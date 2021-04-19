@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.cloudwell.paywell.services">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cloudwell.paywell.services">
 
     <supports-screens
-            android:anyDensity="true"
-            android:largeScreens="true"
-            android:normalScreens="true"
-            android:resizeable="true"
-            android:smallScreens="true"
-            android:xlargeScreens="true" />
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
     <uses-feature
-            android:glEsVersion="0x00020000"
-            android:required="true" />
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -34,114 +34,112 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission
-            android:name="android.permission.RECEIVE_SMS"
-            tools:node="remove" />
+        android:name="android.permission.RECEIVE_SMS"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.READ_SMS"
-            tools:node="remove" />
+        android:name="android.permission.READ_SMS"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.SEND_SMS"
-            tools:node="remove" />
+        android:name="android.permission.SEND_SMS"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.WRITE_SMS"
-            tools:node="remove" />
+        android:name="android.permission.WRITE_SMS"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.RECEIVE_WAP_PUSH"
-            tools:node="remove" />
+        android:name="android.permission.RECEIVE_WAP_PUSH"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.RECEIVE_MMS"
-            tools:node="remove" />
+        android:name="android.permission.RECEIVE_MMS"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.READ_CALL_LOG"
-            tools:node="remove" /> <!-- <permission -->
+        android:name="android.permission.READ_CALL_LOG"
+        tools:node="remove" /> <!-- <permission -->
     <!-- android:name="com.cloudwell.paywell.services.permission.MAPS_RECEIVE" -->
     <!-- android:protectionLevel="signature" /> -->
     <!-- <uses-permission android:name="com.example.permission.MAPS_RECEIVE" /> -->
     <uses-permission
-            android:name="android.permission.WRITE_CALL_LOG"
-            tools:node="remove" /> <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
+        android:name="android.permission.WRITE_CALL_LOG"
+        tools:node="remove" /> <!-- To auto-complete the email text field in ic_login_ajkogin form with the user's emails -->
     <uses-permission
-            android:name="android.permission.PROCESS_OUTGOING_CALLS"
-            tools:node="remove" />
+        android:name="android.permission.PROCESS_OUTGOING_CALLS"
+        tools:node="remove" />
     <uses-permission
-            android:name="android.permission.CALL_PHONE"
-            tools:node="remove" />
+        android:name="android.permission.CALL_PHONE"
+        tools:node="remove" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
 
     <application
-            android:name=".app.AppController"
-            android:allowBackup="false"
-            android:hardwareAccelerated="true"
-            android:icon="@mipmap/paywell_icon"
-            android:label="@string/app_name"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            tools:replace="allowBackup">
-
+        android:name=".app.AppController"
+        android:allowBackup="false"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/paywell_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="allowBackup">
         <activity
-                android:name=".activity.home.login.LoginActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-
+            android:name=".activity.home.login.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.bank_info_update.BankListActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.bank_info_update.BankListActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.bank_info_update.BankSelectionActivity"
-                android:parentActivityName=".activity.settings.SettingsActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.bank_info_update.BankSelectionActivity"
+            android:parentActivityName=".activity.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.entertainment.bongo.BongoTrxActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.entertainment.bongo.BongoTrxActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.entertainment.bongo.BongoCounterActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.entertainment.bongo.BongoCounterActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.entertainment.bongo.PackegeSelectedActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.entertainment.bongo.PackegeSelectedActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.entertainment.bongo.BongoSubscribActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.entertainment.bongo.BongoSubscribActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.entertainment.EntertainmentMainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.entertainment.EntertainmentMainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.education.bbc.BBCstatusCheckActivity"
-                android:parentActivityName=".activity.education.bbc.BBC_Main_Activity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.education.bbc.BBCstatusCheckActivity"
+            android:parentActivityName=".activity.education.bbc.BBC_Main_Activity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.education.bbc.TranscationListActivity"
-                android:parentActivityName=".activity.education.bbc.BBC_Main_Activity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.education.bbc.TranscationListActivity"
+            android:parentActivityName=".activity.education.bbc.BBC_Main_Activity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.education.EducationMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.education.EducationMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.education.bbc.BBC_Main_Activity"
-                android:parentActivityName=".activity.education.bbc.CourseListActivity"
-                android:screenOrientation="portrait"
-                tools:ignore="InnerclassSeparator" />
+            android:name=".activity.education.bbc.BBC_Main_Activity"
+            android:parentActivityName=".activity.education.bbc.CourseListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
-                android:name=".activity.BBC.BBCsubscribeActivity"
-                android:parentActivityName=".activity.education.bbc.CourseListActivity"
-                android:screenOrientation="portrait"
-                tools:ignore="InnerclassSeparator" />
+            android:name=".activity.BBC.BBCsubscribeActivity"
+            android:parentActivityName=".activity.education.bbc.CourseListActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
-                android:name=".activity.education.bbc.CourseListActivity"
-                android:parentActivityName=".activity.education.bbc.BBC_Main_Activity"
-                android:screenOrientation="portrait"
-                tools:ignore="InnerclassSeparator" />
+            android:name=".activity.education.bbc.CourseListActivity"
+            android:parentActivityName=".activity.education.bbc.BBC_Main_Activity"
+            android:screenOrientation="portrait"
+            tools:ignore="InnerclassSeparator" />
         <activity
-                android:name=".activity.bank_info_update.BankINFO_MainActivity"
-                android:parentActivityName=".activity.bank_info_update.BankSelectionActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.bank_info_update.BankINFO_MainActivity"
+            android:parentActivityName=".activity.bank_info_update.BankSelectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activity.entertainment.bongo.BongoMainActivity" />
         <activity
-                android:name=".activity.home.HomeActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/FullScreen">
+            android:name=".activity.home.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -150,211 +148,207 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".activity.home.OtpActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/FullScreenv2" />
+            android:name=".activity.home.OtpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenv2" />
         <activity
-                android:name=".activity.utility.electricity.desco.DescoMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.utility.electricity.desco.DescoMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".LaunchScreenActivity"
-                android:label="@string/app_name"
-                android:launchMode="singleTask"
-                android:screenOrientation="portrait">
-
-
-        </activity>
+            android:name=".LaunchScreenActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
         <activity
-                android:name=".activity.MainActivity"
-                android:launchMode="singleTask"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.AppLoadingActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.AppLoadingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.PendingActivity"
-                android:screenOrientation="portrait" />
-
+            android:name=".activity.PendingActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.reg.regOtp.RegistionOtpActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.reg.regOtp.RegistionOtpActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.utility.UtilityMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.UtilityMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.pallibidyut.registion.PBRegistrationActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.registion.PBRegistrationActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity> <!-- activities for bKasah -->
         <activity
-                android:name=".activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity> <!-- activities for utilities -->
         <activity
-                android:name=".activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity> <!-- activities for palli bidyut -->
         <activity
-                android:name=".activity.utility.pallibidyut.registion.PBInquiryRegActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.registion.PBInquiryRegActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.pallibidyut.bill.PBInquiryBillPayActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.bill.PBInquiryBillPayActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusActivity"
-                android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.utility.pallibidyut.billStatus.PBBillStatusActivity"
+            android:parentActivityName=".activity.utility.pallibidyut.PBMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity" />
         </activity>
         <activity
-                android:name=".activity.topup.TopupMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.topup.TopupMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.topup.TransLogActivity"
-                android:parentActivityName=".activity.topup.TopupMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.topup.TransLogActivity"
+            android:parentActivityName=".activity.topup.TopupMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity" />
         </activity>
         <activity
-                android:name=".activity.topup.OperatorMenuActivity"
-                android:parentActivityName=".activity.topup.TopupMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.topup.OperatorMenuActivity"
+            android:parentActivityName=".activity.topup.TopupMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.topup.TopupMainActivity" />
         </activity>
         <activity
-                android:name=".activity.topup.offer.OfferMainActivity"
-                android:parentActivityName=".activity.topup.OperatorMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.topup.offer.OfferMainActivity"
+            android:parentActivityName=".activity.topup.OperatorMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.topup.OperatorMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.topup.OperatorMenuActivity" />
         </activity> <!-- recever for topup -->
         <activity
-                android:name=".activity.topup.offer.ConfirmOfferActivity"
-                android:parentActivityName=".activity.topup.offer.OfferMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.topup.offer.ConfirmOfferActivity"
+            android:parentActivityName=".activity.topup.offer.OfferMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity" />
         </activity>
         <activity
-                android:name=".activity.eticket.ETicketMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.eticket.ETicketMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.statements.StatementMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.statements.StatementMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.statements.ViewStatementActivity"
-                android:parentActivityName=".activity.statements.StatementMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.statements.ViewStatementActivity"
+            android:parentActivityName=".activity.statements.StatementMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.statements.StatementMainActivity" />
         </activity>
         <activity
-                android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.notification.allNotificaiton.NotificationAllActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_1" />
 
@@ -362,590 +356,589 @@
             </intent-filter>
 
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity> <!-- eTicket activity -->
         <activity
-                android:name=".activity.product.ekShop.EkShopeMenuActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan" /> <!-- Bus ticket activities -->
+            android:name=".activity.product.ekShop.EkShopeMenuActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /> <!-- Bus ticket activities -->
         <activity
-                android:name=".activity.product.ekShop.EKShopActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan" />
+            android:name=".activity.product.ekShop.EKShopActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-                android:name=".activity.product.ekShop.report.ReportMainActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan" />
+            android:name=".activity.product.ekShop.report.ReportMainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-                android:name=".activity.product.ekShop.report.ReportListActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan" /> <!-- train ticket activities -->
+            android:name=".activity.product.ekShop.report.ReportListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" /> <!-- train ticket activities -->
         <activity
-                android:name=".activity.product.ekShop.report.ReportDetailsActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan" />
+            android:name=".activity.product.ekShop.report.ReportDetailsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
-                android:name=".activity.mfs.MFSMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.MFSMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.MYCashMenuActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.MYCashMenuActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.MYCashMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.mfs.mycash.MYCashMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.mfs.mycash.GenerateOTPActivity"
-                android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.GenerateOTPActivity"
+            android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.cash.CashInActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.cash.CashInActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
         </activity> <!-- MFS activities -->
         <activity
-                android:name=".activity.mfs.mycash.CustomerRegistrationActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.CustomerRegistrationActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.inquiry.StatementActivity"
-                android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.inquiry.StatementActivity"
+            android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.BalanceActivity"
-                android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.BalanceActivity"
+            android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.inquiry.LastTransactionsActivity"
-                android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.inquiry.LastTransactionsActivity"
+            android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.ChangeMYCashPinActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.ChangeMYCashPinActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.InquiryMenuActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.InquiryMenuActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.cash.CashOutActivity"
-                android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.cash.CashOutActivity"
+            android:parentActivityName=".activity.mfs.mycash.InquiryMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.ManageMenuActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.ManageMenuActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.manage.BalanceTransferRequestActivity"
-                android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.manage.BalanceTransferRequestActivity"
+            android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.manage.PaymentConfirmationActivity"
-                android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.manage.PaymentConfirmationActivity"
+            android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.CashInOutActivity"
-                android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.CashInOutActivity"
+            android:parentActivityName=".activity.mfs.mycash.MYCashMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.manage.PayWellToMYCashActivity"
-                android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.manage.PayWellToMYCashActivity"
+            android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.mfs.mycash.manage.MYCashToPayWellActivity"
-                android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.mfs.mycash.manage.MYCashToPayWellActivity"
+            android:parentActivityName=".activity.mfs.mycash.ManageMenuActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.mfs.mycash.ManageMenuActivity" />
         </activity>
         <activity
-                android:name=".activity.settings.ChangePinActivity"
-                android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan">
+            android:name=".activity.settings.ChangePinActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.settings.SettingsActivity" />
         </activity>
         <activity
-                android:name=".activity.settings.SettingsActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.settings.SettingsActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.about.AboutActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.about.AboutActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.pallibidyut.PBMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.pallibidyut.PBMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity"
-                android:parentActivityName=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity"
+            android:parentActivityName=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.desco.postpaid.DESCOPostpaidInquiryActivity"
-                android:parentActivityName=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.desco.postpaid.DESCOPostpaidInquiryActivity"
+            android:parentActivityName=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.ElectricityHelpActivity"
-                android:parentActivityName=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.utility.electricity.ElectricityHelpActivity"
+            android:parentActivityName=".activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.dpdc.DPDCMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.dpdc.DPDCMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity"
-                android:parentActivityName=".activity.utility.electricity.dpdc.DPDCMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity"
+            android:parentActivityName=".activity.utility.electricity.dpdc.DPDCMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.dpdc.DPDCPostpaidInquiryActivity"
-                android:parentActivityName=".activity.utility.electricity.dpdc.DPDCMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.dpdc.DPDCPostpaidInquiryActivity"
+            android:parentActivityName=".activity.utility.electricity.dpdc.DPDCMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity" />
         </activity>
         <activity
-                android:name=".activity.refill.RefillBalanceMainActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.refill.RefillBalanceMainActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.refill.banktransfer.BankTransferMainActivity"
-                android:parentActivityName=".activity.refill.RefillBalanceMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.refill.banktransfer.BankTransferMainActivity"
+            android:parentActivityName=".activity.refill.RefillBalanceMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity" />
         </activity>
         <activity
-                android:name=".activity.refill.card.CardTransferMainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.refill.card.CardTransferMainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.reg.EntryMainActivity"
-                android:label="@string/app_name"
-                android:screenOrientation="portrait" />
+            android:name=".activity.reg.EntryMainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.reg.EntryFirstActivity"
-                android:configChanges="orientation"
-                android:label="@string/paywell_reg"
-                android:noHistory="true"
-                android:parentActivityName=".activity.reg.EntryMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.reg.EntryFirstActivity"
+            android:configChanges="orientation"
+            android:label="@string/paywell_reg"
+            android:noHistory="true"
+            android:parentActivityName=".activity.reg.EntryMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryMainActivity" />
         </activity>
         <activity
-                android:name=".activity.reg.EntrySecondActivity"
-                android:configChanges="orientation"
-                android:label="@string/paywell_reg"
-                android:parentActivityName=".activity.reg.EntryFirstActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.reg.EntrySecondActivity"
+            android:configChanges="orientation"
+            android:label="@string/paywell_reg"
+            android:parentActivityName=".activity.reg.EntryFirstActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.reg.EntryFirstActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryFirstActivity" />
         </activity>
         <activity
-                android:name=".activity.reg.EntryThirdActivity"
-                android:configChanges="orientation"
-                android:label="@string/paywell_reg"
-                android:parentActivityName=".activity.reg.EntrySecondActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.reg.EntryThirdActivity"
+            android:configChanges="orientation"
+            android:label="@string/paywell_reg"
+            android:parentActivityName=".activity.reg.EntrySecondActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.reg.EntrySecondActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.reg.EntrySecondActivity" />
         </activity>
         <activity
-                android:name=".activity.reg.EntryForthActivity"
-                android:label="@string/paywell_reg"
-                android:parentActivityName=".activity.reg.EntryThirdActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.reg.EntryForthActivity"
+            android:label="@string/paywell_reg"
+            android:parentActivityName=".activity.reg.EntryThirdActivity"
+            android:screenOrientation="portrait">
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.reg.EntryThirdActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.reg.EntryThirdActivity" />
         </activity>
         <activity
-                android:name=".activity.reg.TermsAndConditionsActivity"
-                android:screenOrientation="portrait">
-        </activity>
+            android:name=".activity.reg.TermsAndConditionsActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
-                android:name=".activity.reg.missing.MissingMainActivity"
-                android:label="@string/paywell_reg_missing"
-                android:screenOrientation="portrait" />
+            android:name=".activity.reg.missing.MissingMainActivity"
+            android:label="@string/paywell_reg_missing"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.terms.TermsActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.terms.TermsActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.product.ProductMenuActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.product.ProductMenuActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.scan.DisplayQRCodeActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.scan.DisplayQRCodeActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.utility.electricity.wasa.WASAMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.wasa.WASAMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.wasa.WASABillPayActivity"
-                android:parentActivityName=".activity.utility.electricity.wasa.WASAMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.wasa.WASABillPayActivity"
+            android:parentActivityName=".activity.utility.electricity.wasa.WASAMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.wasa.WASABillInquiryActivity"
-                android:parentActivityName=".activity.utility.electricity.wasa.WASAMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.wasa.WASABillInquiryActivity"
+            android:parentActivityName=".activity.utility.electricity.wasa.WASAMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.westzone.WZPDCLMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.westzone.WZPDCLMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.westzone.WZPDCLBillPayActivity"
-                android:parentActivityName=".activity.utility.electricity.westzone.WZPDCLMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.westzone.WZPDCLBillPayActivity"
+            android:parentActivityName=".activity.utility.electricity.westzone.WZPDCLMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.electricity.westzone.WZPDCLBillInquiryActivity"
-                android:parentActivityName=".activity.utility.electricity.westzone.WZPDCLMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.electricity.westzone.WZPDCLBillInquiryActivity"
+            android:parentActivityName=".activity.utility.electricity.westzone.WZPDCLMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity" />
         </activity>
         <activity
-                android:name=".activity.MerchantTypeVerify"
-                android:screenOrientation="portrait" />
+            android:name=".activity.MerchantTypeVerify"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.utility.ivac.IvacMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.ivac.IvacMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.ivac.IvacFeePayActivity"
-                android:parentActivityName=".activity.utility.ivac.IvacMainActivity"
-                android:screenOrientation="portrait"
-                tools:replace="screenOrientation">
+            android:name=".activity.utility.ivac.IvacFeePayActivity"
+            android:parentActivityName=".activity.utility.ivac.IvacMainActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.ivac.IvacFeeInquiryMainActivity"
-                android:parentActivityName=".activity.utility.ivac.IvacMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.ivac.IvacFeeInquiryMainActivity"
+            android:parentActivityName=".activity.utility.ivac.IvacMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.ivac.IvacFeeInquiryActivity"
-                android:parentActivityName=".activity.utility.ivac.IvacFeeInquiryMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.ivac.IvacFeeInquiryActivity"
+            android:parentActivityName=".activity.utility.ivac.IvacFeeInquiryMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.ivac.IvacFeeInquiryMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.ivac.ScannerActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.utility.ivac.ScannerActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.utility.banglalion.BanglalionMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.banglalion.BanglalionMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.banglalion.BanglalionRechargeActivity"
-                android:parentActivityName=".activity.utility.banglalion.BanglalionMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.banglalion.BanglalionRechargeActivity"
+            android:parentActivityName=".activity.utility.banglalion.BanglalionMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.banglalion.BanglalionRechargeInquiryActivity"
-                android:parentActivityName=".activity.utility.banglalion.BanglalionMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.banglalion.BanglalionRechargeInquiryActivity"
+            android:parentActivityName=".activity.utility.banglalion.BanglalionMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.karnaphuli.KarnaphuliMainActivity"
-                android:parentActivityName=".activity.utility.UtilityMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:parentActivityName=".activity.utility.UtilityMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.UtilityMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.karnaphuli.KarnaphuliBillPayActivity"
-                android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.karnaphuli.KarnaphuliBillPayActivity"
+            android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
         </activity>
         <activity
-                android:name=".activity.utility.karnaphuli.KarnaphuliInquiryActivity"
-                android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.utility.karnaphuli.KarnaphuliInquiryActivity"
+            android:parentActivityName=".activity.utility.karnaphuli.KarnaphuliMainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity" />
         </activity>
         <activity
-                android:name=".activity.chat.ChatActivity"
-                android:parentActivityName=".activity.MainActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.chat.ChatActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value="com.cloudwell.paywell.services.activity.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cloudwell.paywell.services.activity.MainActivity" />
         </activity>
         <activity
-                android:name=".activity.settings.HelpMainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.settings.HelpMainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.location.LocationActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.location.LocationActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.notification.notificaitonFullView.NotificationFullViewActivity"
-                android:screenOrientation="portrait">
+            android:name=".activity.notification.notificaitonFullView.NotificationFullViewActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_DETAILS" />
 
@@ -953,257 +946,244 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".activity.notification.ImageViewActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.notification.ImageViewActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.topup.TopUpOperatorMenuActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.topup.TopUpOperatorMenuActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.topup.TopupMenuActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.topup.TopupMenuActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.topup.brilliant.BrilliantTopupActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.topup.brilliant.BrilliantTopupActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.topup.brilliant.BrilliantTransactionLogActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.WebViewActivity"
-                android:parentActivityName=".activity.refill.nagad.NagadBalanceClaimActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.WebViewActivity"
+            android:parentActivityName=".activity.refill.nagad.NagadBalanceClaimActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.refill.nagad.nagad_v2.webView.DirectBalaceRefil"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.refill.nagad.nagad_v2.webView.DirectBalaceRefil"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.refill.banktransfer.BankDetailsActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.refill.banktransfer.BankDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.myFavorite.MyFavoriteMenuActivity"
-                android:label="@string/title_activity_my_favorite_menu"
-                android:screenOrientation="portrait" />
+            android:name=".activity.myFavorite.MyFavoriteMenuActivity"
+            android:label="@string/title_activity_my_favorite_menu"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.AirTicketMainActivity"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.AirTicketMainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
-                android:label="@string/title_activity_air_tricket_menu"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.menu.AirTicketMenuActivity"
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
-                android:label="@string/title_activity_air_tricket_menu"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.flightSearch.FlightSearchViewActivity"
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
-                android:label="@string/title_activity_air_tricket_menu"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.flightDetails1.FlightDetails1Activity"
+            android:label="@string/title_activity_air_tricket_menu"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
-                android:label="@string/title_flightDetails2"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.flightDetails2.FlightDetails2Activity"
+            android:label="@string/title_flightDetails2"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
-                android:label="@string/title_passenger_list"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.passengerList.PassengerListActivity"
+            android:label="@string/title_passenger_list"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
-                android:label="@string/title_add_passenger"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.passengerAdd.AddPassengerActivity"
+            android:label="@string/title_add_passenger"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
-                android:label="@string/tile_cencel_booking"
-                android:screenOrientation="portrait" />
+            android:name=".activity.eticket.airticket.bookingCencel.BookingCancelActivity"
+            android:label="@string/tile_cencel_booking"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
-                android:screenOrientation="portrait" />
+            android:name=".libaray.imagePickerAndCrop.ImagePickerActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name="com.yalantis.ucrop.UCropActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.eticket.busticketNew.busTransactionLog.BusTransactionLogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-                android:name=".activity.eticket.busticketNew.cancelList.CancelListActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".activity.eticket.busticketNew.cancelList.CancelListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.busticketNew.cencel.BusTicketCancelOtpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
+            android:label="@string/title_all_summary"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
+            android:label="@string/title_activity_baggage_and_policies_actiivty"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.utility.pallibidyut.bill.PBBillPayNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.busticketNew.transportSelect.TransportSelectActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- uCrop cropping activity -->
+        <activity
+            android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.airticket.dosInfoUpdate.UpdateDocOrInfomationRequestActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.airticket.dosInfoUpdate.editReissuePassengerActivity.DosInfoUpdatePassengerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.busticketNew.busTransportList.BusHosttActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.eticket.busticketNew.cencel.BusCancelActiivty"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.refill.nagad.nagad_v2.webView.WebViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.refill.nagad.NagadMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.refill.nagad.BalanceRefillActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.eticket.airticket.issueTicket.IssueTicketRequestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ocr.OCRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.reg.nidOCR.NidInputActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.reg.nidOCR.InputNidInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.fee.FeeMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.faq.PreLoginFAQActivity"
+            android:label="@string/title_activity_f_a_q"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.faq.PostLoginFAQActivity"
+            android:label="@string/title_activity_f_a_q"
+            android:screenOrientation="portrait" />
 
+        <activity android:name=".activity.healthInsurance.HelthInfoActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.busticketNew.cencel.BusTicketCancelOtpActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-
-
+            android:name=".activity.healthInsurance.HealthInsuranceMainActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.airportSearch.search.AirportsSearchActivity"
-                android:screenOrientation="portrait"
-                android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+            android:name=".activity.healthInsurance.PackageDetailsActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.finalReview.AllSummaryActivity"
-                android:label="@string/title_all_summary"
-                android:screenOrientation="portrait" />
+            android:name=".activity.healthInsurance.MenuActivity"
+            android:screenOrientation="portrait" />
         <activity
-                android:name=".activity.eticket.airticket.flightDetails1.BaggageAndPoliciesActiivty"
-                android:label="@string/title_activity_baggage_and_policies_actiivty"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.utility.pallibidyut.bill.PBBillPayNewActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.eticket.airticket.transationLog.AirThicketTranslationLogActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.airticket.ticketViewer.TicketViewerActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.airticket.ticketViewer.emailTicket.PassengerEmailSendListActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.airticket.transationLog.viewBookingInfo.ViewBookingInfoActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.busticketNew.transportSelect.TransportSelectActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.busticketNew.search.BusCitySearchActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" /> <!-- uCrop cropping activity -->
-        <activity
-                android:name=".activity.eticket.airticket.ticketCencel.TicketCancelActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.airticket.dosInfoUpdate.UpdateDocOrInfomationRequestActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.airticket.dosInfoUpdate.editReissuePassengerActivity.DosInfoUpdatePassengerActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.busticketNew.menu.BusTicketMenuActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.busticketNew.busTransportList.BusHosttActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.eticket.busticketNew.cencel.BusCancelActiivty"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-                android:name=".activity.refill.nagad.NagadBalanceClaimActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.refill.nagad.nagad_v2.webView.WebViewActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.utility.pallibidyut.bill.PBBillPayOldActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.refill.nagad.NagadMainActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.refill.nagad.BalanceRefillActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.eticket.airticket.issueTicket.IssueTicketRequestActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.refill.nagad.NagadRefillLogInquiryActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".ocr.OCRActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.reg.nidOCR.NidInputActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.reg.nidOCR.InputNidInfoActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-                android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity"
-                android:screenOrientation="portrait" />
-        <activity
-                android:name=".activity.fee.FeeMainActivity"
-                android:screenOrientation="portrait" />
-
-
-        <activity
-                android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-                android:screenOrientation="portrait" />
-
-
-        <activity
-                android:name=".activity.faq.PreLoginFAQActivity"
-                android:label="@string/title_activity_f_a_q"
-                android:screenOrientation="portrait" />
-
-        <activity
-                android:name=".activity.faq.PostLoginFAQActivity"
-                android:label="@string/title_activity_f_a_q"
-                android:screenOrientation="portrait" />
-
-
-        <activity
-                android:name=".activity.healthInsurance.HealthInsuranceMainActivity"
-                android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.healthInsurance.PackageDetailsActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-                android:name=".activity.healthInsurance.MenuActivity"
-                android:screenOrientation="portrait" />
-
-
-        <activity
-                android:name=".activity.healthInsurance.PackageListActivity"
-                android:screenOrientation="portrait" />
-
+            android:name=".activity.healthInsurance.PackageListActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
-                android:name="com.google.android.gms.vision.DEPENDENCIES"
-                android:value="barcode" />
-
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="barcode" />
         <meta-data
-                android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/pw_notification_bar" />
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/pw_notification_bar" />
         <meta-data
-                android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/colorAccent" />
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
         <meta-data
-                android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="${applicationId}"
-                android:exported="false"
-                android:grantUriPermissions="true">
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_provider" />
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
         </provider>
 
         <receiver
-                android:name=".utils.IsOnlineReceiver"
-                android:enabled="true"
-                android:exported="true">
+            android:name=".utils.IsOnlineReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -1213,34 +1193,34 @@
         </receiver>
         <receiver android:name=".ActionReceiver" />
         <receiver
-                android:name=".activity.home.SmsBroadcastReceiver"
-                android:exported="true">
+            android:name=".activity.home.SmsBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVE" />
             </intent-filter>
         </receiver>
 
         <service
-                android:name=".service.MyFirebaseMessagingService"
-                android:exported="false"
-                android:stopWithTask="false">
+            android:name=".service.MyFirebaseMessagingService"
+            android:exported="false"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service
-                android:name=".service.notificaiton.NotificationCheckerService"
-                android:exported="true" />
+            android:name=".service.notificaiton.NotificationCheckerService"
+            android:exported="true" />
         <service
-                android:name=".service.notificaiton.NotificationDataSycService"
-                android:exported="true" />
+            android:name=".service.notificaiton.NotificationDataSycService"
+            android:exported="true" />
 
         <uses-library
-                android:name="com.google.android.maps"
-                android:required="false" />
+            android:name="com.google.android.maps"
+            android:required="false" />
         <uses-library
-                android:name="org.apache.http.legacy"
-                android:required="false" />
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

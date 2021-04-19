@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.healthInsurance.HelthInfoActivity">
+
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/helth_active_to" />
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14sp"
+                    android:textColor="#3D6FC4"
+                    android:id="@+id/active_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="01612250477"
+                    android:layout_marginStart="10dp" />
+
+
+            </LinearLayout>
+
+
+            <EditText
+                android:padding="5dp"
+                android:id="@+id/mobile_helth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="13"
+                android:textSize="13sp"
+                android:hint="@string/type_name_in_english"
+                android:drawablePadding="5dp"
+                android:background="@drawable/common_et_bg"/>
+
+
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+                <TextView
+                    android:textColor="#59595C"
+                    android:textSize="13sp"
+                        android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_birth" />
+
+
+                <TextView
+                    android:id="@+id/date_et"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ems="13"
+                    android:hint="mm/dd/yyyy"
+                    android:textSize="13sp"
+                    android:drawablePadding="5dp"
+                    android:drawableEnd="@drawable/helth_cal_ic"
+                    android:background="@drawable/common_et_bg"
+                    android:drawableRight="@drawable/helth_cal_ic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:textColor="#59595C"
+                    android:textSize="13sp"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender" />
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content">
+
+
+                    <Spinner
+                        android:id="@+id/gender_spinner"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/spinner_bg"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:background="#D8D8D8"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <EditText
+                android:padding="5dp"
+                android:id="@+id/id_helth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:ems="13"
+                android:textSize="13sp"
+                tools:hint="@string/number_in_english"
+                android:drawablePadding="5dp"
+                android:background="@drawable/common_et_bg"/>
+
+
+
+
+
+            <TextView
+                android:layout_marginTop="34dp"
+                android:textSize="14sp"
+                android:textColor="#59595C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="নমিনির তথ্য (ঐচ্ছিক)" />
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+                <TextView
+                    android:textColor="#59595C"
+                    android:textSize="13sp"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobile_number" />
+
+
+                <EditText
+                    android:padding="5dp"
+                    android:layout_weight="3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:ems="13"
+                    android:textSize="13sp"
+                    android:hint="+880"
+                    android:inputType="number"
+                    android:drawablePadding="5dp"
+                    android:background="@drawable/common_et_bg"/>
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/date_et"-->
+<!--                    android:layout_weight="3"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:ems="13"-->
+<!--                    android:hint="mm/dd/yyyy"-->
+<!--                    android:textSize="13sp"-->
+<!--                    android:drawablePadding="5dp"-->
+<!--                    android:drawableEnd="@drawable/helth_cal_ic"-->
+<!--                    android:background="@drawable/common_et_bg"-->
+<!--                    android:drawableRight="@drawable/helth_cal_ic" />-->
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:textColor="#59595C"
+                    android:textSize="13sp"
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/relation" />
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content">
+
+
+                    <Spinner
+                        android:id="@+id/relation_sp"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="26dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/spinner_bg"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown" />
+
+                    <ImageView
+                        android:background="#D8D8D8"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:textAlignment="center"
+                android:id="@+id/next_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginBottom="32dp"
+                android:background="@drawable/helth_btn_bg"
+                android:padding="10dp"
+                android:text="@string/next_step"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mobile_helth"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

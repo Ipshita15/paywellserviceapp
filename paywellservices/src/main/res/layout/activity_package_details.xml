@@ -576,14 +576,15 @@
                     android:layout_height="1dp"/>
 
 
-                <TextView
+                <org.sufficientlysecure.htmltextview.HtmlTextView
                     android:id="@+id/package_detailsText"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="16dp"
                     android:layout_marginEnd="16dp"
-                    android:text="- হেল্‌থ ক্যাশব্যাক সুবিধা প্রাথমিক সদস্য ও পরিবারের স্বামী/ স্ত্রী এবং ০২ শিশু সদস্যের জন্য  প্রযোজ্য"
+                    android:layout_marginBottom="30dp"
+                    tools:text="- হেল্‌থ ক্যাশব্যাক সুবিধা প্রাথমিক সদস্য ও পরিবারের স্বামী/ স্ত্রী এবং ০২ শিশু সদস্যের জন্য  প্রযোজ্য"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

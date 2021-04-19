@@ -1,19 +1,21 @@
 package com.cloudwell.paywell.services.activity.healthInsurance
 
 import android.annotation.SuppressLint
-import android.graphics.Point
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
-import com.cloudwell.paywell.services.activity.education.PaywellPinDialog
-import com.cloudwell.paywell.services.activity.healthInsurance.dialog.HelthPINdialog
+import com.cloudwell.paywell.services.activity.healthInsurance.dialog.Documentdialog
+import com.cloudwell.paywell.services.activity.healthInsurance.dialog.HelthMobiledialog
 import com.cloudwell.paywell.services.activity.healthInsurance.model.MembershipPackagesItem
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_package_details.*
+import org.sufficientlysecure.htmltextview.HtmlFormatter
+import org.sufficientlysecure.htmltextview.HtmlFormatterBuilder
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter
 
 
 class PackageDetailsActivity : HealthInsuranceBaseActivity() {
@@ -34,17 +36,16 @@ class PackageDetailsActivity : HealthInsuranceBaseActivity() {
         val packageobject: MembershipPackagesItem = gson.fromJson(intent.getStringExtra(getString(R.string.selected_healthmart_package)), MembershipPackagesItem::class.java)
 
         package_name.setText(packageobject.name)
-        package_duration.setText(packageobject.validity+" "+getString(R.string.validity))
+        package_duration.setText(packageobject.validity + " " + getString(R.string.validity))
 
-       // Toast.makeText(this, packageobject.name, Toast.LENGTH_SHORT ).show()
-        Toast.makeText(this, packageobject.packageImage, Toast.LENGTH_SHORT ).show()
-        amount.setText("\u09F3"+packageobject.amount)
-        cashback_amout_txt.setText(packageobject.cashBackAmount+" "+packageobject.cashBackMessage)
+        amount.setText("\u09F3" + packageobject.amount)
+        cashback_amout_txt.setText(packageobject.cashBackAmount + " " + packageobject.cashBackMessage)
         member_msg.setText(packageobject.memberMessage)
-        additional_txt.setText(packageobject.aditional.get(0).amount + " "+packageobject.aditional.get(0).message)
-        package_detailsText.setText(packageobject.details)
+        additional_txt.setText(packageobject.aditional.get(0).amount + " " + packageobject.aditional.get(0).message)
 
-       // Glide.with(this).load(packageobject.packageImage).into(banner_image)
+        val formattedHtml = HtmlFormatter.formatHtml(HtmlFormatterBuilder().setHtml(packageobject.details).setImageGetter(HtmlResImageGetter(package_detailsText.getContext())))
+        package_detailsText.setText(formattedHtml)
+
         Picasso.get().load(packageobject.packageImage).into(banner_image)
 
 
@@ -60,14 +61,38 @@ class PackageDetailsActivity : HealthInsuranceBaseActivity() {
 
     private fun showPINdialog(packageobject: MembershipPackagesItem) {
 
+        val mobileDialog = HelthMobiledialog(object : HelthMobiledialog.MobileInterface{
+            override fun onclick(mobile : String) {
 
-        val askingPinDialog = HelthPINdialog(object : PaywellPinDialog.IonClickInterface {
-            override fun onclick(pin: String) {
+                showDocumentDialog(mobile, packageobject)
+
+            }
+        })
+
+        mobileDialog.show(supportFragmentManager, "Mobile Dialog")
+
+    }
+
+
+    private fun showDocumentDialog(mobile: String, hPackage :MembershipPackagesItem){
+
+        val documentDialog = Documentdialog(object : Documentdialog.DocClickInterface {
+
+            override fun onclick(document: String) {
+
+                Intent(this@PackageDetailsActivity, HelthInfoActivity::class.java).also {
+                    it.putExtra(getString(R.string.healthmobile), mobile)
+                    it.putExtra(getString(R.string.document), document)
+                    startActivity(it)
+                }
 
 
             }
         })
-        askingPinDialog.show(supportFragmentManager, "Pin Dialog")
+
+        documentDialog.show(supportFragmentManager, "Doc Dialog")
+
+
     }
 
 
