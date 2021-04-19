@@ -861,6 +861,7 @@
     <string name="free_prescription">ফ্রি</string>
     <string name="helth_cashback">হেলথ ক্যাশব্যাক</string>
     <string name="in_package">প্যাক-এ থাকছে</string>
+    <string name="next_step">পরবর্তী ধাপ</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>
