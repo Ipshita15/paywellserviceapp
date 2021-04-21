@@ -879,6 +879,7 @@
     <string name="son">Son</string>
     <string name="daughter">Daughter</string>
     <string name="selectfrom">নির্বাচন করুন</string>
+    <string name="selected_helth_p">package</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

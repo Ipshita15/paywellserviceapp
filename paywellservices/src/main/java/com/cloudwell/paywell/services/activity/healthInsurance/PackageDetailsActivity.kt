@@ -83,6 +83,7 @@ class PackageDetailsActivity : HealthInsuranceBaseActivity() {
                 Intent(this@PackageDetailsActivity, HelthInfoActivity::class.java).also {
                     it.putExtra(getString(R.string.healthmobile), mobile)
                     it.putExtra(getString(R.string.document), document)
+                    it.putExtra(getString(R.string.selected_helth_p), hPackage.packageId)
                     startActivity(it)
                 }
 
