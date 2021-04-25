@@ -2,18 +2,20 @@ package com.cloudwell.paywell.services.activity.healthInsurance.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.MimeTypeFilter.matches
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseDialogFragment
 import kotlinx.android.synthetic.main.helth_pin_dialog.*
 import kotlinx.android.synthetic.main.helth_pin_dialog.view.*
 
 class HelthMobiledialog(val onclick: HelthMobiledialog.MobileInterface) : BaseDialogFragment() {
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.helth_pin_dialog, null)
@@ -23,26 +25,17 @@ class HelthMobiledialog(val onclick: HelthMobiledialog.MobileInterface) : BaseDi
             val mobileNumber : String = mobile_helth.text.toString()
 
 
+            Toast.makeText(requireContext(), mobileNumber, Toast.LENGTH_SHORT).show()
 
-            if ( PhoneNumberUtils.isGlobalPhoneNumber(mobileNumber)){
-                Toast.makeText(requireContext(), "true", Toast.LENGTH_SHORT).show()
+
+            if(mobileNumber.length in 14 downTo 11) {
+                onclick.onclick(mobileNumber)
+                dismiss()
             }else{
-
-                Toast.makeText(requireContext(), "false", Toast.LENGTH_SHORT).show()
+                mobile_helth.setError("Invlaid")
             }
 
 
-//            if (mobileNumber.isNullOrEmpty()){
-//                mobile_helth.setError("Required")
-//            }
-////            else if (pin.length >= 11 || pin.length <= 11){
-////                mobile_helth.setError("Invlaid")
-////            }
-//            else{
-//
-//                onclick.onclick(mobileNumber)
-//                dismiss()
-//            }
 
 
         }
@@ -50,9 +43,6 @@ class HelthMobiledialog(val onclick: HelthMobiledialog.MobileInterface) : BaseDi
 
     }
 
-    fun validCellPhone(number: String?): Boolean {
-        return Patterns.PHONE.matcher(number).matches()
-    }
 
     override fun onStart() {
         super.onStart()
