@@ -49,9 +49,9 @@ class Documentdialog(val onclick: Documentdialog.DocClickInterface) : BaseDialog
 
 
         when (v!!.id) {
-            R.id.nid_btn -> onclick.onclick(getString(R.string.nid_paper))
-            R.id.passport_btn -> onclick.onclick(getString(R.string.passport))
-            R.id.birth_certificate -> onclick.onclick(getString(R.string.helth_birth_certificate))
+            R.id.nid_btn -> onclick.onclick("1")  //onclick(getString(R.string.nid_paper))
+            R.id.passport_btn -> onclick.onclick("2") //onclick(getString(R.string.passport))
+            R.id.birth_certificate -> onclick.onclick("3")    //onclick(getString(R.string.helth_birth_certificate))
 
         }
 

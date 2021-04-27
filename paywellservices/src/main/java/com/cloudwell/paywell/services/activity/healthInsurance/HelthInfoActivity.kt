@@ -39,6 +39,7 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
     var otherNumber : String?  = null
     var relation : String? = null
     var payWellPin : Int? = null
+    var idType : String? = null
 
 
 
@@ -59,6 +60,17 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
 
         active_mobile.setText(mobileNumber)
+        if (idDoc == "1"){
+            id_helth.setHint(getString(R.string.nid_paper) + " " + getString(R.string.number_in_english))
+            idType = "NID"
+        }else if (idDoc == "2"){
+            id_helth.setHint(getString(R.string.passport) + " " + getString(R.string.number_in_english))
+            idType = "Passport"
+
+        }else if (idDoc == "3"){
+            id_helth.setHint(getString(R.string.helth_birth_certificate) + " " + getString(R.string.number_in_english))
+            idType = "BirthCertificate"
+        }
         id_helth.setHint(idDoc + " " + getString(R.string.number_in_english))
 
         setGenderSpinner()
@@ -134,13 +146,14 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
         activePakage.dateOfBirth = birth_date
         activePakage.gender = gender
-        activePakage.identificationType = idDoc
+        activePakage.identificationType = idType
         activePakage.memberName = memberName
         activePakage.mobile = mobileNumber
         activePakage.nomineePhoneNumber = otherNumber
         activePakage.packagesId = healthPackage
         activePakage.password = payWellPin
         activePakage.username = mAppHandler.userName
+        activePakage.identificationNumber = memberidcard
 
 
 
@@ -177,7 +190,7 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
 
     private fun setGenderSpinner() {
-        val country = arrayOf(getString(R.string.selectfrom), getString(R.string.male), getString(R.string.female), getString(R.string.other))
+        val country = arrayOf("Please Select","Male", "Female", "Other")
         val sp : Spinner = gender_spinner
         sp.onItemSelectedListener
         val aa: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.spinner_item, country)
@@ -202,7 +215,7 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
     private fun setRelationSpinner(){
 
 
-        val country = arrayOf(getString(R.string.selectfrom), getString(R.string.father), getString(R.string.mother), getString(R.string.husband_wife), getString(R.string.son), getString(R.string.daughter))
+        val country = arrayOf("Please Select", "Father", "Mother", "Husband/Wife", "Son" ,"Daughter")
         val sp : Spinner = relation_sp
         sp.onItemSelectedListener
         val aa: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.spinner_item, country)

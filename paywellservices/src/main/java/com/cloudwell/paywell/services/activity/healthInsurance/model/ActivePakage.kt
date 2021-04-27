@@ -7,7 +7,7 @@ data class ActivePakage(
         var packagesId: String? = null,
         var mobile: String? = null,
         var memberName: String? = null,
-        val identificationNumber: String? = null,
+        var identificationNumber: String? = null,
         var identificationType: String? = null,
         var dateOfBirth: String? = null,
         var username: String? = null
