@@ -11,12 +11,16 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXrequestModel
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXresponse
+import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxRequest
+import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxResponse
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.StringConstant
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_health_menu.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +49,13 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
         Insurancepackage.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, PackageListActivity::class.java))
         })
+        //
+        health_Transcation.setOnClickListener(View.OnClickListener {
+            showLimitPrompt()
+           // startActivity(Intent(this, TranscationLogActivity::class.java))
+        })
+
+
 
 //        bongo_count.setOnClickListener(View.OnClickListener {
 //            startActivity(Intent(this, BongoCounterActivity::class.java))
@@ -109,36 +120,39 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
     private fun getTransactionLog(limit: Int) {
         showProgressDialog()
 
-        val transcationLog = BongoTRXrequestModel()
+        val transcationLog = TrxRequest()
         transcationLog.limit = "" + limit
-        transcationLog.service = "Bongo"
-        transcationLog.userName = mAppHandler?.userName.toString()
+        transcationLog.username = mAppHandler.userName
 
-        ApiUtils.getAPIServiceV2().getBongoTransactionLog(transcationLog).enqueue(object : Callback<BongoTRXresponse> {
-            override fun onFailure(call: Call<BongoTRXresponse>, t: Throwable) {
+        ApiUtils.getAPIServiceV2().trnscationLog(transcationLog).enqueue(object : Callback<TrxResponse> {
+            override fun onFailure(call: Call<TrxResponse>, t: Throwable) {
                 dismissProgressDialog()
                 showErrorMessagev1(getString(R.string.try_again_msg))
             }
 
-            override fun onResponse(call: Call<BongoTRXresponse>, response: Response<BongoTRXresponse>) {
+            override fun onResponse(call: Call<TrxResponse>, response: Response<TrxResponse>) {
                 dismissProgressDialog()
                 if (response.isSuccessful) {
-                    val trPojo: BongoTRXresponse = response.body()!!
-                    val status: Int? = trPojo.status //js.getInt("status")
-                    val msg: String = trPojo.message.toString() //js.getString("message")
+
+                    val trxPjo : TrxResponse = response.body()!!
+
+                    val status: Int? = trxPjo.statusCode
+                    val msg: String = trxPjo.message.toString()
                     if (status == 200) {
-//                        val toJson = Gson().toJson(trPojo)
-//                        val intent = Intent(applicationContext, BongoTrxActivity::class.java)
-//                        intent.putExtra(getString(R.string.bongo_trx_tag), toJson)
-//                        startActivity(intent)
+
+                        val toJson = Gson().toJson(trxPjo)
+                        val intent = Intent(applicationContext, TranscationLogActivity::class.java)
+                        intent.putExtra(getString(R.string.health_trx_tag), toJson)
+                        startActivity(intent)
+
 
                     } else {
-                        showErrorMessagev1(msg)
+                        showErrorCallBackMessagev1(msg)
                     }
 
 
                 } else {
-                    showErrorMessagev1(getString(R.string.try_again_msg))
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg))
                 }
             }
 

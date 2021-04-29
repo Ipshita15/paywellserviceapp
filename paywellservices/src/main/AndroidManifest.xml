@@ -77,6 +77,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
+        <activity android:name=".activity.healthInsurance.TranscationLogActivity"></activity>
         <activity
             android:name=".activity.home.login.LoginActivity"
             android:screenOrientation="portrait"
@@ -159,7 +160,7 @@
             android:name=".LaunchScreenActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -739,7 +740,7 @@
         </activity>
         <activity
             android:name=".activity.reg.TermsAndConditionsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.reg.missing.MissingMainActivity"
             android:label="@string/paywell_reg_missing"
@@ -1141,8 +1142,8 @@
             android:name=".activity.faq.PostLoginFAQActivity"
             android:label="@string/title_activity_f_a_q"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activity.healthInsurance.HelthInfoActivity"
+        <activity
+            android:name=".activity.healthInsurance.HelthInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.healthInsurance.HealthInsuranceMainActivity"

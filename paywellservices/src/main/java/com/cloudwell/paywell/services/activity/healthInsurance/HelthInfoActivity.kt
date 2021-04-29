@@ -14,6 +14,7 @@ import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
 import com.cloudwell.paywell.services.activity.education.PaywellPinDialog
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ActivePakage
+import com.cloudwell.paywell.services.activity.healthInsurance.model.ActiveResponse
 import com.cloudwell.paywell.services.activity.healthInsurance.model.MembershipPackagesItem
 import com.cloudwell.paywell.services.activity.healthInsurance.model.RespseMemberShipPackage
 import com.cloudwell.paywell.services.app.AppHandler
@@ -71,7 +72,6 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
             id_helth.setHint(getString(R.string.helth_birth_certificate) + " " + getString(R.string.number_in_english))
             idType = "BirthCertificate"
         }
-        id_helth.setHint(idDoc + " " + getString(R.string.number_in_english))
 
         setGenderSpinner()
         setRelationSpinner()
@@ -157,8 +157,8 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
 
 
-        ApiUtils.getAPIServiceV2().activatePackage(activePakage).enqueue(object : Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        ApiUtils.getAPIServiceV2().activatePackage(activePakage).enqueue(object : Callback<ActiveResponse>{
+            override fun onResponse(call: Call<ActiveResponse>, response: Response<ActiveResponse>) {
                 dismissProgressDialog()
 
                 if (response.isSuccessful){
@@ -166,7 +166,16 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
 
                     val body = response.body()
-                    showSuccessDialog( "Health Insurance",body.toString())
+                    val msg  = response.message()
+
+                    if(response.body()?.statusCode == 200){
+                        showSuccessDialog("Health Insurence", response.body()!!.message)
+                    }else{
+                        showErrorCallBackMessagev1(response.body()?.message)
+
+                    }
+
+
 
 
                 }else{
@@ -177,7 +186,7 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            override fun onFailure(call: Call<ActiveResponse>, t: Throwable) {
                dismissProgressDialog()
                 showErrorMessagev1(t.message)
             }

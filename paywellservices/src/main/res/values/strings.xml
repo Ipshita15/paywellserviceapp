@@ -847,7 +847,7 @@
     <string name="didital_hospital">Digital Hospital</string>
     <string name="package_list_digital_health">All Package List</string>
     <string name="insurance_claim">Insurance Claim</string>
-    <string name="selected_healthmart_package">healthmart_package</string>
+    <string name="selected_healthmart_package" translatable="false">healthmart_package</string>
     <string name="active_btn">Active</string>
     <string name="amount_title">Total Amount</string>
     <string name="validity"> Month valid</string>
@@ -880,6 +880,9 @@
     <string name="daughter">Daughter</string>
     <string name="selectfrom">নির্বাচন করুন</string>
     <string name="selected_helth_p">package</string>
+    <string name="trx_details">ট্রানজেকশন লগ</string>
+    <string name="health_trx_tag" translatable="false">health_trx</string>
+    <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

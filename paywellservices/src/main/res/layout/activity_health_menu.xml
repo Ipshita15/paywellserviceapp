@@ -80,7 +80,7 @@
                     android:layout_weight="1" />
 
             <Button
-                    android:id="@+id/bbcBtnTranscation"
+                    android:id="@+id/health_Transcation"
                     style="@style/HomeButtonNew"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/insurance_transition_log"
