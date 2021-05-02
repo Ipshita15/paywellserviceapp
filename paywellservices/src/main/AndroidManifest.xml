@@ -77,7 +77,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="allowBackup">
-        <activity android:name=".activity.healthInsurance.TranscationLogActivity"></activity>
+        <activity android:name=".activity.healthInsurance.ClaimActivity"></activity>
+        <activity android:name=".activity.healthInsurance.TranscationLogActivity" />
         <activity
             android:name=".activity.home.login.LoginActivity"
             android:screenOrientation="portrait"

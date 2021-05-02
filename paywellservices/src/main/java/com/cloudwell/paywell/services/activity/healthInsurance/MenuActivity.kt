@@ -2,15 +2,19 @@ package com.cloudwell.paywell.services.activity.healthInsurance
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
+import android.view.Gravity
 import android.view.View
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.RadioButton
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXrequestModel
 import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXresponse
+import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimRequest
+import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimResponse
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxResponse
 import com.cloudwell.paywell.services.app.AppHandler
@@ -54,6 +58,10 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
             showLimitPrompt()
            // startActivity(Intent(this, TranscationLogActivity::class.java))
         })
+        health_claim.setOnClickListener(View.OnClickListener {
+            showEnquiryPrompt()
+           // startActivity(Intent(this, TranscationLogActivity::class.java))
+        })
 
 
 
@@ -71,6 +79,82 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
 
     }
 
+
+    private fun showEnquiryPrompt() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.phone_no_title_msg)
+        val enqNoET = EditText(this)
+        val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+        enqNoET.layoutParams = lp
+        enqNoET.inputType = InputType.TYPE_CLASS_NUMBER
+        enqNoET.gravity = Gravity.CENTER_HORIZONTAL
+        val FilterArray = arrayOfNulls<InputFilter>(1)
+        FilterArray[0] = InputFilter.LengthFilter(11)
+        enqNoET.filters = FilterArray
+        builder.setView(enqNoET)
+        builder.setPositiveButton(R.string.okay_btn) { dialogInterface, id ->
+            if (enqNoET.text.toString().length < 11) {
+                showErrorMessagev1(getString(R.string.phone_no_error_msg))
+                showEnquiryPrompt()
+            } else {
+                if (!isInternetConnection) {
+                    AppHandler.showDialog(supportFragmentManager)
+                } else {
+                    getHealthClaim(enqNoET.text.toString())
+                }
+                dialogInterface.dismiss()
+            }
+        }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun getHealthClaim(phone: String) {
+        showProgressDialog()
+
+        val claim =  ClaimRequest()
+        claim.username = mAppHandler.userName
+        claim.phone = phone
+
+        ApiUtils.getAPIServiceV2().healthInquiry(claim).enqueue(object : Callback<ClaimResponse>{
+            override fun onResponse(call: Call<ClaimResponse>, response: Response<ClaimResponse>) {
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+
+                    val trxPjo : ClaimResponse = response.body()!!
+
+                    val status: Int? = trxPjo.statusCode
+                    val msg: String = trxPjo.message.toString()
+                    if (status == 200) {
+
+                        val toJson = Gson().toJson(trxPjo)
+                        val intent = Intent(applicationContext, ClaimActivity::class.java)
+                        intent.putExtra(getString(R.string.health_claim_tag), toJson)
+                        startActivity(intent)
+
+
+                    } else {
+                        showErrorCallBackMessagev1(msg)
+                    }
+
+
+                } else {
+                    showErrorCallBackMessagev1(getString(R.string.try_again_msg))
+                }
+
+
+
+            }
+
+            override fun onFailure(call: Call<ClaimResponse>, t: Throwable) {
+                dismissProgressDialog()
+            }
+        })
+
+
+    }
 
     private fun addRecentUsedList() {
         val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_bongo, StringConstant.KEY_home_entertainment, IconConstant.KEY_bongo_icon, 0, 52)

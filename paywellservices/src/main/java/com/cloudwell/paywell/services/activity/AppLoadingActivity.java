@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.healthInsurance.MenuActivity;
 import com.cloudwell.paywell.services.activity.home.HomeActivity;
 import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
 import com.cloudwell.paywell.services.activity.home.model.ResponseDetailsUserProfile;
@@ -100,7 +101,8 @@ public class AppLoadingActivity extends BaseActivity {
                 Handler handler = new Handler();
                 Runnable myRunnable = new Runnable() {
                     public void run() {
-                        Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                      //  Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                        Intent i = new Intent(AppLoadingActivity.this, MenuActivity.class);
                         i.putExtra("pin", pin);
                         startActivity(i);
                         finish();
@@ -128,7 +130,8 @@ public class AppLoadingActivity extends BaseActivity {
                     Handler handler = new Handler();
                     Runnable myRunnable = new Runnable() {
                         public void run() {
-                            Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                         //   Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                            Intent i = new Intent(AppLoadingActivity.this, MenuActivity.class);
                             startActivity(i);
                             finish();
                         }
@@ -445,7 +448,8 @@ public class AppLoadingActivity extends BaseActivity {
 
 
 
-                                    Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
+                                  //  Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
+                                    Intent i = new Intent(AppLoadingActivity.this, MenuActivity.class);
                                     startActivity(i);
                                     finish();
 

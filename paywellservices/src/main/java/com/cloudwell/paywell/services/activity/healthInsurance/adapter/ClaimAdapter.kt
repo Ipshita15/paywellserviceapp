@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.education.bbc.model.CoursesItem
+import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimDataItem
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TransactionDataItem
 import kotlinx.android.synthetic.main.health_trx_item.view.*
 
 
-class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?>?) : RecyclerView.Adapter<TrxLogAdapter.CourseListViewHolder>() {
+class ClaimAdapter(val mContext: Context, var trList: List<ClaimDataItem?>?) : RecyclerView.Adapter<ClaimAdapter.CourseListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseListViewHolder {
         val v: View = LayoutInflater.from(parent?.context)

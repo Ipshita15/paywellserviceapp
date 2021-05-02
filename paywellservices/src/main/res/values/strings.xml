@@ -882,6 +882,7 @@
     <string name="selected_helth_p">package</string>
     <string name="trx_details">ট্রানজেকশন লগ</string>
     <string name="health_trx_tag" translatable="false">health_trx</string>
+    <string name="health_claim_tag" translatable="false">health_claim</string>
     <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
 
     <array name="faq_header">

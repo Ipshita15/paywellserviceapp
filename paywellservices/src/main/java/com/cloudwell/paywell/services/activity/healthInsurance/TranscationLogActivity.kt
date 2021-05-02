@@ -26,8 +26,6 @@ class TranscationLogActivity : HealthInsuranceBaseActivity() {
         val response = Gson().fromJson(data, TrxResponse::class.java)
         responseDetails = response.transactionData
 
-        Toast.makeText(this, ""+ responseDetails!!.size, Toast.LENGTH_SHORT).show()
-
 
 
         val linearLayoutManager : LinearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
