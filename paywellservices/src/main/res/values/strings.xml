@@ -220,6 +220,7 @@
     <string name="amount_transfer_msg">Amount transfer successful</string>
     <string name="success_msg">Successful</string>
     <string name="request_failed_msg">Failed</string>
+    <string name="failed_msg">Failed</string>
     <string name="coming_soon_msg">Coming Soon</string>
     <string name="data_error_msg">Unable to get data properly</string>
     <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
@@ -870,20 +871,21 @@
     <string name="user_details">গ্রাহকের তথ্য</string>
     <string name="healthmobile" translatable="false">mobile_number</string>
     <string name="helth_active_to">এ্যাক্টিভেট করা হচ্ছে</string>
-    <string name="type_name_in_english">নাম লিখুন (Type in English)</string>
-    <string name="relation">সম্পর্ক</string>
+    <string name="type_name_in_english">Type Name (Type in English)</string>
+    <string name="relation">Relation</string>
     <string name="number_in_english">নম্বর (Type in English)</string>
     <string name="father">Father</string>
     <string name="mother">Mother</string>
     <string name="husband_wife">Husband/Wife</string>
     <string name="son">Son</string>
     <string name="daughter">Daughter</string>
-    <string name="selectfrom">নির্বাচন করুন</string>
+    <string name="selectfrom">Select</string>
     <string name="selected_helth_p">package</string>
-    <string name="trx_details">ট্রানজেকশন লগ</string>
+    <string name="trx_details">Transcation Log</string>
     <string name="health_trx_tag" translatable="false">health_trx</string>
     <string name="health_claim_tag" translatable="false">health_claim</string>
-    <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
+    <string name="health_trx_id">Activation ID</string>
+    <string name="comment">Comment:</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

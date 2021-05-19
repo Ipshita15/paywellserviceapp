@@ -11,9 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXrequestModel
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXresponse
-import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimRequest
+import com.cloudwell.paywell.services.activity.healthInsurance.model.HealthInqueryRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimResponse
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxResponse
@@ -24,7 +22,6 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.StringConstant
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_health_menu.*
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -114,7 +111,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
     private fun getHealthClaim(phone: String) {
         showProgressDialog()
 
-        val claim =  ClaimRequest()
+        val claim =  HealthInqueryRequest()
         claim.username = mAppHandler.userName
         claim.phone = phone
 
@@ -130,7 +127,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
                     if (status == 200) {
 
                         val toJson = Gson().toJson(trxPjo)
-                        val intent = Intent(applicationContext, ClaimActivity::class.java)
+                        val intent = Intent(applicationContext, InqueryActivity::class.java)
                         intent.putExtra(getString(R.string.health_claim_tag), toJson)
                         startActivity(intent)
 
