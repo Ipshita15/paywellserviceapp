@@ -445,7 +445,7 @@ public class AppLoadingActivity extends BaseActivity {
 
 
 
-                                    Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
+                                   Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
                                     startActivity(i);
                                     finish();
 

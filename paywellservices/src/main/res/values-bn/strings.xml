@@ -882,13 +882,15 @@
     <string name="type_name_in_english">নাম লিখুন (Type in English)</string>
     <string name="relation">সম্পর্ক</string>
     <string name="number_in_english">নম্বর (Type in English)</string>
-    <string name="father">Father</string>
-    <string name="mother">Mother</string>
-    <string name="husband_wife">Husband/Wife</string>
-    <string name="son">Son</string>
-    <string name="daughter">Daughter</string>
+    <string name="father">বাবা</string>
+    <string name="mother">মা</string>
+    <string name="husband_wife">স্বামী / স্ত্রী</string>
+    <string name="son">পুত্র</string>
+    <string name="daughter">কন্যা</string>
     <string name="selectfrom">নির্বাচন করুন</string>
-    <string name="selected_helth_p">package</string>
+    <string name="selected_helth_p">প্যাকেজ</string>
+    <string name="trx_details">ট্রানজেকশন লগ</string>
+    <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
 
 
     <array name="faq_header">
