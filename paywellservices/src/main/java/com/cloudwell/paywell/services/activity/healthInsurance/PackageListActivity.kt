@@ -19,6 +19,8 @@ import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_bongo_subscrib.*
+import kotlinx.android.synthetic.main.activity_bongo_subscrib.bongo_packege_recyclerview
+import kotlinx.android.synthetic.main.activity_health_package.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +28,6 @@ import ss.com.bannerslider.Slider
 
 
 class PackageListActivity : HealthInsuranceBaseActivity() {
-    private var viewPager: Slider? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,17 +36,12 @@ class PackageListActivity : HealthInsuranceBaseActivity() {
 
         setToolbar(getString(R.string.package_list_digital_health))
 
-        viewPager = findViewById(R.id.bongoo_sllider)
-
-
         mAppHandler = AppHandler.getmInstance(applicationContext)
 
 
-
         if (isInternetConnection) {
-            getSliderImage()
 
-            getBongoPackgeList()
+            getHealthPackgeList()
 
         } else {
             showErrorCallBackMessagev1(getString(R.string.no_internet_connection_please_check_your_internet_connection))
@@ -54,66 +50,12 @@ class PackageListActivity : HealthInsuranceBaseActivity() {
 
     }
 
-    private fun getSliderImage() {
-
-        val pojo = BongoPkgListReqPojo()
-        pojo.language = mAppHandler?.appLanguage
-        ApiUtils.getAPIServiceV2().getBannerList(pojo).enqueue(object : Callback<BongoBannerResponse> {
-            override fun onFailure(call: Call<BongoBannerResponse>, t: Throwable) {
-
-            }
-
-            override fun onResponse(call: Call<BongoBannerResponse>, response: Response<BongoBannerResponse>) {
-
-                if (response.isSuccessful) {
-                    val banner: BongoBannerResponse = response.body()!!
-                    if (banner.status == 200) {
-                        val imageLink: ArrayList<ImageLinkItem?>? = banner.imageLink
-                        val stringArray = arrayOfNulls<String>(imageLink!!.size)
-                        for (i in 0 until imageLink!!.size) {
-                            stringArray[i] = imageLink.get(i)?.imageAddress
-                            Log.e("url", imageLink.get(i)?.imageAddress.toString())
-                        }
-                        Log.e("url", stringArray.size.toString())
-                        initializePreview(stringArray)
-                    }
-
-                }
-            }
-
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewPager!!.setInterval(2000)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewPager!!.setInterval(0)
-    }
-
-    override fun onDestroy() {
-        if (viewPager != null) {
-            Slider.imageLoadingService = null
-            viewPager = null
-        }
-        super.onDestroy()
-    }
 
 
-    private fun initializePreview(array: Array<String?>) {
-
-        val imageUpdateVersionString = array.size.toString() + array
-        Slider.init(PicassoImageLoadingWithoutRound(imageUpdateVersionString))
-        viewPager!!.setAdapter(MainSliderAdapter(applicationContext, array))
-        viewPager!!.setInterval(2000)
-        viewPager!!.setLoopSlides(true)
-    }
 
 
-    private fun getBongoPackgeList() {
+
+    private fun getHealthPackgeList() {
         showProgressDialog()
         val pojo = RequestMembershipPackages()
         pojo.language = mAppHandler?.appLanguage
@@ -161,7 +103,7 @@ class PackageListActivity : HealthInsuranceBaseActivity() {
 
             }
         })
-        bongo_packege_recyclerview.layoutManager = LinearLayoutManager(applicationContext)
-        bongo_packege_recyclerview.adapter = adapter
+        health_packege_recyclerview.layoutManager = LinearLayoutManager(applicationContext)
+        health_packege_recyclerview.adapter = adapter
     }
 }
