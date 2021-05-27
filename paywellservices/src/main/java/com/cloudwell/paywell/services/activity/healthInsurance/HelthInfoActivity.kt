@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
 import com.cloudwell.paywell.services.activity.education.PaywellPinDialog
@@ -22,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
@@ -108,14 +110,8 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
         }else if (memberidcard.isNullOrEmpty()){
             id_helth.setError("Required")
 
-        }else if (otherNumber.isNullOrEmpty()){
-            other_number.setError("Required")
         }else if (gender.isNullOrEmpty()){
             showErrorMessagev1(getString(R.string.select)+" "+getString(R.string.gender))
-
-        }else if (relation.isNullOrEmpty()){
-            showErrorMessagev1(getString(R.string.select)+" "+getString(R.string.relation))
-
 
         }else if (birth_date.isNullOrEmpty()){
             getString(R.string.select)+" "+getString(R.string.date_of_birth)
@@ -194,7 +190,8 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
 
     private fun setGenderSpinner() {
-        val country = arrayOf("Please Select","Male", "Female", "Other")
+        val country = arrayOf(getString(R.string.please_select),"Male", "Female", "Other")
+      //  val country = arrayOf(getString(R.string.please_select), )
         val sp : Spinner = gender_spinner
         sp.onItemSelectedListener
         val aa: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.spinner_item, country)
@@ -219,7 +216,7 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
     private fun setRelationSpinner(){
 
 
-        val country = arrayOf("Please Select", "Father", "Mother", "Husband/Wife", "Son" ,"Daughter")
+        val country = arrayOf(getString(R.string.please_select), "Father", "Mother", "Husband/Wife", "Son" ,"Daughter")
         val sp : Spinner = relation_sp
         sp.onItemSelectedListener
         val aa: ArrayAdapter<*> = ArrayAdapter<Any?>(this, R.layout.spinner_item, country)
@@ -262,10 +259,9 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
                         val nameOfDayOfWeek = SimpleDateFormat("EEE", Locale.ENGLISH).format(date)
                         val nameOfMonth = SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.getTime())
 
-                        birth_date = "$day /$nameOfMonth /$year"
-
+                      //  birth_date = "$day /$nameOfMonth /$year"
+                        birth_date = "$year /$month /$day"
                         date_et.text = birth_date
-                        //tvDepartDate.setTextColor(Color.BLACK);
 
 
                     }, year, thismonth, dayOfMonth)
@@ -273,11 +269,23 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
 
         val calendarMin = Calendar.getInstance()
         datePickerDialog?.datePicker?.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-       // datePickerDialog?.datePicker?.minDate = (calendarMin.timeInMillis - 10000)
+        datePickerDialog.datePicker.setMaxDate(System.currentTimeMillis() - 568025136000L)
         datePickerDialog?.show()
 
 
 
+    }
+
+    private fun getAge(year: Int, month: Int, day: Int): String? {
+        val dob = Calendar.getInstance()
+        val today = Calendar.getInstance()
+        dob[year, month] = day
+        var age = today[Calendar.YEAR] - dob[Calendar.YEAR]
+        if (today[Calendar.DAY_OF_YEAR] < dob[Calendar.DAY_OF_YEAR]) {
+            age--
+        }
+        val ageInt = age
+        return ageInt.toString()
     }
 
 }

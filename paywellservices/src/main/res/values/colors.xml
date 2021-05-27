@@ -76,5 +76,6 @@
     <color name="statubar_color_health">#237d89</color>
     <color name="toolbar_font_color_health">#FFFFFF</color>
     <color name="health_trx_color">#FD9738</color>
+    <color name="health_sptrx">#59595C</color>
 
 </resources>

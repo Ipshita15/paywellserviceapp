@@ -222,7 +222,6 @@
     <string name="request_failed_msg">ফেল</string>
     <string name="failed_msg">সফল হয়নি</string>
     <string name="trx_details">ট্রানজেকশন লগ</string>
-    <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
     <string name="comment">মন্তব্য:</string>
     <string name="coming_soon_msg">শীঘ্রই আসছে</string>
     <string name="data_error_msg">সঠিকভাবে তথ্য পেতে ব্যর্থ</string>
@@ -725,6 +724,11 @@
     <string name="bank_added">তথ্য দেওয়ার জন্য আপনাকে ধন্যবাদ 24 ঘন্টার মধ্যে পেওয়েল আইডির সাথে ব্যাংক একাউন্টটি লিংক হয়ে যাবে</string>
     <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
     <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমূহ-</string>
+    <string name="birthday">জন্ম তারিখ</string>
+    <string name="h_gender">লিঙ্গ</string>
+    <string name="nomine_mobile_number">মোবাইল নম্বর</string>
+    <string name="please_select">নির্বাচন করুন</string>
+    <string name="mobile_number" >মোবাইল নম্বর *</string>
 
     <string name="launch">লঞ্চ টিকেট</string>
     <string name="text_bus_from_error">You must type the city from you want to travel</string>
@@ -859,9 +863,10 @@
     <string name="package_list_digital_health">প্যাকেজ সমূহ</string>
     <string name="insurance_claim">ইন্স্যুরেন্স ক্লেইম</string>
 
+    <string name="month_validity">মাসের মেয়াদ</string>
     <string name="active_btn">এ্যাক্টিভেট করুন</string>
     <string name="amount_title">সর্বমোট প্রদেয়:</string>
-    <string name="validity"> মাসের মেয়াদ</string>
+    <string name="validity"> মেয়াদ</string>
     <string name="contact_eith_doctor">ডাক্তারের সঙ্গে পরামর্শ</string>
     <string name="in_pack">প্যাক-এ থাকছে</string>
     <string name="call_doctor">ডক্টর কল</string>
@@ -879,9 +884,9 @@
     <string name="nid_paper">জাতীয় পরিচয় পত্র</string>
     <string name="user_details">গ্রাহকের তথ্য</string>
     <string name="helth_active_to">এ্যাক্টিভেট করা হচ্ছে</string>
-    <string name="type_name_in_english">নাম লিখুন (Type in English)</string>
+    <string name="type_name_in_english">নাম লিখুন (ইংরেজীতে লিখুন)</string>
     <string name="relation">সম্পর্ক</string>
-    <string name="number_in_english">নম্বর (Type in English)</string>
+    <string name="number_in_english">নম্বর (ইংরেজীতে লিখুন)</string>
     <string name="father">বাবা</string>
     <string name="mother">মা</string>
     <string name="husband_wife">স্বামী / স্ত্রী</string>
@@ -889,8 +894,8 @@
     <string name="daughter">কন্যা</string>
     <string name="selectfrom">নির্বাচন করুন</string>
     <string name="selected_helth_p">প্যাকেজ</string>
-    <string name="trx_details">ট্রানজেকশন লগ</string>
     <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
+    <string name="nominir_info">নমিনির তথ্য (ঐচ্ছিক)</string>
 
 
     <array name="faq_header">

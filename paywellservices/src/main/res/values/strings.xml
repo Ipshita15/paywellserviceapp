@@ -284,7 +284,7 @@
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
-
+    <string name="comment">Comment</string>
     <string name="star_sign">*</string>
 
 
@@ -569,7 +569,7 @@
     <string name="full_name" translatable="false">Full Name *</string>
     <string name="your_seats">Your seats:</string>
     <string name="total_price">Total price:</string>
-    <string name="mobile_number" translatable="false">Mobile Number *</string>
+    <string name="mobile_number" >Mobile Number *</string>
     <string name="age" translatable="false">Age *</string>
     <string name="bus_info_gender" translatable="false">Gender</string>
     <string name="et_email" translatable="false">Email</string>
@@ -851,7 +851,7 @@
     <string name="selected_healthmart_package" translatable="false">healthmart_package</string>
     <string name="active_btn">Active</string>
     <string name="amount_title">Total Amount</string>
-    <string name="validity"> Month valid</string>
+    <string name="validity">validity</string>
     <string name="contact_eith_doctor">Counsel with the doctor</string>
     <string name="in_pack">In This Package</string>
     <string name="call_doctor">Call Doctor</string>
@@ -885,6 +885,12 @@
     <string name="health_trx_tag" translatable="false">health_trx</string>
     <string name="health_claim_tag" translatable="false">health_claim</string>
     <string name="health_trx_id">Activation Id:</string>
+    <string name="month_validity">Month validity</string>
+    <string name="nominir_info">Nominee Information (Optional)</string>
+    <string name="birthday">Date of Birth</string>
+    <string name="h_gender">Gender</string>
+    <string name="nomine_mobile_number">Mobile Number</string>
+    <string name="please_select">Please Select</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

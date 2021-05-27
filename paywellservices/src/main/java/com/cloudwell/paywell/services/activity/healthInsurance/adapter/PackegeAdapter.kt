@@ -1,5 +1,6 @@
 package com.cloudwell.paywell.services.activity.healthInsurance.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ public class PackegeAdapter(val mContext: Context, var packageList: List<Members
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: PackegeViewHolder, position: Int) {
 
         val m = packageList.get(position)
@@ -43,7 +45,7 @@ public class PackegeAdapter(val mContext: Context, var packageList: List<Members
 
 
         holder.tvPackageName.text = FormatHelper.formatText(m.name)
-        holder.tvPackageValidity.text = m.validity
+        holder.tvPackageValidity.text = m.validity //+ " "+ mContext.resources.getString(R.string.month_validity)//getString(R.string.month_validity)
         val cashbackFull = "<font color='#3d6fc4'>${m.cashBackAmount}</font>" + "<font color='#59595c'> ${m.cashBackMessage}</font>"
 
         holder.tvPackageCashback.text = FormatHelper.formatText(cashbackFull)
