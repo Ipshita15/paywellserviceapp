@@ -45,7 +45,7 @@ public class PackegeAdapter(val mContext: Context, var packageList: List<Members
 
 
         holder.tvPackageName.text = FormatHelper.formatText(m.name)
-        holder.tvPackageValidity.text = m.validity //+ " "+ mContext.resources.getString(R.string.month_validity)//getString(R.string.month_validity)
+        holder.tvPackageValidity.text = m.validity// + " "+ mContext.resources.getString(R.string.month_validity)//getString(R.string.month_validity)
         val cashbackFull = "<font color='#3d6fc4'>${m.cashBackAmount}</font>" + "<font color='#59595c'> ${m.cashBackMessage}</font>"
 
         holder.tvPackageCashback.text = FormatHelper.formatText(cashbackFull)

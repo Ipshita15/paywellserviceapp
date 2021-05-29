@@ -37,7 +37,7 @@ class PackageDetailsActivity : HealthInsuranceBaseActivity() {
         val packageobject: MembershipPackagesItem = gson.fromJson(intent.getStringExtra(getString(R.string.selected_healthmart_package)), MembershipPackagesItem::class.java)
 
         package_name.setText(packageobject.name)
-        package_duration.setText(getString(R.string.validity) + ": " + packageobject.validity )
+        package_duration.setText(packageobject.validity + " "+ getString(R.string.month_validity))
 
         amount.setText("\u09F3" + packageobject.amount)
         cashback_amout_txt.setText(packageobject.cashBackAmount + " " + packageobject.cashBackMessage)
