@@ -11,10 +11,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
-import com.cloudwell.paywell.services.activity.healthInsurance.model.HealthInqueryRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimResponse
+import com.cloudwell.paywell.services.activity.healthInsurance.model.HealthInqueryRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxResponse
+import com.cloudwell.paywell.services.analytics.AnalyticsManager
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
@@ -42,6 +44,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
 
         setToolbar(getString(R.string.didital_hospital))
 
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_HEALTH_MART)
 
 //        bongo_main_back.setOnClickListener(View.OnClickListener {
 //            finish()
@@ -72,9 +75,10 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
 //        })
 //
 //
-//        addRecentUsedList()
+        addRecentUsedList()
 
     }
+
 
 
     private fun showEnquiryPrompt() {
@@ -154,7 +158,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
     }
 
     private fun addRecentUsedList() {
-        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_bongo, StringConstant.KEY_home_entertainment, IconConstant.KEY_bongo_icon, 0, 52)
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_HEALTH_MART, StringConstant.KEY_HEALTH_MART, IconConstant.KEY_HEALTH_icon, 0, 52)
         addItemToRecentListInDB(recentUsedMenu)
     }
 

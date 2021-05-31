@@ -42,14 +42,11 @@ class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?
 
 
 
-//        holder.trxstatus.setText(trList?.get(position)?.statusName)
-
+        holder.trxstatus.setText(trList?.get(position)?.statusName)
         if(trList?.get(position)?.status.equals("200")){
                 holder.trxstatus.setTextColor(Color.parseColor("#33A544"))
-            holder.trxstatus.setText(mContext.getString(R.string.success_msg))
         }else{
             holder.trxstatus.setTextColor(Color.parseColor("#FD9738"))
-            holder.trxstatus.setText(mContext.getString(R.string.failed_msg))
         }
 
 

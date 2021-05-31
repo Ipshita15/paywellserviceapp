@@ -192,6 +192,9 @@ public class AnalyticsParameters {
 
     public static final String KEY_BBC = "BBC";
     public static final String KEY_Bongo = "Bongo";
+    public static final String KEY_HEALTH_MART = "Health_mart";
+
+
 
 
     public static final String KEY_Screen = "Screen";
