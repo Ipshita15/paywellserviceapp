@@ -44,38 +44,24 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
 
         setToolbar(getString(R.string.didital_hospital))
 
-        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_HEALTH_MART)
+//        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_HEALTH_MART)
 
-//        bongo_main_back.setOnClickListener(View.OnClickListener {
-//            finish()
-//        })
-//
+
         Insurancepackage.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, PackageListActivity::class.java))
         })
-        //
+
         health_Transcation.setOnClickListener(View.OnClickListener {
             showLimitPrompt()
-           // startActivity(Intent(this, TranscationLogActivity::class.java))
         })
         health_claim.setOnClickListener(View.OnClickListener {
             showEnquiryPrompt()
-           // startActivity(Intent(this, TranscationLogActivity::class.java))
         })
 
 
 
-//        bongo_count.setOnClickListener(View.OnClickListener {
-//            startActivity(Intent(this, BongoCounterActivity::class.java))
-//        })
-//
-//        bbcBtnTranscation.setOnClickListener(View.OnClickListener {
-//           // startActivity(Intent(this, BongoTrxActivity::class.java))
-//            showLimitPrompt()
-//        })
-//
-//
-        addRecentUsedList()
+
+ //       addRecentUsedList()
 
     }
 
