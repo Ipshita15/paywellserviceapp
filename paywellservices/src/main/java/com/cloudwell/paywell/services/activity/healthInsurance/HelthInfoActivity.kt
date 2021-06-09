@@ -254,13 +254,9 @@ class HelthInfoActivity : HealthInsuranceBaseActivity() {
                         calendar.set(Calendar.YEAR, year)
                         calendar.set(Calendar.MONTH, month)
                         calendar.set(Calendar.DAY_OF_MONTH, day)
-                        val date = calendar.getTime()
 
-                        val nameOfDayOfWeek = SimpleDateFormat("EEE", Locale.ENGLISH).format(date)
-                        val nameOfMonth = SimpleDateFormat("MMM", Locale.ENGLISH).format(calendar.getTime())
-
-                      //  birth_date = "$day /$nameOfMonth /$year"
-                        birth_date = "$year /$month /$day"
+                        val mMonth = month + 1;
+                        birth_date = "$year /$mMonth /$day"
                         date_et.text = birth_date
 
 
