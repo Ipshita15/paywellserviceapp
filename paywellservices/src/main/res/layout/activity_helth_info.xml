@@ -83,7 +83,7 @@
                         android:layout_weight="2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/date_of_birth" />
+                    android:text="@string/birthday" />
 
 
                 <TextView
@@ -92,7 +92,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="13"
-                    android:hint="mm/dd/yyyy"
+                    android:hint="yyyy/mm/dd"
                     android:textSize="13sp"
                     android:drawablePadding="5dp"
                     android:drawableEnd="@drawable/helth_cal_ic"
@@ -114,7 +114,7 @@
                     android:layout_weight="2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/gender" />
+                    android:text="@string/h_gender" />
 
 
                 <LinearLayout
@@ -168,7 +168,7 @@
                 android:textColor="#59595C"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="নমিনির তথ্য (ঐচ্ছিক)" />
+                android:text="@string/nominir_info" />
 
             <LinearLayout
                 android:layout_marginTop="16dp"
@@ -184,7 +184,7 @@
                     android:layout_weight="2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/mobile_number" />
+                    android:text="@string/nomine_mobile_number" />
 
 
                 <EditText

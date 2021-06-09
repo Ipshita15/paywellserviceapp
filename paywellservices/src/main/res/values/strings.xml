@@ -220,6 +220,7 @@
     <string name="amount_transfer_msg">Amount transfer successful</string>
     <string name="success_msg">Successful</string>
     <string name="request_failed_msg">Failed</string>
+    <string name="failed_msg">Failed</string>
     <string name="coming_soon_msg">Coming Soon</string>
     <string name="data_error_msg">Unable to get data properly</string>
     <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
@@ -283,7 +284,7 @@
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
-
+    <string name="comment">Comment</string>
     <string name="star_sign">*</string>
 
 
@@ -568,7 +569,7 @@
     <string name="full_name" translatable="false">Full Name *</string>
     <string name="your_seats">Your seats:</string>
     <string name="total_price">Total price:</string>
-    <string name="mobile_number" translatable="false">Mobile Number *</string>
+    <string name="mobile_number" >Mobile Number *</string>
     <string name="age" translatable="false">Age *</string>
     <string name="bus_info_gender" translatable="false">Gender</string>
     <string name="et_email" translatable="false">Email</string>
@@ -850,40 +851,46 @@
     <string name="selected_healthmart_package" translatable="false">healthmart_package</string>
     <string name="active_btn">Active</string>
     <string name="amount_title">Total Amount</string>
-    <string name="validity"> Month valid</string>
-    <string name="contact_eith_doctor">ডাক্তারের সঙ্গে পরামর্শ</string>
-    <string name="in_pack">প্যাক-এ থাকছে</string>
-    <string name="call_doctor">ডক্টর কল</string>
-    <string name="doctor_vedio_call">ডক্টর ভিডিও কল</string>
-    <string name="call_limit">আনলিমিটেড</string>
-    <string name="doctor_chat">ডক্টর চ্যাট</string>
-    <string name="degital_prescription">ডিজিটাল প্রেসক্রিপশন</string>
-    <string name="free_prescription">ফ্রি</string>
-    <string name="helth_cashback">হেলথ ক্যাশব্যাক</string>
-    <string name="in_package">প্যাক-এ থাকছে</string>
-    <string name="next_step">পরবর্তী ধাপ</string>
-    <string name="type_of_identy">পরিচয় পত্রের ধরণ</string>
-    <string name="helth_birth_certificate">জন্ম নিবন্ধন ১৮+</string>
-    <string name="passport">পাসপোর্ট</string>
-    <string name="nid_paper">জাতীয় পরিচয় পত্র</string>
+    <string name="validity">validity</string>
+    <string name="contact_eith_doctor">Counsel with the doctor</string>
+    <string name="in_pack">In This Package</string>
+    <string name="call_doctor">Call Doctor</string>
+    <string name="doctor_vedio_call">Vedio Call</string>
+    <string name="call_limit">Unlimited</string>
+    <string name="doctor_chat">Doctor Chat</string>
+    <string name="degital_prescription">digital prescription</string>
+    <string name="free_prescription">Free</string>
+    <string name="helth_cashback">Health Cashback</string>
+    <string name="in_package">In This Package</string>
+    <string name="next_step">Next Step</string>
+    <string name="type_of_identy">Type of ID</string>
+    <string name="helth_birth_certificate">Birth registration 18+</string>
+    <string name="passport">Passport</string>
+    <string name="nid_paper">National ID Card</string>
     <string name="document" translatable="false">helth_doc_type</string>
-    <string name="user_details">গ্রাহকের তথ্য</string>
+    <string name="user_details">User info</string>
     <string name="healthmobile" translatable="false">mobile_number</string>
-    <string name="helth_active_to">এ্যাক্টিভেট করা হচ্ছে</string>
-    <string name="type_name_in_english">নাম লিখুন (Type in English)</string>
-    <string name="relation">সম্পর্ক</string>
-    <string name="number_in_english">নম্বর (Type in English)</string>
+    <string name="helth_active_to">Activating</string>
+    <string name="type_name_in_english">Your Name (Type in English)</string>
+    <string name="relation">Relation</string>
+    <string name="number_in_english">Number (Type in English)</string>
     <string name="father">Father</string>
     <string name="mother">Mother</string>
     <string name="husband_wife">Husband/Wife</string>
     <string name="son">Son</string>
     <string name="daughter">Daughter</string>
-    <string name="selectfrom">নির্বাচন করুন</string>
-    <string name="selected_helth_p">package</string>
-    <string name="trx_details">ট্রানজেকশন লগ</string>
+    <string name="selectfrom">Select from</string>
+    <string name="selected_helth_p">Package</string>
+    <string name="trx_details">Transaction log</string>
     <string name="health_trx_tag" translatable="false">health_trx</string>
     <string name="health_claim_tag" translatable="false">health_claim</string>
-    <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
+    <string name="health_trx_id">Activation Id:</string>
+    <string name="month_validity">Month validity</string>
+    <string name="nominir_info">Nominee Information (Optional)</string>
+    <string name="birthday">Date of Birth</string>
+    <string name="h_gender">Gender</string>
+    <string name="nomine_mobile_number">Mobile Number</string>
+    <string name="please_select">Please Select</string>
 
     <array name="faq_header">
         <item>How do I login to the new app version for the first time?</item>

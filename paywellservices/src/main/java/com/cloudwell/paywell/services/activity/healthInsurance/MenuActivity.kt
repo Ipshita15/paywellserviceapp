@@ -11,12 +11,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDialog
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXrequestModel
-import com.cloudwell.paywell.services.activity.entertainment.bongo.model.BongoTRXresponse
-import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimResponse
+import com.cloudwell.paywell.services.activity.healthInsurance.model.HealthInqueryRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxRequest
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxResponse
+import com.cloudwell.paywell.services.analytics.AnalyticsManager
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters
 import com.cloudwell.paywell.services.app.AppHandler
 import com.cloudwell.paywell.services.constant.IconConstant
 import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu
@@ -24,7 +24,6 @@ import com.cloudwell.paywell.services.retrofit.ApiUtils
 import com.cloudwell.paywell.services.utils.StringConstant
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_health_menu.*
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,39 +44,27 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
 
         setToolbar(getString(R.string.didital_hospital))
 
+//        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_HEALTH_MART)
 
-//        bongo_main_back.setOnClickListener(View.OnClickListener {
-//            finish()
-//        })
-//
+
         Insurancepackage.setOnClickListener(View.OnClickListener {
             startActivity(Intent(this, PackageListActivity::class.java))
         })
-        //
+
         health_Transcation.setOnClickListener(View.OnClickListener {
             showLimitPrompt()
-           // startActivity(Intent(this, TranscationLogActivity::class.java))
         })
         health_claim.setOnClickListener(View.OnClickListener {
             showEnquiryPrompt()
-           // startActivity(Intent(this, TranscationLogActivity::class.java))
         })
 
 
 
-//        bongo_count.setOnClickListener(View.OnClickListener {
-//            startActivity(Intent(this, BongoCounterActivity::class.java))
-//        })
-//
-//        bbcBtnTranscation.setOnClickListener(View.OnClickListener {
-//           // startActivity(Intent(this, BongoTrxActivity::class.java))
-//            showLimitPrompt()
-//        })
-//
-//
-//        addRecentUsedList()
+
+ //       addRecentUsedList()
 
     }
+
 
 
     private fun showEnquiryPrompt() {
@@ -114,7 +101,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
     private fun getHealthClaim(phone: String) {
         showProgressDialog()
 
-        val claim =  ClaimRequest()
+        val claim =  HealthInqueryRequest()
         claim.username = mAppHandler.userName
         claim.phone = phone
 
@@ -130,7 +117,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
                     if (status == 200) {
 
                         val toJson = Gson().toJson(trxPjo)
-                        val intent = Intent(applicationContext, ClaimActivity::class.java)
+                        val intent = Intent(applicationContext, InqueryActivity::class.java)
                         intent.putExtra(getString(R.string.health_claim_tag), toJson)
                         startActivity(intent)
 
@@ -157,7 +144,7 @@ class MenuActivity : HealthInsuranceBaseActivity(), CompoundButton.OnCheckedChan
     }
 
     private fun addRecentUsedList() {
-        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_bongo, StringConstant.KEY_home_entertainment, IconConstant.KEY_bongo_icon, 0, 52)
+        val recentUsedMenu = RecentUsedMenu(StringConstant.KEY_HEALTH_MART, StringConstant.KEY_HEALTH_MART, IconConstant.KEY_HEALTH_icon, 0, 52)
         addItemToRecentListInDB(recentUsedMenu)
     }
 

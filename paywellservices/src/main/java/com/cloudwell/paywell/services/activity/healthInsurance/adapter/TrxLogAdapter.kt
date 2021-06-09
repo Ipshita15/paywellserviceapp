@@ -8,16 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.services.R
-import com.cloudwell.paywell.services.activity.education.bbc.model.CoursesItem
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TransactionDataItem
 import kotlinx.android.synthetic.main.health_trx_item.view.*
 
 
 class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?>?) : RecyclerView.Adapter<TrxLogAdapter.CourseListViewHolder>() {
 
+
+    var ontrxclick : trxOnClick? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseListViewHolder {
         val v: View = LayoutInflater.from(parent?.context)
-                .inflate(R.layout.health_trx_item,parent,false)
+                .inflate(R.layout.health_trx_item, parent, false)
 
         return CourseListViewHolder(v)
     }
@@ -30,7 +32,7 @@ class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?
     override fun onBindViewHolder(holder: CourseListViewHolder, position: Int) {
 
 
-        holder.subscriptionID.setText(mContext.getString(R.string.health_trx_id)+" "+trList?.get(position)?.trxId)
+        holder.subscriptionID.setText(mContext.getString(R.string.health_trx_id) + " " + trList?.get(position)?.trxId)
         holder.packageType.setText(trList?.get(position)?.nameEn)
         holder.trxmobileNumber.setText(trList?.get(position)?.customerPhoneNumber)
         holder.trx_time.setText(trList?.get(position)?.activeDatetime)
@@ -39,11 +41,10 @@ class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?
         holder.trxname.setText(trList?.get(position)?.customerName)
 
 
-        holder.trxstatus.setText(trList?.get(position)?.statusName)
 
+        holder.trxstatus.setText(trList?.get(position)?.statusName)
         if(trList?.get(position)?.status.equals("200")){
                 holder.trxstatus.setTextColor(Color.parseColor("#33A544"))
-
         }else{
             holder.trxstatus.setTextColor(Color.parseColor("#FD9738"))
         }
@@ -51,6 +52,19 @@ class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?
 
 
 
+//        holder.itemView.setOnClickListener(View.OnClickListener {
+//            clickListener?.onPaymentClick(courselist.get(position), it, position)
+
+
+        holder.itemView.setOnClickListener(View.OnClickListener {
+
+            trList?.get(position)?.let { it1 -> ontrxclick?.onclick(it1) }
+        })
+
+    }
+
+    fun setClickListener(itemClickListener: trxOnClick) {
+        ontrxclick = itemClickListener
     }
 
 
@@ -68,8 +82,8 @@ class TrxLogAdapter(val mContext: Context, var trList: List<TransactionDataItem?
 
     }
 
-    interface CourseOnClick{
-        fun onclick(course : CoursesItem)
+    interface trxOnClick{
+        fun onclick(item: TransactionDataItem)
     }
 
 

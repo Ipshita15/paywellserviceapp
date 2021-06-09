@@ -61,8 +61,8 @@ import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.new_v.
 import com.cloudwell.paywell.services.activity.eticket.busticketNew.model.transactionLog.TransactionLogDetailsModel;
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ActivePakage;
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ActiveResponse;
-import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimRequest;
 import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimResponse;
+import com.cloudwell.paywell.services.activity.healthInsurance.model.HealthInqueryRequest;
 import com.cloudwell.paywell.services.activity.healthInsurance.model.RequestMembershipPackages;
 import com.cloudwell.paywell.services.activity.healthInsurance.model.RespseMemberShipPackage;
 import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxRequest;
@@ -812,7 +812,7 @@ public interface APIService {
     Call<TrxResponse> trnscationLog(@Body TrxRequest trxRequest);
 
     @POST("Insurance/HealthMartService/transactionInquiry")
-    Call<ClaimResponse> healthInquiry(@Body ClaimRequest claimRequest);
+    Call<ClaimResponse> healthInquiry(@Body HealthInqueryRequest claimRequest);
 
 
     @POST("/")

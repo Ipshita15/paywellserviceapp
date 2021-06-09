@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.healthInsurance
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
@@ -11,7 +10,7 @@ import com.cloudwell.paywell.services.activity.healthInsurance.model.TrxResponse
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_transcation_log.*
 
-class TranscationLogActivity : HealthInsuranceBaseActivity() {
+class TranscationLogActivity : HealthInsuranceBaseActivity(){
 
     var responseDetails:  List<TransactionDataItem?>? = null
 
@@ -38,4 +37,7 @@ class TranscationLogActivity : HealthInsuranceBaseActivity() {
 
 
     }
+
+
+
 }

@@ -10,7 +10,7 @@ import com.cloudwell.paywell.services.activity.healthInsurance.model.ClaimRespon
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_claim.*
 
-class ClaimActivity : HealthInsuranceBaseActivity() {
+class InqueryActivity : HealthInsuranceBaseActivity() {
 
     var responseDetails:  List<ClaimDataItem?>? = null
 

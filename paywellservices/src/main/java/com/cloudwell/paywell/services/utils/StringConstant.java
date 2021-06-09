@@ -53,6 +53,7 @@ public class StringConstant {
 
     public static String KEY_home_entertainment = "home_entertainment";
     public static String KEY_bongo = "bongo_bd";
+    public static String KEY_HEALTH_MART = "HEALTH_MART";
 
 
     public static String KEY_home_ticket = "home_eticket";

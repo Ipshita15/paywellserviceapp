@@ -4,9 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.HealthInsuranceBaseActivity
+import com.cloudwell.paywell.services.activity.healthInsurance.adapter.DocConsultationAdapter
 import com.cloudwell.paywell.services.activity.healthInsurance.dialog.Documentdialog
 import com.cloudwell.paywell.services.activity.healthInsurance.dialog.HelthMobiledialog
 import com.cloudwell.paywell.services.activity.healthInsurance.model.MembershipPackagesItem
@@ -36,7 +37,7 @@ class PackageDetailsActivity : HealthInsuranceBaseActivity() {
         val packageobject: MembershipPackagesItem = gson.fromJson(intent.getStringExtra(getString(R.string.selected_healthmart_package)), MembershipPackagesItem::class.java)
 
         package_name.setText(packageobject.name)
-        package_duration.setText(packageobject.validity + " " + getString(R.string.validity))
+        package_duration.setText(packageobject.validity + " "+ getString(R.string.month_validity))
 
         amount.setText("\u09F3" + packageobject.amount)
         cashback_amout_txt.setText(packageobject.cashBackAmount + " " + packageobject.cashBackMessage)
@@ -48,6 +49,10 @@ class PackageDetailsActivity : HealthInsuranceBaseActivity() {
 
         Picasso.get().load(packageobject.packageImage).into(banner_image)
 
+        rvDoctorConsultation
+        val adapter = DocConsultationAdapter(packageobject.doctorConsultation)
+        rvDoctorConsultation.layoutManager = GridLayoutManager(this, 2)
+        rvDoctorConsultation.adapter = adapter
 
 
         active_btn.setOnClickListener(View.OnClickListener {
