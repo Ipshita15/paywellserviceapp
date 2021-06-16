@@ -35,7 +35,7 @@
                     android:gravity="center" />
 
                 <Button
-                    android:id="@+id/homeBtnBusTicket"
+                    android:id="@+id/et_shop_visit"
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/ic_bus_ticket"
                     android:onClick="onButtonClicker"
@@ -51,7 +51,7 @@
                     android:gravity="center" />
 
                 <Button
-                    android:id="@+id/homeBtnTrainTicket"
+                    android:id="@+id/et_ek_shop_report"
                     style="@style/HomeButtonNew"
                     android:drawableTop="@drawable/air_ticket"
                     android:onClick="onButtonClicker"
@@ -67,6 +67,39 @@
                     android:gravity="center" />
 
             </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/et_launch"
+                style="@style/HomeButtonNew"
+                android:drawableTop="@drawable/launch_ticket"
+                android:drawablePadding="-2dp"
+                android:onClick="onButtonClicker"
+                android:text="@string/launch"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center" />
+        </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -3,10 +3,7 @@ package com.cloudwell.paywell.services.activity.utility.electricity.dpdc;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,24 +15,29 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AppCompatDialog;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -45,8 +47,8 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static int service_type;
-    private String packageNameYoutube = "com.google.android.youtube";
-    private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
+    private String packageNameYoutube = AllUrl.packageNameYoutube;
+    private String linkDpdcBillPay =AllUrl.linkDpdcBillPay;
     private static int TAG_SERVICE_POSTPAID_INQUIRY = 1;
 
     @Override
@@ -60,7 +62,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnPostBill = findViewById(R.id.homeBtnPostpaidBillPay);
         Button btnPostInquiry = findViewById(R.id.homeBtnPostpaidInquiry);
@@ -74,6 +76,9 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         }
 
         checkIsComeFromFav(getIntent());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
+
     }
 
     private void checkIsComeFromFav(Intent intent) {
@@ -83,9 +88,15 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
             if (booleanExtra) {
                 service_type = TAG_SERVICE_POSTPAID_INQUIRY;
                 showLimitPrompt();
+                addRecentUsedList();
             }
 
         }
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_dpdc_bill_pay_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_dpdc, 0, 8);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     public void onButtonClicker(View v) {
@@ -98,6 +109,7 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_DPDC_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY_INQUIRY);
                 service_type = TAG_SERVICE_POSTPAID_INQUIRY;
                 showLimitPrompt();
+                addRecentUsedList();
                 break;
             default:
                 break;
@@ -167,8 +179,9 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    if(service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
-                        new TransactionLogAsync().execute(getResources().getString(R.string.utility_multi_trx_inq));
+                    if (service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
+                        //new TransactionLogAsync().execute(getResources().getString(R.string.utility_multi_trx_inq));
+                        callAPI("DPDC",selectedLimit);
                     }
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
@@ -189,6 +202,68 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         dialog.setCancelable(true);
         dialog.show();
     }
+
+    private void callAPI(String serviceName, String selectedLimit) {
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+        ReqInquiryModel m = new ReqInquiryModel();
+        m.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
+        m.setLimit(selectedLimit);
+        m.setService(serviceName);
+        m.setRefId(uniqueKey);
+
+        showProgressDialog();
+
+        ApiUtils.getAPIServiceV2().PBInquiry(m).enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+
+                if (response.code()==200){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String responseMessage = jsonObject.getString("Message");
+                        int status = jsonObject.getInt("Status");
+
+                        if (status == 200){
+                            JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
+                            String result = responseDetails.toString();
+
+                            if (service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
+                                DPDCPostpaidInquiryActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(DPDCMainActivity.this, DPDCPostpaidInquiryActivity.class));
+                                finish();
+                            }
+
+                        } else {
+                            showErrorMessagev1(responseMessage);
+
+                        }
+
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
+    }
+
+
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -244,58 +319,6 @@ public class DPDCMainActivity extends BaseActivity implements CompoundButton.OnC
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
-
-
-        @Override
-        protected void onPreExecute() {
-           showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", "DPDC"));
-                nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                if(service_type == TAG_SERVICE_POSTPAID_INQUIRY) {
-                    DPDCPostpaidInquiryActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(DPDCMainActivity.this, DPDCPostpaidInquiryActivity.class));
-                    finish();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     protected boolean isAppInstalled(String packageName) {
         Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);

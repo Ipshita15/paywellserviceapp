@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="110dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="24dp"
+    android:layout_marginRight="24dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@android:color/black"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Flight 1 "/>
+
+    <TextView
+        android:id="@+id/tvDepDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="Wed, 17 Apr 19"/>
+
+    <TextView
+        android:id="@+id/tvDepTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tvDepDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepDate"
+        tools:text="3:00"/>
+
+    <TextView
+        android:id="@+id/tvArrTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@+id/tvDepTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepDate"
+        tools:text="15:45 (1+)"/>
+
+    <TextView
+        android:id="@+id/tvOrginAirportCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tvDepTime"
+        app:layout_constraintTop_toBottomOf="@+id/tvDepTime"
+        tools:text="DAC"/>
+
+    <TextView
+        android:id="@+id/tvDestinationAirportCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/tvArrTime"
+        app:layout_constraintTop_toTopOf="@+id/tvOrginAirportCode"
+        tools:text="DFW"/>
+
+    <TextView
+        android:id="@+id/tvDurationAndStopCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/oxygen_light"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvOrginAirportCode"
+        app:layout_constraintTop_toBottomOf="@+id/tvOrginAirportCode"
+        tools:text="25 hr 45 min, 1 stop "/>
+</androidx.constraintlayout.widget.ConstraintLayout>

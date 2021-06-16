@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +18,14 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 
 public class ElectricityHelpActivity extends AppCompatActivity {
@@ -169,7 +170,7 @@ public class ElectricityHelpActivity extends AppCompatActivity {
     }
 
     /*private void launchHomeScreen() {
-        startActivity(new Intent(ElectricityHelpActivity.this, DESCOMainActivity.class));
+        startActivity(new Intent(ElectricityHelpActivity.this, DESCOPostpaidMainActivity.class));
         finish();
     }*/
 
@@ -256,7 +257,7 @@ public class ElectricityHelpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (serviceName.equalsIgnoreCase(TAG_DESCO_SERVICE)) {
-            startActivity(new Intent(ElectricityHelpActivity.this, DESCOMainActivity.class));
+            startActivity(new Intent(ElectricityHelpActivity.this, DESCOPostpaidMainActivity.class));
         } else if (serviceName.equalsIgnoreCase(TAG_DPDC_SERVICE)) {
             startActivity(new Intent(ElectricityHelpActivity.this, DPDCMainActivity.class));
         } else if (serviceName.equalsIgnoreCase(TAG_WASA_SERVICE)) {

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/rootLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#F2F3F8"
+              android:orientation="vertical"
+              tools:context="com.cloudwell.paywell.services.activity.eticket.airticket.flightDetails1.FlightDetails1Activity">
+
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/viewDeartSectionWithoutColor"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/expandable_layout_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.51"/>
+
+            <View
+                android:id="@+id/viewDeartSectionWithColor"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/layout_white_round_bg"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvDepart2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorAccent"
+                android:padding="4dp"
+                android:text="Depart"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/viewDeartSectionWithColor"
+                app:layout_constraintTop_toTopOf="@+id/viewDeartSectionWithColor"/>
+
+            <TextView
+                android:id="@+id/tvNameOfDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tvDepart2"
+                app:layout_constraintStart_toEndOf="@+id/tvDepart2"
+                app:layout_constraintTop_toTopOf="@+id/tvDepart2"
+                tools:text="Thu, Jan 24"/>
+
+            <TextView
+                android:id="@+id/tvOrginAndDestinationAirportCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/tvDepart2"
+                app:layout_constraintTop_toBottomOf="@+id/tvNameOfDate"
+                tools:text="HHB-DXB "/>
+
+            <View
+                android:id="@+id/lineView"
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_marginStart="4dp"
+                android:background="#c0c0c0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOrginAndDestinationAirportCode"
+                app:layout_constraintStart_toEndOf="@+id/tvOrginAndDestinationAirportCode"
+                android:layout_marginLeft="4dp"
+                app:layout_constraintTop_toTopOf="@+id/tvOrginAndDestinationAirportCode"/>
+
+            <TextView
+                android:id="@+id/tvShortDepartArriveTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/lineView"
+                app:layout_constraintTop_toBottomOf="@+id/tvTotalDepartTime"
+                tools:text="00:30-0645"/>
+
+            <TextView
+                android:id="@+id/tvTotalDepartTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/black33333"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/tvNameOfDate"
+                app:layout_constraintStart_toEndOf="@+id/tvNameOfDate"
+                app:layout_constraintTop_toTopOf="@+id/tvNameOfDate"
+                tools:text="1H55m"/>
+
+            <com.github.zagum.expandicon.ExpandIconView
+                android:id="@+id/ivUpDown"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/viewDeartSectionWithColor"
+                app:layout_constraintTop_toTopOf="@+id/viewDeartSectionWithoutColor"
+                />
+
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                app:el_duration="800"
+                app:el_expanded="true"
+                app:el_parallax="0.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShortDepartArriveTime">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.cloudwell.paywell.services.libaray.SequenceLayout
+                            android:id="@+id/sequenceLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </com.cloudwell.paywell.services.libaray.SequenceLayout>
+
+
+                    </LinearLayout>
+                </ScrollView>
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewDeartSectionWithoutColor"
+                tools:text="sss "/>
+
+            <com.github.zagum.expandicon.ExpandIconView
+                android:id="@+id/ivUpDown2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView9"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrainlayoutPricesDetailsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                >
+
+                <TextView
+                    android:id="@+id/tvPriceDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/price_details"
+                    android:textColor="@color/black33333"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTotalFair"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"
+                    app:srcCompat="@drawable/ic_taka_small"/>
+
+                <TextView
+                    android:id="@+id/tvTotalFair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#189d49"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toTopOf="@+id/tvClass"
+                    app:layout_constraintStart_toEndOf="@+id/imageView7"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPriceDetails"
+                    tools:text="2000"/>
+
+                <TextView
+                    android:id="@+id/tvClass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22sp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="4dp"
+
+                    android:textColor="@color/black33333"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTotalFair"
+                    tools:text="Economy Class"/>
+
+                <ImageView
+                    android:id="@+id/ivFareInfo"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTotalFair"
+                    app:layout_constraintStart_toEndOf="@+id/tvTotalFair"
+                    app:layout_constraintTop_toTopOf="@+id/tvTotalFair"
+                    app:layout_constraintVertical_bias="0.545"
+                    app:srcCompat="@drawable/ic_prices_details"/>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+
+                    android:layout_marginTop="8dp"
+                    android:text="@string/baggage_policy_details"
+                    android:textColor="@color/black33333"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvClass"/>
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView10"
+                    app:layout_constraintStart_toEndOf="@+id/textView10"
+                    app:layout_constraintTop_toTopOf="@+id/textView10"
+                    app:srcCompat="@drawable/ic_baggage_details"/>
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10"
+                    app:srcCompat="@drawable/ic_baggage_info"/>
+
+                <TextView
+                    android:id="@+id/tvBaggage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView11"
+                    app:layout_constraintTop_toTopOf="@+id/imageView11"
+                    tools:text="Baggage : 20 KG per adult ticket " />
+
+                <Button
+                    android:id="@+id/btBook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#69C630"
+                    android:text="@string/book_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/imageView17"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView19"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView19"
+                    app:srcCompat="@drawable/ic_rules"/>
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/rules"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView17"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBaggage"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constaniLayoutForOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constrainlayoutPricesDetailsView">
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPassportMandatory"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvPassportMandatory"
+                    app:srcCompat="@drawable/ic_passport_mangatory"/>
+
+                <TextView
+                    android:id="@+id/tvPassportMandatory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView13"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Passport Mandatory"/>
+
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
+                    app:srcCompat="@drawable/ic_extra_services"/>
+
+                <TextView
+                    android:id="@+id/tvExtraService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView14"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPassportMandatory"
+                    tools:text="@string/extra_serviex"/>
+
+                <ImageView
+                    android:id="@+id/imageView15"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"
+                    app:layout_constraintVertical_bias="0.49"
+                    app:srcCompat="@drawable/ic_refundable"/>
+
+                <TextView
+                    android:id="@+id/tvRefunable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView15"
+                    app:layout_constraintTop_toBottomOf="@+id/tvExtraService"
+                    tools:text="Is Refundable"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--</LinearLayout>-->
+    </ScrollView>
+
+</LinearLayout>

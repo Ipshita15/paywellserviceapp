@@ -1,8 +1,6 @@
 package com.cloudwell.paywell.services.activity.topup.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +12,9 @@ import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
 import com.cloudwell.paywell.services.app.AppController;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 11/7/18.
@@ -76,7 +77,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            if (mClickListener != null) {
+                if (getAdapterPosition() == RecyclerView.NO_POSITION) {
+                    return;
+                }
+                mClickListener.onItemClick(view, getAdapterPosition());
+            }
         }
     }
 

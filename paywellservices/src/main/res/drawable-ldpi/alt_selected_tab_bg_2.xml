@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <item android:drawable="@color/tab_selector"
+        android:state_selected="true"/>
+    <item android:drawable="@color/white"/>
+
+    <corners
+        android:topRightRadius="8dp"/>
+
+    <!-- color of the selected tab -->
+    <solid
+        android:color="@color/tab_selector"/>
+
+</shape>

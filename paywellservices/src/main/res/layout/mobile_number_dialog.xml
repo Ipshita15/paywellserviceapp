@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#189d49"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:id="@+id/outletNameTV"
+                android:layout_width="396dp"
+                android:layout_height="wrap_content"
+                android:text="@string/member_login"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/billViewLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/etMobileOrRID"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/rect_text_edit"
+                android:hint="@string/rid_mobile_number"
+                android:paddingLeft="16dp"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etPin"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/rect_text_edit"
+                android:hint="@string/pin_number"
+                android:paddingLeft="16dp"
+                android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textCursorDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etMobileOrRID" />
+
+            <Button
+                android:id="@+id/btbtSubmitMobileNumber"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/submit_button"
+                android:drawableLeft="@drawable/submit_icon"
+                android:paddingLeft="26dp"
+                android:paddingTop="8dp"
+                android:paddingRight="26dp"
+                android:paddingBottom="8dp"
+                android:text="@string/submit"
+                android:textColor="#FFFFFF"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etPin" />
+
+            <Button
+                android:id="@+id/btForgetPinNumber"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/submit_button"
+                android:drawableLeft="@drawable/submit_icon"
+                android:paddingLeft="26dp"
+                android:paddingTop="8dp"
+                android:paddingRight="26dp"
+                android:paddingBottom="8dp"
+                android:text="@string/forget_pin"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/btbtSubmitMobileNumber"
+                app:layout_constraintTop_toBottomOf="@+id/btbtSubmitMobileNumber" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

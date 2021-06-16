@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="40dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/banner_image"
+            android:layout_width="0dp"
+            android:scaleType="fitXY"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/package_purchase"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imageView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/banner_image"
+            app:srcCompat="@drawable/helth_family" />
+
+        <TextView
+            android:id="@+id/package_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            tools:text="আমরা সিলভার"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView53" />
+
+        <TextView
+            android:id="@+id/package_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="১২ মাসের মেয়াদ"
+            android:textColor="#33A544"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/package_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/package_duration">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/amount_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/amount_title"
+                    android:textColor="#59595C"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="৳২৯০০"
+                    android:textColor="#3D6FC4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/amount_title"
+                    app:layout_constraintTop_toBottomOf="@+id/amount_title" />
+
+
+                <TextView
+                    android:id="@+id/active_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/helth_btn_bg"
+                    android:padding="10dp"
+                    android:text="@string/active_btn"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/contact_eith_doctor"
+                    android:textColor="#2B2B2E"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/in_pack"
+                    android:textColor="#59595C"
+                    android:textSize="12sp" />
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvDoctorConsultation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp" />
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal">-->
+
+
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:id="@+id/direct_call"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:layout_weight="1">-->
+
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView56"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:srcCompat="@drawable/call_doctor_ic" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/call_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            android:text="@string/call_doctor"-->
+<!--                            android:textColor="#2B2B2E"-->
+<!--                            android:textSize="12sp"-->
+<!--                            app:layout_constraintStart_toEndOf="@+id/imageView56"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/limit_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/call_limit"-->
+<!--                            android:textColor="#59595C"-->
+<!--                            android:textSize="10sp"-->
+<!--                            app:layout_constraintStart_toStartOf="@+id/call_txt"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/call_txt" />-->
+
+
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:id="@+id/direct_vediocall"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        tools:ignore="DuplicateIds">-->
+
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView56"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:srcCompat="@drawable/vediocall_ic"-->
+<!--                            tools:ignore="DuplicateIds" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/call_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            android:text="@string/doctor_vedio_call"-->
+<!--                            android:textColor="#2B2B2E"-->
+<!--                            android:textSize="12sp"-->
+<!--                            app:layout_constraintStart_toEndOf="@+id/imageView56"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/limit_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/call_limit"-->
+<!--                            android:textColor="#59595C"-->
+<!--                            android:textSize="10sp"-->
+<!--                            app:layout_constraintStart_toStartOf="@+id/call_txt"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/call_txt" />-->
+
+
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--                </LinearLayout>-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal">-->
+
+
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:id="@+id/direct_chat"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        tools:ignore="DuplicateIds">-->
+
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView56"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:srcCompat="@drawable/doctor_chat_ic"-->
+<!--                            tools:ignore="DuplicateIds" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/call_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            android:text="@string/doctor_chat"-->
+<!--                            android:textColor="#2B2B2E"-->
+<!--                            android:textSize="12sp"-->
+<!--                            app:layout_constraintStart_toEndOf="@+id/imageView56"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/limit_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/call_limit"-->
+<!--                            android:textColor="#59595C"-->
+<!--                            android:textSize="10sp"-->
+<!--                            app:layout_constraintStart_toStartOf="@+id/call_txt"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/call_txt" />-->
+
+
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                        android:id="@+id/degital_prescription"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        tools:ignore="DuplicateIds">-->
+
+
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView56"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent"-->
+<!--                            app:srcCompat="@drawable/doctor_prescription_ic"-->
+<!--                            tools:ignore="DuplicateIds" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/call_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="16dp"-->
+<!--                            android:layout_marginLeft="16dp"-->
+<!--                            android:text="@string/degital_prescription"-->
+<!--                            android:textColor="#2B2B2E"-->
+<!--                            android:textSize="12sp"-->
+<!--                            app:layout_constraintStart_toEndOf="@+id/imageView56"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/limit_txt"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/free_prescription"-->
+<!--                            android:textColor="#59595C"-->
+<!--                            android:textSize="10sp"-->
+<!--                            app:layout_constraintStart_toStartOf="@+id/call_txt"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/call_txt" />-->
+
+
+<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--                </LinearLayout>-->
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="20dp"
+            android:paddingBottom="20dp"
+            android:layout_marginRight="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView5">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/helth_cashback"
+                    android:textColor="#2B2B2E"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/in_package"
+                    android:textColor="#59595C"
+                    android:textSize="12sp" />
+
+                <View
+                    android:background="#EFEFEF"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/direct_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:ignore="DuplicateIds">
+
+
+                    <ImageView
+                        android:id="@+id/imageView56"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/helth_details_ic"
+                        tools:ignore="DuplicateIds" />
+
+                    <TextView
+                        android:id="@+id/cashback_amout_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginEnd="100dp"
+                        android:layout_marginRight="100dp"
+                        android:textColor="#2B2B2E"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView56"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/direct_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:ignore="DuplicateIds">
+
+
+                    <ImageView
+                        android:id="@+id/imageView56"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/helth_family_ic"
+                        tools:ignore="DuplicateIds" />
+
+                    <TextView
+                        android:id="@+id/member_msg"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginEnd="100dp"
+                        android:layout_marginRight="100dp"
+                        android:text="প্রাথমিক সদস্য ও পরিবারের স্বামী/ স্ত্রী এবং ০২ শিশু"
+                        android:textColor="#2B2B2E"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView56"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <View
+                    android:background="#EFEFEF"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/direct_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:ignore="DuplicateIds">
+
+
+                    <ImageView
+                        android:id="@+id/imageView56"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/helth_details_ic"
+                        tools:ignore="DuplicateIds" />
+
+                    <TextView
+                        android:id="@+id/additional_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginEnd="100dp"
+                        android:layout_marginRight="100dp"
+                        android:text="৳১০০,০০০ টাকা পর্যন্ত হেলথ ক্যাশব্যাক হাসপাতাল খরচ এবং COVID-19 সংক্রান্ত কারনে"
+                        android:textColor="#2B2B2E"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView56"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <View
+                    android:background="#EFEFEF"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+
+                <org.sufficientlysecure.htmltextview.HtmlTextView
+                    android:id="@+id/package_detailsText"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="30dp"
+                    tools:text="- হেল্‌থ ক্যাশব্যাক সুবিধা প্রাথমিক সদস্য ও পরিবারের স্বামী/ স্ত্রী এবং ০২ শিশু সদস্যের জন্য  প্রযোজ্য"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginRight="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="- সর্বোচ্চ ১০০,০০০ টাকা পর্যন্ত  হাসপাতাল ভর্তির খরচের উপর ক্যাশব্যাক"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginRight="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="- COVID-19 সংক্রান্ত কারনে আইসোলেশনে ৫,০০০ টাকা পর্যন্ত ক্যাশব্যাক ডাক্তারের প্রেসক্রিপশন অনুযায়ী"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginRight="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="- গর্ভবতী নারীদের জন্য ১০,০০০ টাকা পর্যন্ত হাসপাতাল খরচের উপর ক্যাশব্যাক"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginRight="16dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:text="- ৫০,০০০ টাকা পর্যন্ত জীবন বীমা (প্রাথমিক সদস্যের জন্য)"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</ScrollView>

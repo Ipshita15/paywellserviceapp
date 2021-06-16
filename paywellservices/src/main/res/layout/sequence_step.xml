@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:clipChildren="false"
+       android:clipToPadding="false"
+       android:orientation="horizontal"
+       tools:parentTag="android.widget.TableRow">
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout9"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/sequence_anchor_max_width"
+            android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/black"
+            tools:layout_width="64dp"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="64dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp"
+            tools:text="30 Novs dfsd "/>
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/sequence_anchor_max_width"
+            android:maxLines="1"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/black"
+            tools:layout_width="64dp"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="64dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="27dp"
+            tools:text="10:33"/>
+
+        <TextView
+            android:id="@+id/tvTotalJounaryTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:text="50m"/>
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="The Title of this Step"/>
+
+        <View
+            android:id="@+id/vFlightBackgroud"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#F7F7F9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+        <ImageView
+            android:id="@+id/flightInfoIncon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/vFlightBackgroud"
+            app:layout_constraintTop_toTopOf="@+id/vFlightBackgroud"
+            app:srcCompat="@drawable/ic_airless_info"/>
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:textColor="#9d9d9f"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/vFlightBackgroud"
+            app:layout_constraintEnd_toStartOf="@+id/flightInfoIncon"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/vFlightBackgroud"
+            tools:text="Biman Bangladesh airlines"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

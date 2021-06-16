@@ -12,21 +12,17 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.app.AppHandler;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class LocationActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback {
 
@@ -43,7 +39,7 @@ public class LocationActivity extends AppCompatActivity implements LocationListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         mapView = findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
@@ -104,10 +100,10 @@ public class LocationActivity extends AppCompatActivity implements LocationListe
         PLACE_LATITUDE = (location.getLatitude());
         PLACE_LONGITUDE = (location.getLongitude());
 
-        if(!mAppHandler.getLatitude().equalsIgnoreCase(String.valueOf(PLACE_LATITUDE))) {
+        if (!mAppHandler.getLatitude().equalsIgnoreCase(String.valueOf(PLACE_LATITUDE))) {
             mAppHandler.setLatitude(String.valueOf(PLACE_LATITUDE));
         }
-        if(!mAppHandler.getLongitude().equalsIgnoreCase(String.valueOf(PLACE_LONGITUDE))) {
+        if (!mAppHandler.getLongitude().equalsIgnoreCase(String.valueOf(PLACE_LONGITUDE))) {
             mAppHandler.setLongitude(String.valueOf(PLACE_LONGITUDE));
         }
         //showMapView();

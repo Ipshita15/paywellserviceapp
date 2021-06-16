@@ -5,9 +5,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -20,8 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,6 +30,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class WASABillInquiryActivity extends AppCompatActivity {
@@ -59,10 +62,13 @@ public class WASABillInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_utility_wasa_bill_inquary_title);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_WASA_BILL_PAY_INQUIRY);
+
     }
 
     private void initializeView() {
@@ -118,7 +124,7 @@ public class WASABillInquiryActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }

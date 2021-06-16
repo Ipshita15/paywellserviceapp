@@ -3,21 +3,29 @@ package com.cloudwell.paywell.services.activity.topup;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.topup.model.ResponseDetailsItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransLogActivity extends AppCompatActivity {
+
+    public static ArrayList<ResponseDetailsItem> responseDetailsItems = new ArrayList<>();
+    public  static List<ResponseDetailsItem> responseDetailsItemList;
 
     private RelativeLayout relativeLayout;
     private ListView listView;
@@ -29,7 +37,8 @@ public class TransLogActivity extends AppCompatActivity {
     public static String length;
     public static String TRANSLOG_TAG = "TRANSLOGTXT";
     private String date = "";
-    private CustomAdapter adapter;
+
+    RecyclerView responseRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,201 +51,90 @@ public class TransLogActivity extends AppCompatActivity {
         }
 
         relativeLayout = findViewById(R.id.relativeLayout);
-        adapter = new CustomAdapter(this);
+        responseRecyclerView = findViewById(R.id.recycler_view_trsnscationLog);
+        responseRecyclerView.setHasFixedSize(true);
+        responseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        String response = TRANSLOG_TAG;
-        if (response != null && response.length() > 0) {
-            mPhn = new String[response.length()];
-            mAmount = new String[response.length()];
-            mDate = new String[response.length()];
-            mStatus = new String[response.length()];
-            mTrx = new String[response.length()];
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(responseDetailsItemList, TransLogActivity.this);
+        responseRecyclerView.setAdapter(adapter);
 
-            if (response.contains("@@@@")) {
-                response = response.split("@@@@")[0];
-                String[] splitTripleAt = response.split("@@@");
-                int i = 0;
-                for (String perTrans : splitTripleAt) {
-                    String[] splittedSingleAt = perTrans.split("@");
-                    String result;
-                    try {
-                        if (perTrans.startsWith("200")) {
-                            mPhn[i] = splittedSingleAt[2];
-                            mAmount[i] = splittedSingleAt[4];
-                            mDate[i] = splittedSingleAt[5];
-                            mStatus[i] = splittedSingleAt[6];
-                            mTrx[i] = "1";
-                        } else {
-                            mPhn[i] = splittedSingleAt[1];
-                            mAmount[i] = splittedSingleAt[3];
-                            mDate[i] = splittedSingleAt[4];
-                            mStatus[i] = splittedSingleAt[5];
-                            mTrx[i] = "2";
-                        }
 
-                        String sub_date_comp = mDate[i].substring(0, 10);
-                        if (!date.equals(sub_date_comp)) {
-                            date = sub_date_comp;
-                            adapter.addSectionHeaderItem(date);
-                        }
-                        String time = mDate[i].substring(11);
-                        result = mPhn[i] + "@" + mAmount[i] + "@" + time + "@" + mStatus[i];
-                        adapter.addItem(result);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Snackbar snackbar = Snackbar.make(relativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                    i++;
-                }
-                length = String.valueOf(i);
-                listView = findViewById(R.id.listView);
-                listView.setAdapter(adapter);
-            }
-        }
     }
 
-    public class CustomAdapter extends BaseAdapter {
-        private static final int TYPE_ITEM = 0;
-        private static final int TYPE_SEPARATOR = 1;
+    public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
-        private ArrayList<String> mData = new ArrayList<>();
-        private ArrayList<String> array = new ArrayList<>();
+        private List<ResponseDetailsItem> responseDetailsItemList;
+        private Context context;
         private LayoutInflater mInflater;
-        String splitArray_row_first[];
-        String splitArray_row_second[];
 
-        public CustomAdapter(Context context) {
-            mInflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public RecyclerViewAdapter(List<ResponseDetailsItem> responseDetailsItemList, Context context) {
+            this.responseDetailsItemList = responseDetailsItemList;
+            this.context = context;
         }
 
-        private void addItem(final String item) {
-            mData.add(item);
-            array.add("data");
-            notifyDataSetChanged();
-        }
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//            View view = mInflater.inflate(R.layout.dialog_topup_trx_log_new, parent, false);
+//            return new ViewHolder(view);
 
-        private void addSectionHeaderItem(final String item) {
-            mData.add(item);
-            array.add("header");
-            notifyDataSetChanged();
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View listItem= layoutInflater.inflate(R.layout.dialog_topup_trx_log_new, parent, false);
+            ViewHolder viewHolder = new ViewHolder(listItem);
+            return viewHolder;
         }
 
         @Override
-        public int getItemViewType(int position) {
-            if (array.get(position).equals("header")) {
-                return TYPE_SEPARATOR;
-            } else {
-                return TYPE_ITEM;
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+                String sub_date = responseDetailsItemList.get(position).getRequestTrxDate();
+                String time = responseDetailsItemList.get(position).getRequestDate().substring(11, 19);
+            if (!date.equals(sub_date)) {
+                date = sub_date;
+                //go for header
+                holder.headerLayout.setVisibility(View.VISIBLE);
+                holder.header.setText(date);
+            }else {
+                //go without header
+                holder.headerLayout.setVisibility(View.GONE);
             }
-        }
-
-        @Override
-        public int getViewTypeCount() {
-            return 2;
-        }
-
-        @Override
-        public int getCount() {
-            return array.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return mData.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            int rowType;
-            if (mData.get(position).contains("@")) {
-                rowType = 0;
-            } else {
-                rowType = 1;
+            holder.amount.setText("Tk."+responseDetailsItemList.get(position).getAmount());
+            holder.date.setText(time);
+            holder.phnNo.setText(responseDetailsItemList.get(position).getRecipientMsisdn());
+            String status = responseDetailsItemList.get(position).getStatusName();
+            if (status.equals("Successful")){
+                holder.status.setText(status);
+                holder.status.setTextColor(Color.parseColor("#008000"));
+            }else {
+                holder.status.setText(status);
+                holder.status.setTextColor(Color.parseColor("#ff0000"));
             }
 
-            if (convertView == null) {
-                holder = new ViewHolder();
-                switch (rowType) {
-                    case TYPE_SEPARATOR:
-                        convertView = mInflater.inflate(R.layout.dialog_both_header, parent, false);
-                        holder.textView = convertView.findViewById(R.id.header);
-                        convertView.setTag(holder);
-                        holder.textView.clearComposingText();
-                        holder.textView.setText(mData.get(position));
-                        break;
-                    case TYPE_ITEM:
-                        convertView = mInflater.inflate(R.layout.dialog_topup_trx_log, parent, false);
-                        holder.phnNo = convertView.findViewById(R.id.phnNo);
-                        holder.amount = convertView.findViewById(R.id.amount);
-                        holder.date = convertView.findViewById(R.id.date);
-                        holder.status = convertView.findViewById(R.id.status);
-                        convertView.setTag(holder);
-
-                        splitArray_row_first = mData.get(position).split("@");
-
-                        String amountStr = "Tk." + splitArray_row_first[1];
-                        holder.phnNo.setText(splitArray_row_first[0]);
-                        holder.amount.setText(amountStr);
-                        holder.date.setText(splitArray_row_first[2]);
-                        holder.status.setText(splitArray_row_first[3]);
-
-                        if (splitArray_row_first[3].equalsIgnoreCase("Successful")) {
-                            holder.status.setTextColor(Color.parseColor("#008000"));
-                        } else {
-                            holder.status.setTextColor(Color.parseColor("#ff0000"));
-                        }
-                        break;
-                }
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-                switch (rowType) {
-                    case TYPE_SEPARATOR:
-                        convertView = mInflater.inflate(R.layout.dialog_both_header, parent, false);
-                        holder.textView = convertView.findViewById(R.id.header);
-                        convertView.setTag(holder);
-                        holder.textView.clearComposingText();
-                        holder.textView.setText(mData.get(position));
-                        break;
-                    case TYPE_ITEM:
-                        convertView = mInflater.inflate(R.layout.dialog_topup_trx_log, parent, false);
-                        holder.phnNo = convertView.findViewById(R.id.phnNo);
-                        holder.amount = convertView.findViewById(R.id.amount);
-                        holder.date = convertView.findViewById(R.id.date);
-                        holder.status = convertView.findViewById(R.id.status);
-                        convertView.setTag(holder);
-
-                        splitArray_row_second = mData.get(position).split("@");
-
-                        String amountStr = "Tk." + splitArray_row_second[1];
-
-                        holder.phnNo.setText(splitArray_row_second[0]);
-                        holder.amount.setText(amountStr);
-                        holder.date.setText(splitArray_row_second[2]);
-                        holder.status.setText(splitArray_row_second[3]);
-
-                        if (splitArray_row_second[3].equalsIgnoreCase("Successful")) {
-                            holder.status.setTextColor(Color.parseColor("#008000"));
-                        } else {
-                            holder.status.setTextColor(Color.parseColor("#ff0000"));
-                        }
-                        break;
-                }
-            }
-            return convertView;
         }
 
-        public class ViewHolder {
-            TextView textView, phnNo, amount, date, status;
+        @Override
+        public int getItemCount() {
+            return responseDetailsItemList.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            LinearLayout headerLayout;
+            TextView header,phnNo,amount,date,status;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+
+                headerLayout = itemView.findViewById(R.id.hader_layout);
+                header = itemView.findViewById(R.id.header);
+                phnNo = itemView.findViewById(R.id.phnNo);
+                amount = itemView.findViewById(R.id.amount);
+                date = itemView.findViewById(R.id.date);
+                status = itemView.findViewById(R.id.status);
+
+
+
+            }
         }
     }
 

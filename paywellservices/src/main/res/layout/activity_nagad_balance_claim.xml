@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/rootLayout"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    tools:context="com.cloudwell.paywell.services.activity.refill.nagad.NagadBalanceClaimActivity"
+    android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="2dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="5dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="6.5"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="2dp"
+                    android:gravity="center_vertical">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/pbBillNumberET"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:singleLine="true"
+                            android:maxLength="30"
+                            android:hint="@string/hint_mobile_number_or_transtion_id"
+                            android:textColor="#333333" />
+
+                    </FrameLayout>
+                    <EditText
+                        android:id="@+id/pbBillAmountET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
+                        android:maxLength="7"
+                        android:hint="@string/bill_amount_naged"
+                        android:textColor="#333333" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/submitButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/confirm_btn"
+        android:textAllCaps="false"
+        fancy:fb_radius="5dp"
+        fancy:fb_defaultColor="#189d49"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>

@@ -21,3 +21,23 @@
 # fabric:
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable
+
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @com.squareup.otto.Subscribe public *;
+    @com.squareup.otto.Produce public *;
+}
+
+-keep class com.shockwave.**
+
+
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**

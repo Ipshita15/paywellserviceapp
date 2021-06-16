@@ -7,13 +7,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.utils.AppHelper;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +27,9 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class AppHandler {
+
+    public static AppHandler mInstance = null;
+
     // Shared Preferences
     private SharedPreferences mPref;
 
@@ -38,7 +45,9 @@ public class AppHandler {
     public static final String KEY_TYPE2 = "wrong_amount";
     public static final String TRX_TYPE = "recharge_not_received";
     public static final int MULTIPLE_TOPUP_LIMIT = 5;
+    public static final int MULTIPLE_BANK_INFO_LIMIT = 5;
     private static final String UPDATE_CHECK = "LastUpdateCheck";
+    private static final String AIRPORT_LIST_UPDATE_CHECKER = "AIRPORT_LIST_UPDATE_CHECKER";
     private static final String PIN = "pin";
     private static final String PW_BALANCE = "pwBalance";
     private static final String PW_RID = "pwRID";
@@ -102,7 +111,9 @@ public class AppHandler {
     private static final String UNKNOWN_PASSENGER_AGE = "unknownPassengerAge";
     private static final String UNKNOWN_SOURCE_STATION_CODE = "unknownSourceStationCode";
     private static final String UNKNOWN_MOBILE_NUMBER = "UNKNOWN_MOBILE_NUMBER";
+    private static final String  UNKNOWN = "UNKNOWN";
     private static final String MOBILE_NUMBER = "MOBILE_NUMBER";
+    private static final String PictureArrayImageLink = "PictureArrayImageLink";
 
     private static final String REG_DISTRICT_ARRAY = "district_array";
     public static Boolean REG_FLAG_ONE = false;
@@ -113,7 +124,7 @@ public class AppHandler {
     private static final String MYCASH_BALANCE = "mycash_balance";
 
     private static final String APP_LANGUAGE = "en";
-    private static final String APP_STATUS = "registered";
+    private static final String APP_STATUS = "registered_v1";
 
     private static final String USERNAME = "username";
     private static final String PHONE_NUMBER = "phone";
@@ -150,13 +161,43 @@ public class AppHandler {
     private static final String DISPLAY_PICTURE_ = "displaypicture_";
     private static final String UNKNOWN_DISPLAY_PICTURE = "unknownDisplayPicture";
 
+    private static final String SECUTIRY_TOEKN = "SECUTIRY_TOEKN";
+
+    public static final int MULTI_CITY_LIMIT = 5;
+    public static final String IVAC_CENTER_LOCK = "IVAC_CENTER_LOCK";
+    public static final String IVAC_CENTER_ID = "IVAC_CENTER_ID";
+    public static final String IVAC_CENTER_AMOUNT = "IVAC_CENTER_AMOUNT";
+
+    public static final String KEY_RSA_PRIVATE_KEY= "KEY_RSA_PRIVATE_KEY";
+    public static final String KEY_RSA_PUBLIC_KEY= "KEY_RSA_PUBLIC_KEY";
+    public static final String KEY_SEALED_DATA= "KEY_SEALED_DATA";
+    public static final String KEY_ENVLOPE= "KEY_ENVLOPE";
+    public static final String KEY_APPS_SECURITY_Token= "KEY_APPS_SECURITY_Token";
+    public static final String KEY_APPS_TOKEN_EXP_Time= "KEY_APPS_TOKEN_EXP_Time";
+    public static final String KEY_IsSuccessfullDoneAuthenticationFlow= "setSuccessfulPassAuthenticationFlow";
+    public static final String KEY_IsSuccessfullDoneRegistionFlow= "KEY_IsSuccessfullDoneRegistionFlow";
+    public static final String KEY_ANDROID_ID= "KEY_ANDROID_ID";
+    public static final String KEY_setUserNeedToChangePassword= "KEY_setUserNeedToChangePassword";
+    public static final String KEY_savePreviousRequestObject= "savePreviousRequestObject";
+    public static final String KEY_ImageAddressArrayJson= "KEY_ImageAddressArrayJson";
+    public static final String KEY_BannerDetails = "BannerDetails";
+    public static final String KEY_isVideoPreviewShow = "isVideoPreviewShow";
+
+
     public AppHandler() {
 
     }
 
-    public AppHandler(Context context) {
+    private AppHandler(Context context) {
         mPref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = mPref.edit();
+    }
+
+    public static AppHandler getmInstance(Context context) {
+        if (mInstance == null) {
+            mInstance = new AppHandler(context);
+        }
+        return mInstance;
     }
 
     public ArrayList<String> getSources() {
@@ -178,6 +219,7 @@ public class AppHandler {
         editor.putInt(SOURCE_SIZE_, sources.size());
         editor.commit();
     }
+
     public ArrayList<String> getSourceCodes() {
         int size = mPref.getInt(SOURCE_CODES_SIZE_, PRIVATE_MODE);
         ArrayList<String> sourceCodes = new ArrayList<>(size);
@@ -198,14 +240,7 @@ public class AppHandler {
         editor.commit();
     }
 
-    public String getImeiNo() {
-        return mPref.getString(IMEI_NO, "unknown");
-    }
 
-    public void setImeiNo(String imeiNo) {
-        editor.putString(IMEI_NO, imeiNo);
-        editor.commit();
-    }
 
     public String getPin() {
         return mPref.getString(PIN, "unknown");
@@ -238,8 +273,17 @@ public class AppHandler {
         return mPref.getLong(UPDATE_CHECK, PRIVATE_MODE);
     }
 
+    public long getAirportListUpdateCheck() {
+        return mPref.getLong(AIRPORT_LIST_UPDATE_CHECKER, PRIVATE_MODE);
+    }
+
     public void setUpdateCheck(long times) {
         editor.putLong(UPDATE_CHECK, times);
+        editor.commit();
+    }
+
+    public void setAirportListUpdateCheck(long times) {
+        editor.putLong(AIRPORT_LIST_UPDATE_CHECKER, times);
         editor.commit();
     }
 
@@ -377,9 +421,16 @@ public class AppHandler {
     }
 
     public static void showDialog(FragmentManager fm) {
-        FragmentTransaction ft = fm.beginTransaction();
-        MyDialogFragment frag = new MyDialogFragment();
-        frag.show(ft, "txn_tag");
+        try {
+            FragmentTransaction ft = fm.beginTransaction();
+            MyDialogFragment frag = new MyDialogFragment();
+            frag.show(ft, "txn_tag");
+
+        } catch (IllegalStateException e) {
+            Log.e("IllegalStateException", "Exception", e);
+        }
+
+
     }
 
     public static String getCurrentDate() {
@@ -426,16 +477,20 @@ public class AppHandler {
         editor.putString(SOURCE_STATION_CODE, mSourceCode);
         editor.commit();
     }
+
     public String getSourceStationCode() {
         return mPref.getString(SOURCE_STATION_CODE, UNKNOWN_SOURCE_STATION_CODE);
     }
+
     public void setDestinationName(String mDestination) {
         editor.putString(DESTINATION_NAME, mDestination);
         editor.commit();
     }
+
     public String getDestinationName() {
         return mPref.getString(DESTINATION_NAME, UNKNOWN_DESTINATION);
     }
+
     public void setDestinationStations(ArrayList<String> destinationStations) {
         int size = mPref.getInt(DESTINATION_STATION_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
@@ -447,6 +502,7 @@ public class AppHandler {
         editor.putInt(DESTINATION_STATION_SIZE_, destinationStations.size());
         editor.commit();
     }
+
     public ArrayList<String> getDestinationStations() {
         int size = mPref.getInt(DESTINATION_STATION_SIZE_, PRIVATE_MODE);
         ArrayList<String> stations = new ArrayList<>(size);
@@ -466,6 +522,7 @@ public class AppHandler {
         editor.putInt(DESTINATION_STATION_CODE_SIZE_, destinationStationCodes.size());
         editor.commit();
     }
+
     public ArrayList<String> getDestinationStationCodes() {
         int size = mPref.getInt(DESTINATION_STATION_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> stationCodes = new ArrayList<>(size);
@@ -485,6 +542,7 @@ public class AppHandler {
         editor.putInt(PASSENGER_SIZE_, passengers.size());
         editor.commit();
     }
+
     public ArrayList<String> getPassengers() {
         int size = mPref.getInt(PASSENGER_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengers = new ArrayList<>(size);
@@ -504,6 +562,7 @@ public class AppHandler {
         editor.putInt(PASSENGER_CODE_SIZE_, passengerCodes.size());
         editor.commit();
     }
+
     public ArrayList<String> getPassengerCodes() {
         int size = mPref.getInt(PASSENGER_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
@@ -523,7 +582,8 @@ public class AppHandler {
         editor.putInt(PASSENGER_TYPE_SIZE_, passengerTypes.size());
         editor.commit();
     }
-    public ArrayList<String> getPassengerTypes () {
+
+    public ArrayList<String> getPassengerTypes() {
         int size = mPref.getInt(PASSENGER_TYPE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -535,7 +595,8 @@ public class AppHandler {
         editor.putString(DESTINATION_STATION, mDestinationName);
         editor.commit();
     }
-    public String getDestinationStation () {
+
+    public String getDestinationStation() {
         return mPref.getString(DESTINATION_STATION, UNKNOWN_DESTINATION_STATION);
     }
 
@@ -543,11 +604,20 @@ public class AppHandler {
         editor.putString(DESTINATION_STATION_CODE, destCode);
         editor.commit();
     }
-    public String getDestinationStationCode () {
+
+    public String getDestinationStationCode() {
         return mPref.getString(DESTINATION_STATION_CODE, UNKNOWN_DESTINATION_STATION_CODE);
     }
 
-    public void setTrainNames (ArrayList<String> trainNames) {
+    public ArrayList<String> getTrainNames() {
+        int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
+        ArrayList<String> passengerCodes = new ArrayList<>(size);
+        for (int i = 0; i < size; i++)
+            passengerCodes.add(mPref.getString(TRAIN_NAME_ + i, UNKNOWN_TRAIN_NAME));
+        return passengerCodes;
+    }
+
+    public void setTrainNames(ArrayList<String> trainNames) {
         int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
         // clear the previous data if exists
         for (int i = 0; i < size; i++)
@@ -557,13 +627,6 @@ public class AppHandler {
             editor.putString(TRAIN_NAME_ + i, trainNames.get(i));
         editor.putInt(TRAIN_NAME_SIZE_, trainNames.size());
         editor.commit();
-    }
-    public ArrayList<String> getTrainNames () {
-        int size = mPref.getInt(TRAIN_NAME_SIZE_, PRIVATE_MODE);
-        ArrayList<String> passengerCodes = new ArrayList<>(size);
-        for (int i = 0; i < size; i++)
-            passengerCodes.add(mPref.getString(TRAIN_NAME_ + i, UNKNOWN_TRAIN_NAME));
-        return passengerCodes;
     }
 
     public void setTrainCodes(ArrayList<String> trainCodes) {
@@ -578,7 +641,7 @@ public class AppHandler {
         editor.commit();
     }
 
-    public ArrayList<String> getTrainCodes () {
+    public ArrayList<String> getTrainCodes() {
         int size = mPref.getInt(TRAIN_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -597,7 +660,8 @@ public class AppHandler {
         editor.putInt(CLASS_TYPE_SIZE_, classTypes.size());
         editor.commit();
     }
-    public ArrayList<String> getClassTypes () {
+
+    public ArrayList<String> getClassTypes() {
         int size = mPref.getInt(CLASS_TYPE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -616,7 +680,8 @@ public class AppHandler {
         editor.putInt(CLASS_TYPE_CODE_SIZE_, classCode.size());
         editor.commit();
     }
-    public ArrayList<String> getClassTypeCodes () {
+
+    public ArrayList<String> getClassTypeCodes() {
         int size = mPref.getInt(CLASS_TYPE_CODE_SIZE_, PRIVATE_MODE);
         ArrayList<String> passengerCodes = new ArrayList<>(size);
         for (int i = 0; i < size; i++)
@@ -628,7 +693,8 @@ public class AppHandler {
         editor.putString(NUMBER_OF_PASSENGER, noOfPassenger);
         editor.commit();
     }
-    public String getNumberOfPassenger () {
+
+    public String getNumberOfPassenger() {
         return mPref.getString(NUMBER_OF_PASSENGER, UNKNOWN_NUMBER_OF_PASSENGER);
     }
 
@@ -636,7 +702,8 @@ public class AppHandler {
         editor.putString(AGE_OF_PASSENGER, passengerAge);
         editor.commit();
     }
-    public String getAgeOfPassenger () {
+
+    public String getAgeOfPassenger() {
         return mPref.getString(AGE_OF_PASSENGER, UNKNOWN_PASSENGER_AGE);
     }
 
@@ -644,7 +711,8 @@ public class AppHandler {
         editor.putString(PASSENGER_CODE, passengerCode);
         editor.commit();
     }
-    public String getPassengerCode () {
+
+    public String getPassengerCode() {
         return mPref.getString(PASSENGER_CODE, UNKNOWN_PASSENGER_CODE);
     }
 
@@ -655,6 +723,159 @@ public class AppHandler {
 
     public String getMobileNumber() {
         return mPref.getString(MOBILE_NUMBER, UNKNOWN_MOBILE_NUMBER);
+    }
+
+    public String getPictureArrayImageLink() {
+        return mPref.getString(PictureArrayImageLink, "");
+    }
+
+    public void setPictureArrayImageLink(String toString) {
+        editor.putString(PictureArrayImageLink, toString);
+        editor.commit();
+    }
+
+    public boolean isIVACCenterLock() {
+        return mPref.getBoolean(IVAC_CENTER_LOCK, false);
+    }
+
+    public void setIVACCenterLock(Boolean check) {
+        editor.putBoolean(IVAC_CENTER_LOCK, check);
+        editor.commit();
+    }
+
+    public void setCenterId(String centerId) {
+        editor.putString(IVAC_CENTER_ID, centerId);
+        editor.commit();
+    }
+
+    public String getSavedCenterId() {
+        return mPref.getString(IVAC_CENTER_ID,"");
+    }
+
+    public void setCenterAmount(String centerAmount) {
+        editor.putString(IVAC_CENTER_AMOUNT, centerAmount);
+        editor.commit();
+    }
+
+    public String getSavedCenterAmount() {
+        return mPref.getString(IVAC_CENTER_AMOUNT,"");
+    }
+
+    public ArrayList<String> getRSAKays() {
+
+        ArrayList<String> data = new ArrayList<String>();
+
+        String rSAPrivateKey = mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN);
+        if (rSAPrivateKey.equals(UNKNOWN)){
+            ArrayList<String> rsaKays = AppHelper.getRSAKays();
+            String privateKey = rsaKays.get(0);
+            String publicKey = rsaKays.get(1);
+
+            data.add(privateKey);
+            data.add(publicKey);
+
+            editor.putString(KEY_RSA_PRIVATE_KEY, privateKey);
+            editor.putString(KEY_RSA_PUBLIC_KEY, publicKey);
+        }else {
+
+            Logger.v("private: "+mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN));
+            Logger.v("public: "+mPref.getString(KEY_RSA_PUBLIC_KEY, UNKNOWN));
+
+            data.add(mPref.getString(KEY_RSA_PRIVATE_KEY, UNKNOWN));
+            data.add(mPref.getString(KEY_RSA_PUBLIC_KEY, UNKNOWN));
+
+        }
+        return data;
+
+
+    }
+
+    public void setSealedData(String sealedData) {
+        editor.putString(KEY_SEALED_DATA, sealedData);
+        editor.commit();
+    }
+
+
+    public String getSealedData() {
+        return mPref.getString(KEY_SEALED_DATA, "unknown");
+    }
+
+
+    public void setEnvlope(String envlope) {
+        editor.putString(KEY_ENVLOPE, envlope);
+        editor.commit();
+    }
+
+    public String getEnvlope() {
+        return mPref.getString(KEY_ENVLOPE, "unknown");
+    }
+
+
+    public void setAppsSecurityToken(String token) {
+        editor.putString(KEY_APPS_SECURITY_Token, token);
+        editor.commit();
+    }
+
+    public String getAppsSecurityToken() {
+        return mPref.getString(KEY_APPS_SECURITY_Token, "unknown");
+    }
+
+
+    public void setAppsTokenExpTime(String token) {
+        editor.putString(KEY_APPS_TOKEN_EXP_Time, token);
+        editor.commit();
+    }
+
+    public String getAppsTokenExpTime() {
+        return mPref.getString(KEY_APPS_TOKEN_EXP_Time, "unknown");
+    }
+
+
+
+
+    public void setAndroidID(String androidId) {
+        editor.putString(KEY_ANDROID_ID, androidId);
+        editor.commit();
+    }
+
+    public String getAndroidID() {
+        return mPref.getString(KEY_ANDROID_ID, "");
+    }
+
+    public void setUserNeedToChangePassword(boolean b) {
+        editor.putBoolean(KEY_setUserNeedToChangePassword, b);
+        editor.commit();
+    }
+    public boolean getUserNeedToChnagePassword(){
+        return mPref.getBoolean(KEY_setUserNeedToChangePassword, false);
+    }
+
+    public void setImageAddress(String json) {
+        editor.putString(KEY_ImageAddressArrayJson, json);
+        editor.commit();
+    }
+
+    public String getImageAddress() {
+        return mPref.getString(KEY_ImageAddressArrayJson, "");
+    }
+
+    public void setBannerDetails(String json) {
+        editor.putString(KEY_BannerDetails, json);
+        editor.commit();
+    }
+
+
+    public String getBannerDetails() {
+        return mPref.getString(KEY_BannerDetails, "");
+    }
+
+    public boolean isVideoPreviewShow() {
+        return mPref.getBoolean(KEY_isVideoPreviewShow, false);
+    }
+
+    public void setVideoPreviewShow(boolean b) {
+        editor.putBoolean(KEY_isVideoPreviewShow, b);
+        editor.commit();
     }
 
     public static class MyDialogFragment extends DialogFragment {
@@ -689,12 +910,15 @@ public class AppHandler {
         editor.commit();
     }
 
-    public String getDistrictArray() { return mPref.getString(REG_DISTRICT_ARRAY, "unknown"); }
+    public String getDistrictArray() {
+        return mPref.getString(REG_DISTRICT_ARRAY, "unknown");
+    }
 
     public void setAppLanguage(String mLanguage) {
         editor.putString(APP_LANGUAGE, mLanguage);
         editor.commit();
     }
+
     public String getAppLanguage() {
         return mPref.getString(APP_LANGUAGE, "unknown");
     }
@@ -703,6 +927,7 @@ public class AppHandler {
         editor.putString(APP_STATUS, mStatus);
         editor.commit();
     }
+
     public String getAppStatus() {
         return mPref.getString(APP_STATUS, "unknown");
     }
@@ -711,14 +936,17 @@ public class AppHandler {
         editor.putString(USERNAME, mUserName);
         editor.commit();
     }
+
     public String getUserName() {
         return mPref.getString(USERNAME, "unknown");
     }
+
 
     public void setPhoneNumber(String mPhone) {
         editor.putString(PHONE_NUMBER, mPhone);
         editor.commit();
     }
+
     public String getPhoneNumber() {
         return mPref.getString(PHONE_NUMBER, "unknown");
     }
@@ -727,6 +955,7 @@ public class AppHandler {
         editor.putString(QR_CODE_BITMAP, mPath);
         editor.commit();
     }
+
     public String getQrCodeImagePath() {
         return mPref.getString(QR_CODE_BITMAP, "unknown");
     }
@@ -735,6 +964,7 @@ public class AppHandler {
         editor.putString(PHN_NUMBER_VERIFICATION_STATUS, mPhnNoStatus);
         editor.commit();
     }
+
     public String getPhnNumberVerificationStatus() {
         return mPref.getString(PHN_NUMBER_VERIFICATION_STATUS, "unknown");
     }
@@ -743,6 +973,7 @@ public class AppHandler {
         editor.putString(MERCHANT_TYPE_VERIFICATION_STATUS, mMerchantType);
         editor.commit();
     }
+
     public String getMerchantTypeVerificationStatus() {
         return mPref.getString(MERCHANT_TYPE_VERIFICATION_STATUS, "unknown");
     }
@@ -751,6 +982,7 @@ public class AppHandler {
         editor.putString(PHN_NUMBER, mPhnNo);
         editor.commit();
     }
+
     public String getPhnNumber() {
         return mPref.getString(PHN_NUMBER, "unknown");
     }
@@ -768,6 +1000,7 @@ public class AppHandler {
         editor.putInt(DAY_COUNT, mCount);
         editor.commit();
     }
+
     public int getDayCount() {
         return mPref.getInt(DAY_COUNT, PRIVATE_MODE);
     }
@@ -896,6 +1129,16 @@ public class AppHandler {
         editor.commit();
     }
 
+    public String getToken() {
+        return mPref.getString(SECUTIRY_TOEKN, "");
+    }
+
+    public void setToken(String token) {
+        editor.putString(SECUTIRY_TOEKN, token);
+        editor.commit();
+    }
+
+
     public int getCenterDropDownPogistion() {
         return mPref.getInt(CENTER_AREA_DROP_DOWN_POSITION, 0);
     }
@@ -921,5 +1164,10 @@ public class AppHandler {
         editor.putInt(DISPLAY_PICTURE_SIZE_, displayPictureArrayList.size());
         editor.commit();
     }
+
+
+
+
+
 
 }

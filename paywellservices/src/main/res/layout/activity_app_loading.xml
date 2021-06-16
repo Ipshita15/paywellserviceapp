@@ -18,13 +18,15 @@
         android:indeterminateBehavior="cycle"
         android:indeterminateDrawable="@drawable/rotar" />
 
-    <TextView
+    <org.sufficientlysecure.htmltextview.HtmlTextView
         android:id="@+id/connErrorMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:typeface="sans"
         android:layout_centerInParent="true"
         android:gravity="center"
+        tools:visibility="visible"
+
         android:text="@string/internet_connection_error_msg"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
@@ -37,9 +39,9 @@
         android:layout_below="@+id/connErrorMsg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:onClick="onClickRetry"
         android:visibility="gone"
         android:text="@string/try_again_msg"
+        tools:visibility="visible"
         android:textAllCaps="false" />
 
     <Button
@@ -50,8 +52,8 @@
         android:layout_below="@+id/connErrorMsg"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:onClick="onClickClose"
         android:visibility="gone"
         android:text="Ok"
+        tools:visibility="visible"
         android:textAllCaps="false" />
 </RelativeLayout>

@@ -1,19 +1,20 @@
-[
-  {
-    "outputType": {
-      "type": "APK"
-    },
-    "apkInfo": {
-      "type": "MAIN",
-      "splits": [],
-      "versionCode": 37,
-      "versionName": "10.16.1",
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.cloudwell.paywell.services",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 58,
+      "versionName": "58",
       "enabled": true,
-      "outputFile": "paywellservices-release.apk",
-      "fullName": "release",
-      "baseName": "release"
-    },
-    "path": "paywellservices-release.apk",
-    "properties": {}
-  }
-]
+      "outputFile": "paywellservices-release.apk"
+    }
+  ]
+}

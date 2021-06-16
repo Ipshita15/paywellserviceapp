@@ -1,20 +1,106 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.AppBarOverlay.Search" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">#FFFFFF</item>
+    </style>
 
-    <style name="AppTheme.NoActionBar">
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlayWithout" parent="ThemeOverlay.AppCompat.Light">
+
+    <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+
+
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="fontFamily">@font/oxygen_light</item>
+    </style>
+
+
+    <style name="BanglaAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/apona_lohit</item>
+        <item name="fontFamily">@font/apona_lohit</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="BanglaAppThemeNoActionBar" parent="AppTheme.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/apona_lohit</item>
+        <item name="fontFamily">@font/apona_lohit</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="EnglishAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="fontFamily">@font/oxygen_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="EnglishAppThemeNoActionBar" parent="AppTheme.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="fontFamily">@font/oxygen_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+    <style name="EnglishAppThemeBus" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="fontFamily">@font/oxygen_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+    </style>
+
+
+    <style name="EnglishAppThemeHealthInsurance" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/oxygen_light</item>
+        <item name="fontFamily">@font/oxygen_light</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+    </style>
+
+    <style name="BanglaAppThemeHealthInsurance" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/apona_lohit</item>
+        <item name="fontFamily">@font/apona_lohit</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:actionMenuTextColor">@color/bus_action_menu_text_color</item>
+    </style>
+
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="FullScreenv2" parent="AppTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">false</item>
     </style>
 
     <!-- For Lollipop only -->
@@ -28,15 +114,15 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/foreground</item>
+<!--        <item name="android:textStyle">normal</item>-->
+<!--        <item name="android:textColor">@color/foreground</item>-->
         <item name="android:background">@null</item>
     </style>
 
     <style name="heading_text">
         <item name="android:textColor">#ff000000</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="HomeButtonNew">
@@ -47,10 +133,118 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">@dimen/text_size_button</item>
         <item name="android:lineSpacingExtra">-3dp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/foreground</item>
+<!--        <item name="android:textStyle">bold</item>-->
+<!--        <item name="android:textColor">@color/foreground</item>-->
         <item name="android:background">@null</item>
+        <item name="android:drawablePadding">8dp</item>
     </style>
 
+
+    <style name="HomeButtonNewV1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_gravity">bottom|center</item>
+        <item name="android:gravity">bottom|center</item>
+        <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="android:background">@null</item>
+        <item name="android:drawablePadding">8dp</item>
+    </style>
+
+
+    <!--<style name="datepicker" parent="Theme.AppCompat.Light.Dialog">-->
+    <!--<item name="colorPrimary">@color/mti_default_primary</item>-->
+    <!--<item name="colorPrimaryDark">@color/mti_default_primary</item>-->
+    <!--<item name="colorAccent">@color/mti_ring_lbl_date_color</item>-->
+    <!--</style>-->
+
+    <style name="TicketFrom">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="TicketTo">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+    <style name="TicketFromPort">
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="TicketToPort">
+        <item name="android:textSize">10sp</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+
+    <declare-styleable name="SequenceLayout">
+        <attr name="progressForegroundColor" format="color" />
+        <attr name="progressBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SequenceStep">
+        <attr name="anchor" format="string" />
+        <attr name="anchorTextAppearance" format="reference" />
+        <attr name="title" format="string" />
+        <attr name="titleTextAppearance" format="reference" />
+        <attr name="subtitle" format="string" />
+        <attr name="subtitleTextAppearance" format="reference" />
+        <attr name="active" format="boolean" />
+    </declare-styleable>
+
+    <style name="SequenceLayout">
+        <item name="progressForegroundColor">?colorAccent</item>
+        <item name="progressBackgroundColor">@color/default_progress_background</item>
+    </style>
+
+    <style name="SequenceStep">
+        <item name="anchorTextAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Small</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.AppCompat.Body1</item>
+    </style>
+
+
+    <style name="SlyCalendarTimeDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/slycalendar_defHeaderColor</item>
+        <item name="colorControlNormal">@color/slycalendar_defHeaderColor</item>
+    </style>
+
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimaryDark">@color/bus_ticket_status_color</item>
+        <item name="colorPrimary">@color/bus_ticket_status_color</item>
+
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">false</item>
+
+        <item name="android:windowIsFloating">false</item>
+
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@color/white</item>
+
+        <!-- Additionally if you want animations when dialog opening -->
+
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/bus_button_color</item>
+    </style>
+
+    <style name="DialogThemeBus" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/bus_ticket_status_color</item>
+    </style>
+
+    <style name="BusAppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">@color/bus_ticket_status_color</item>
+    </style>
+
+    <style name="BusEditInputLayout" parent="AppTheme">
+        <item name="colorAccent">#00a89b</item>
+    </style>
 
 </resources>

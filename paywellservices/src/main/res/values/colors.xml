@@ -4,16 +4,15 @@
     <color name="colorPrimaryDark">#2E7D32</color>
     <color name="colorAccent">#5aac40</color>
     <drawable name="layout_background">#0c000000</drawable>
-    <color name="tab_background">@color/colorPrimary</color>
+    <color name="tab_background">#189d49</color>
+    <color name="tab_indicator">#8de291</color>
     <color name="colorText">#ffffff</color>
     <color name="card_background">@color/colorText</color>
-    <color name="layout_background">#eeeeee</color>
 
     <!--
     <color name="list_divider">#272727</color>
 -->
     <!-- Paywell services color -->
-    <color name="ivory_black">#292421</color>
     <color name="bg_color">#ffffff</color>
     <color name="white">#ffffff</color>
 
@@ -25,7 +24,58 @@
     <color name="blackShade_trans70">#70363b34</color>
     <!-- Paywell utility color -->
 
+    <color name="color_red">#E00201</color>
+
     <!-- Paywell dialg color -->
     <color name="foreground">#ff355689</color>
+
+    <!-- horizontal date picker-->
+    <color name="mti_default_primary">#189d49</color>
+    <color name="text_color">#999999</color>
+    <color name="text_color_white">#FFFFFF</color>
+    <color name="default_progress_background">#ccc</color>
+    <color name="black33333">#333333</color>
+    <color name="blackcccccc">#cccccc</color>
+    <color name="balck666666">#666666</color>
+
+    <color name="slycalendar_defBackgroundColor">#ffffff</color>
+    <color name="slycalendar_defHeaderColor">#5aac40</color>
+    <color name="slycalendar_defHeaderTextColor">#ffffff</color>
+    <color name="slycalendar_defTextColor">#333333</color>
+    <color name="slycalendar_defSelectedColor">#5aac40</color>
+    <color name="slycalendar_defSelectedTextColor">#ffffff</color>
+
+    <color name="bus_ticket_status_color">#00001a</color>
+    <color name="bus_ticket_toolbar_title_text_color">#ffffff</color>
+    <color name="bus_ticket_toolbar_backgroud_color">#00203f</color>
+    <color name="color_tab_background_bus">#00203f</color>
+    <color name="bus_button_color">#00203f</color>
+    <color name="bus_action_menu_text_color">#268472</color>
+    <color name="button_color">#189d49</color>
+    <color name="tab_selector">#00834a</color>
+    <color name="nogadh_text_clr">#666666</color>
+    <color name="colorFocused">#1e00844a</color>
+    <color name="new_text_clr">#59595c</color>
+    <color name="bongo_item_bg">#2d2e31</color>
+    <color name="bongo_bg_clr">#1d1d1d</color>
+    <color name="bongo_pay_btn">#008352</color>
+    <color name="bongo_indicator">#00203f</color>
+    <color name="bongo_indicator1">#c3d0e0</color>
+    <color name="bbc_item_divider_clr">#109298</color>
+    <color name="bbc_item_bg">#f5f5f5</color>
+    <color name="bankInfobg">#f5f4f7</color>
+
+    <color name="color_tangaroa">#00203f</color>
+
+
+    <!--    HealthInsurance-->
+
+    <color name="color_text">#59595C</color>
+    <color name="colorPrimary_health">#2791A1</color>
+    <color name="toolbar_background_color_health">#2791a1</color>
+    <color name="statubar_color_health">#237d89</color>
+    <color name="toolbar_font_color_health">#FFFFFF</color>
+    <color name="health_trx_color">#FD9738</color>
+    <color name="health_sptrx">#59595C</color>
 
 </resources>

@@ -2,23 +2,21 @@ package com.cloudwell.paywell.services.activity.scan;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -28,6 +26,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public class DisplayQRCodeActivity extends AppCompatActivity {
 
@@ -47,7 +48,7 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_scan_qr_code);
         }
         mContext = this;
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
 
         imageViewQRCode = findViewById(R.id.imageViewQRCode);
@@ -57,12 +58,16 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
         } else {
             setImage(mAppHandler.getQrCodeImagePath());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_QRCODE_ICON_PAGE);
+
+
     }
 
 
     public void generateQRCode() {
         try {
-            if(mAppHandler.getRID() != "unknown") {
+            if (mAppHandler.getRID() != "unknown") {
                 Bitmap bitmap = TextToImageEncode(mAppHandler.getRID());
                 imageViewQRCode.setImageBitmap(bitmap);
                 String path = saveToInternalStorage(bitmap);
@@ -141,8 +146,6 @@ public class DisplayQRCodeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(DisplayQRCodeActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 

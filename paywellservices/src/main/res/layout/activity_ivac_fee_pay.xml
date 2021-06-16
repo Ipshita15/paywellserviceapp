@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constrainLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.utility.ivac.IvacFeePayActivity">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/constrainLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".activity.utility.ivac.IvacFeePayActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -39,6 +39,74 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout16"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
+                        card_view:layout_constraintBottom_toTopOf="@+id/checkBoxForCenterLock"
+                        card_view:layout_constraintTop_toTopOf="@+id/checkBoxForCenterLock">
+
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/star_sign"
+                            android:textColor="#FF4719"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            tools:layout_conversion_absoluteHeight="19dp"
+                            tools:layout_conversion_absoluteWidth="6dp"
+                            tools:layout_conversion_wrapHeight="65"
+                            tools:layout_conversion_wrapWidth="21"/>
+
+                        <TextView
+                            android:id="@+id/tvIvacCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginLeft="2dp"
+                            android:text="@string/center_des"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            card_view:layout_constraintBottom_toBottomOf="@+id/textView29"
+                            card_view:layout_constraintStart_toEndOf="@+id/textView29"
+                            card_view:layout_constraintTop_toTopOf="@+id/textView29"
+                            tools:layout_conversion_absoluteHeight="24dp"
+                            tools:layout_conversion_absoluteWidth="57dp"
+                            tools:layout_conversion_wrapHeight="85"
+                            tools:layout_conversion_wrapWidth="198"/>
+
+                        <CheckBox
+                            android:id="@+id/checkBoxForCenterLock"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="Unlock"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent"
+                            tools:layout_conversion_absoluteHeight="32dp"
+                            tools:layout_conversion_absoluteWidth="311dp"
+                            tools:layout_conversion_wrapHeight="112"
+                            tools:layout_conversion_wrapWidth="216"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <Spinner
+                        android:id="@+id/spinner_center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:spinnerMode="dropdown"/>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -56,14 +124,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/star_sign"
-                                android:textColor="#FF4719" />
+                                android:textColor="#FF4719"/>
 
                             <TextView
                                 android:id="@+id/tvIvacPin"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/pw_pin_no_des"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"/>
                         </LinearLayout>
 
                         <EditText
@@ -73,39 +141,10 @@
                             android:layout_marginBottom="5dp"
                             android:digits=".abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                             android:imeOptions="actionNext"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"/>
 
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
-
-                        <TextView
-                            android:id="@+id/tvIvacCenter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/center_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    </LinearLayout>
-
-                    <Spinner
-                        android:id="@+id/spinner_center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="@dimen/activity_horizontal_margin"
-                        android:spinnerMode="dropdown" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -120,15 +159,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/amount_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                         <TextView
                             android:id="@+id/tvFeeAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="@string/tk"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     </LinearLayout>
 
@@ -149,14 +187,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/star_sign"
-                                android:textColor="#FF4719" />
+                                android:textColor="#FF4719"/>
 
                             <TextView
                                 android:id="@+id/tvIvacWebFileNo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/web_file_des"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"/>
                         </LinearLayout>
 
                         <EditText
@@ -169,7 +207,7 @@
                             android:drawableRight="@drawable/ic_bar_code"
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
-                            android:text="BGD" />
+                            android:text="BGD"/>
 
                     </LinearLayout>
 
@@ -190,14 +228,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/star_sign"
-                                android:textColor="#FF4719" />
+                                android:textColor="#FF4719"/>
 
                             <TextView
                                 android:id="@+id/tvIvacPassport"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/passport_des"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"/>
                         </LinearLayout>
 
                         <EditText
@@ -208,7 +246,7 @@
                             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                             android:drawableRight="@drawable/ic_bar_code"
                             android:imeOptions="actionNext"
-                            android:inputType="text" />
+                            android:inputType="text"/>
 
                     </LinearLayout>
 
@@ -229,17 +267,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/star_sign"
-                                android:textColor="#FF4719" />
+                                android:textColor="#FF4719"/>
 
                             <TextView
                                 android:id="@+id/tvIvacPhn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/phone_no_des"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                                android:textAppearance="?android:attr/textAppearanceMedium"/>
                         </LinearLayout>
 
-                        <EditText
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/etPhnNum"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -247,16 +285,16 @@
                             android:digits="0123456789"
                             android:imeOptions="actionDone"
                             android:inputType="number"
-                            android:maxLength="11" />
+                            android:maxLength="11"/>
 
                     </LinearLayout>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/btnIvacSubmit"
@@ -273,7 +311,7 @@
                 android:shadowRadius="2"
                 android:text="@string/confirm_btn"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"/>
         </LinearLayout>
     </ScrollView>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

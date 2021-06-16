@@ -8,16 +8,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatDialog;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -34,20 +27,25 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.model.BrilliantTopUpInquiry;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.BrillintAddBalanceModel;
+import com.cloudwell.paywell.services.activity.topup.brilliant.model.transtionLog.EnqueryModel;
 import com.cloudwell.paywell.services.activity.utility.ivac.DrawableClickListener;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -60,6 +58,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BrilliantTopupActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -97,7 +105,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
 
         topUpLayout = findViewById(R.id.brilliantLL);
         cd = new ConnectionDetector(getApplicationContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         phoneNoET = findViewById(R.id.brilliantPhoneNo);
         amountET = findViewById(R.id.brilliantAmount);
@@ -149,6 +157,17 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         });
 
         refreshLanguage();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_BRILLIANT_PAGE);
+
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_brilliant, StringConstant.KEY_topup, IconConstant.KEY_brilli_ant, 0, 2);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void refreshLanguage() {
@@ -195,6 +214,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                 }
                 if (cd.isConnectingToInternet()) {
                     startActivity(intent.putExtra(LIMIT_STRING, selectedLimit));
+
                 } else {
                     Snackbar snackbar = Snackbar.make(topUpLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -407,7 +427,9 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     dialogInterface.dismiss();
                     PIN_NO = pinNoET.getText().toString();
                     if (cd.isConnectingToInternet()) {
-                        new TopUpAsync().execute();
+
+                         CallApiTopUp();
+
                     } else {
                         Snackbar snackbar = Snackbar.make(topUpLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -434,66 +456,65 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         alert.show();
     }
 
-    private class TopUpAsync extends AsyncTask<Object, String, String> {
+    private void CallApiTopUp (){
+        showProgressDialog();
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        BrillintAddBalanceModel addBalancemodel = generateRequestModel();
 
-        @Override
-        protected String doInBackground(Object... params) {
+        ApiUtils.getAPIServiceV2().addBrillintBalance(addBalancemodel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if(response.code() == 200){
 
-            return generateRequestURL();
-        }
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        showResponse(jsonObject);
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                if (result.startsWith("313")) {
-                    showResponse(result);
-                } else {
-                    if (result.startsWith("200")) {
-                        statusCode = true;
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+
                     }
-                    showResponse(result);
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(topUpLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
             }
-        }
 
-        private String generateRequestURL() {
-            String requestString = null;
-
-            // Single
-            EditText phoneNoET, amountET;
-
-            phoneNoET = findViewById(R.id.brilliantPhoneNo);
-            amountET = findViewById(R.id.brilliantAmount);
-
-            String phoneStr = phoneNoET.getText().toString();
-            String amountStr = amountET.getText().toString();
-
-            requestString = "https://api.paywellonline.com/PayWellBrilliantSystem/addBalance?"
-                    + "username=" + mAppHandler.getImeiNo()
-                    + "&password=" + PIN_NO
-                    + "&amount=" + amountStr
-                    + "&brilliantNumber=" + COUNTRY_CODE + phoneStr;
-
-            return sendingHTTPSTopupRequest(requestString);
-        }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
     }
 
-    private void showResponse(String result) {
+    private BrillintAddBalanceModel generateRequestModel() {
+
+        // Single
+        EditText phoneNoET, amountET;
+
+        phoneNoET = findViewById(R.id.brilliantPhoneNo);
+        amountET = findViewById(R.id.brilliantAmount);
+
+        String phoneStr = phoneNoET.getText().toString();
+        String amountStr = amountET.getText().toString();
+
+
+        BrillintAddBalanceModel brillintAddBalanceModel = new BrillintAddBalanceModel();
+        brillintAddBalanceModel.setUsername(mAppHandler.getUserName());
+        brillintAddBalanceModel.setPassword(PIN_NO);
+        brillintAddBalanceModel.setAmount(amountStr);
+        brillintAddBalanceModel.setBrilliantNumber(phoneStr);
+        brillintAddBalanceModel.setRefId(ParameterUtility.KEY_REF_ID);
+        brillintAddBalanceModel.setFormat("json");
+
+        return brillintAddBalanceModel;
+    }
+
+
+
+    private void showResponse(JSONObject json ) {
 
         try {
-            JSONObject json = new JSONObject(result);
             String statusCode = json.getString("status_code");
             String userResponse;
 
@@ -540,12 +561,7 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
             }
         } catch (JSONException e) {
             e.printStackTrace();
-
-            Snackbar snackbar = Snackbar.make(topUpLayout, "Unknown Exception!!!", Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            snackbar.show();
+            showErrorMessagev1("Unknown Exception!!!");
         }
     }
 
@@ -621,7 +637,10 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
                     if (!cd.isConnectingToInternet()) {
                         AppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        getTopUpInquiry(mAppHandler.getImeiNo(), enqNoET.getText().toString());
+
+                        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(BrilliantTopupActivity.this).getRID());
+                        //getTopUpInquiry(mAppHandler.getImeiNo(), enqNoET.getText().toString(), uniqueKey);
+                        getNewApiTopUpInquiry(mAppHandler.getUserName(), enqNoET.getText().toString());
                     }
                     dialogInterface.dismiss();
                 }
@@ -637,31 +656,45 @@ public class BrilliantTopupActivity extends BaseActivity implements CompoundButt
         alert.show();
     }
 
-    private void getTopUpInquiry(final String userName, String number) {
+    private void getNewApiTopUpInquiry(final String userName, String number){
         showProgressDialog();
 
-        AndroidNetworking.get("https://api.paywellonline.com/PayWellBrilliantSystem/transactionEnquiry?")
-                .addQueryParameter("username", userName)
-                .addQueryParameter("brilliant_number", number)
-                .setPriority(Priority.HIGH)
-                .build().getAsObject(BrilliantTopUpInquiry.class, new ParsedRequestListener<BrilliantTopUpInquiry>() {
+        EnqueryModel enqueryModel = new EnqueryModel();
+        enqueryModel.setBrilliantNumber(number);
+        enqueryModel.setUsername(userName);
+        enqueryModel.setFormat("json");
+
+        ApiUtils.getAPIServiceV2().getEnquery(enqueryModel).enqueue(new Callback<BrilliantTopUpInquiry>() {
             @Override
-            public void onResponse(BrilliantTopUpInquiry o) {
-                dismissProgressDialog();
-                if (o.getStatusCode() == 200) {
-                    showEnquiryResult(o.getData().getBrilliantMobileNumber(), o.getData().getAmount(), o.getData().getBriliantTrxId(), o.getData().getPaywellTrxId(), String.valueOf(o.getStatusCode()), o.getData().getStatusName(), o.getData().getAddDatetime(), o.getPwContact());
-                } else {
-                    showEnquiryResult(null, null, null, null, String.valueOf(o.getStatusCode()), o.getMessage(), null, o.getPwContact());
+            public void onResponse(Call<BrilliantTopUpInquiry> call, Response<BrilliantTopUpInquiry> response) {
+
+                if (response.code() == 200){
+
+                    dismissProgressDialog();
+                    if (response.body().getStatusCode() == 200) {
+                        showEnquiryResult(response.body().getData().getBrilliantMobileNumber(), response.body().getData().getAmount(), response.body().getData().getBriliantTrxId(),
+                                response.body().getData().getPaywellTrxId(), String.valueOf(response.body().getStatusCode()), response.body().getData().getStatusName(),
+                                response.body().getData().getAddDatetime(), response.body().getPwContact());
+                    } else {
+                        showEnquiryResult(null, null, null, null, String.valueOf(response.body().getStatusCode()), response.body().getMessage(),
+                                null, response.body().getPwContact());
+                    }
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
                 }
+
             }
 
             @Override
-            public void onError(ANError anError) {
-                anError.printStackTrace();
+            public void onFailure(Call<BrilliantTopUpInquiry> call, Throwable t) {
                 dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
             }
         });
+
     }
+
 
     private void showEnquiryResult(String phone, String amount, String brilliant_trx_id, String trxId, String status, String statusMsg, String datetime, String hotline) {
 

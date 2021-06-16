@@ -15,7 +15,10 @@ public class StringConstant {
     public static String KEY_home_utility = "home_utility";
     public static String KEY_home_utility_desco = "home_utility_desco";
     public static String KEY_home_utility_desco_pay = "home_utility_desco_pay";
-    public static String KEY_home_utility_desco_pay_inquiry = "home_utility_desco_pay_inquiry";
+    public static String KEY_home_utility_desco_postpaid_string = "desco_postpaid_string";
+    public static String KEY_home_utility_desco_postpaid_inquiry = "desco_postpaid_inquiry";
+    public static String KEY_home_utility_desco_prepaid_string = "home_utility_desco_prepaid_title";
+    public static String KEY_home_utility_desco_prepaid_inquiry = "home_utility_desco_prepaid_inquiry";
     public static String KEY_home_utility_dpdc = "home_utility_dpdc";
     public static String KEY_home_utility_dpdc_bill_pay = "home_utility_dpdc_bill_pay";
     public static String KEY_home_utility_dpdc_bill_pay_inquiry = "home_utility_dpdc_bill_pay_inquiry";
@@ -45,8 +48,17 @@ public class StringConstant {
     public static String KEY_home_utility_karnaphuli_inquiry = "home_utility_karnaphuli_inquiry";
 
 
+    public static String KEY_home_education = "home_education";
+    public static String KEY_bbc_janala = "bbc_janala";
+
+    public static String KEY_home_entertainment = "home_entertainment";
+    public static String KEY_bongo = "bongo_bd";
+    public static String KEY_HEALTH_MART = "HEALTH_MART";
+
+
     public static String KEY_home_ticket = "home_eticket";
     public static String KEY_home_bus = "home_eticket_bus";
+    public static String KEY_launch = "launch";
     public static String home_eticket_air = "home_eticket_air";
 
 
@@ -68,6 +80,10 @@ public class StringConstant {
     public static String KEY_home_refill_balance = "home_refill_balance";
     public static String KEY_home_refill_bank = "home_refill_bank";
     public static String KEY_home_refill_card = "home_refill_card";
+    public static String KEY_home_nagad_refill_msg = "nagad_refill_msg";
+
+
+    public static String KEY_home_product_ekshop = "home_product_ekshop";
 
 
 }

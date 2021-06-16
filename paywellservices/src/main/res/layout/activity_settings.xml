@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_background_card"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activity.settings.SettingsActivity">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_background_card"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".activity.settings.SettingsActivity">
 
     <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="5dp">
 
-                <Button
-                    android:id="@+id/homeBtnChangPin"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_change_pin"
-                    android:onClick="onSettingsButtonClicker"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnPasswordReset"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_pin_reset"
-                    android:onClick="onSettingsButtonClicker"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:id="@+id/homeBtnChangPin"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_change_pin"
+                        android:onClick="onSettingsButtonClicker"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
 
                 <Button
-                    android:id="@+id/homeBtnUpgrade"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_version_upgrade"
-                    android:onClick="onSettingsButtonClicker"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:id="@+id/homeBtnUpgrade"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_version_upgrade"
+                        android:onClick="onSettingsButtonClicker"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:orientation="horizontal"
-                android:weightSum="5">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnChangeLanguage"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_change_language"
-                    android:onClick="onSettingsButtonClicker"
-                    android:paddingTop="10dp"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:id="@+id/homeBtnChangeLanguage"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_change_language"
+                        android:onClick="onSettingsButtonClicker"
+                        android:paddingTop="10dp"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/homeBtnHelp"
-                    style="@style/HomeButtonNew"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_help_video"
-                    android:onClick="onSettingsButtonClicker"
-                    android:textAllCaps="false"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:id="@+id/homeBtnHelp"
+                        style="@style/HomeButtonNew"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/ic_help_video"
+                        android:onClick="onSettingsButtonClicker"
+                        android:text="@string/home_tutorial"
+                        android:textAllCaps="false"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
             </LinearLayout>
+
+
         </LinearLayout>
 
     </ScrollView>

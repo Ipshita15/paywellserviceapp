@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,8 +18,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.utils.ParameterUtility;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +34,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DPDCPostpaidInquiryActivity extends AppCompatActivity {
 
@@ -62,10 +68,13 @@ public class DPDCPostpaidInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_utility_dpdc_inquary_title);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_DPDC_BILL_PAY_INQUIRY);
+
     }
 
     private void initializeView() {
@@ -125,7 +134,7 @@ public class DPDCPostpaidInquiryActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -324,10 +333,11 @@ public class DPDCPostpaidInquiryActivity extends AppCompatActivity {
     }
 
     private void showFullInfo(int position) {
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(DPDCPostpaidInquiryActivity.this).getRID());
         String array[] = adapter.mData.get(position).split("@");
         String msg = "Bill No: " + array[0] + "\nAmount: " + getString(R.string.tk_des) + " " + array[3]
                 + "\nBill Month: " + array[5] + "\nBill Year: " + array[6]
-                + "\nLocation: " + array[7] + "\nPhone: " + array[8]
+                + "\nLocation: " + array[7] + "\nPhone: " + array[8] +"\n"+ParameterUtility.KEY_REF_ID+":" + uniqueKey
                 + "\nDate: " + array[9] + "\nTrx ID: " + array[4];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(DPDCPostpaidInquiryActivity.this);

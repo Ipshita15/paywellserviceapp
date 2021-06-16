@@ -1,12 +1,13 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.model;
 
+import com.cloudwell.paywell.services.utils.ParameterUtility;
 import com.google.gson.annotations.SerializedName;
 
 public class RequestBillStatus {
 
     @SerializedName("username")
     private String mUsername;
-    @SerializedName("pass")
+    @SerializedName("password")
     private String mPassword;
     @SerializedName("account_no")
     private String mAccountNo;
@@ -16,6 +17,17 @@ public class RequestBillStatus {
     private String mYear;
     @SerializedName("format")
     private String mFormat;
+
+    @SerializedName(ParameterUtility.KEY_REF_ID)
+    private String refId;
+
+    public String getRefId() {
+        return refId;
+    }
+
+    public void setRefId(String refId) {
+        this.refId = refId;
+    }
 
     public String getmUsername() {
         return mUsername;

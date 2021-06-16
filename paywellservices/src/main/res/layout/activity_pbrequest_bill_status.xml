@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/layout_background"
-    android:orientation="vertical">
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/linearLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/layout_background"
+              android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"
@@ -42,7 +42,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvPBPin"
@@ -51,7 +51,7 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/pw_pin_no_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -65,7 +65,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="numberPassword"
                         android:maxLength="10"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvPBAccount"
@@ -88,7 +88,18 @@
                             android:paddingLeft="2dp"
                             android:paddingRight="2dp"
                             android:text="@string/acc_no_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                        <ImageView
+                            android:id="@+id/imageView_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="@drawable/ic_info"
+                            android:contentDescription="@string/bell_msg"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintStart_toEndOf="@+id/tvDescoBillNo" />
 
                     </LinearLayout>
 
@@ -103,7 +114,7 @@
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="30"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -118,14 +129,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <Spinner
                             android:id="@+id/monthSpinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
-                            android:paddingRight="2dp" />
+                            android:paddingRight="2dp"/>
 
                     </LinearLayout>
 
@@ -143,24 +154,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <Spinner
                             android:id="@+id/yearSpinner"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
-                            android:paddingRight="2dp" />
+                            android:paddingRight="2dp"/>
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/btnPBConfirm"
@@ -175,7 +186,7 @@
                 android:shadowRadius="2"
                 android:text="@string/confirm_btn"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"/>
 
         </LinearLayout>
     </ScrollView>

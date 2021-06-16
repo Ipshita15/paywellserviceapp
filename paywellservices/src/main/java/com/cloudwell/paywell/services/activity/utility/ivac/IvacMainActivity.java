@@ -3,7 +3,6 @@ package com.cloudwell.paywell.services.activity.utility.ivac;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +10,15 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.google.android.material.snackbar.Snackbar;
 
 public class IvacMainActivity extends BaseActivity {
 
@@ -37,8 +42,7 @@ public class IvacMainActivity extends BaseActivity {
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
 
-        AppHandler appHandler = new AppHandler(this);
-
+        AppHandler appHandler = AppHandler.getmInstance(getApplicationContext());
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnInquiry = findViewById(R.id.homeBtnInquiry);
 
@@ -49,6 +53,21 @@ public class IvacMainActivity extends BaseActivity {
             btnBill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnInquiry.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_IVAC_MENU);
+
+
+
+        addRecentUsedList();
+
+
+
+    }
+
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu= new RecentUsedMenu(StringConstant.KEY_home_utility_ivac_free_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, 3, 25);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     public void onButtonClicker(View v) {

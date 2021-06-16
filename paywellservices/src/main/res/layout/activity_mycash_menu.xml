@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/ic_background_card"
-    android:orientation="vertical">
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/linearLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/ic_background_card"
+              android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/fbCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,10 +23,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:typeface="serif" />
-    </android.support.v7.widget.CardView>
+            android:typeface="serif"/>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -57,12 +57,12 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_cash_in_out"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"/>
 
                     <Button
                         android:id="@+id/homeBtnFundManagement"
@@ -72,12 +72,12 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_fund_management"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"/>
 
                     <Button
                         android:id="@+id/homeBtnBalance"
@@ -87,7 +87,7 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_mycash_balance"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                 </LinearLayout>
 
@@ -106,12 +106,12 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_customer_registration"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"/>
 
                     <Button
                         android:id="@+id/homeBtnGenerateOTP"
@@ -121,12 +121,12 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_generate_otp"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"/>
 
                     <Button
                         android:id="@+id/homeBtnPinChange"
@@ -136,7 +136,7 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_mycash_change_pin"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -149,7 +149,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"/>
 
                     <Button
                         android:id="@+id/homeBtnInquiry"
@@ -159,15 +159,15 @@
                         android:onClick="onButtonClicker"
                         android:text="@string/home_inquiry"
                         android:textAllCaps="false"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"/>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>

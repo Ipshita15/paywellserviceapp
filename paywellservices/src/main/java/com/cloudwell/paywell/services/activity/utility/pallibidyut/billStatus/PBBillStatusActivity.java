@@ -3,28 +3,38 @@ package com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResBIllStatus;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.model.ResponseDetails;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatus;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.RequestBillStatusData;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.DateUtils;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +50,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
     private Button btnConfirm;
     private int month = 0, year = 0;
     private String mPin, mAcc, mMonth, mYear;
+    ImageView imageViewInfo;
 
     private static String KEY_TAG = PBBillStatusActivity.class.getName();
 
@@ -53,9 +64,19 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
             getSupportActionBar().setTitle(R.string.home_utility_polli_home_bill_status);
         }
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS);
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_request_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_to_know_bill_status, 0, 14);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void initializeView() {
@@ -67,6 +88,10 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
 
         spnr_month = findViewById(R.id.monthSpinner);
         spnr_year = findViewById(R.id.yearSpinner);
+
+        imageViewInfo = findViewById(R.id.imageView_info);
+        imageViewInfo.setOnClickListener(this);
+
 
         ArrayAdapter<CharSequence> month_adapter = ArrayAdapter.createFromResource(this,
                 R.array.month_array, android.R.layout.simple_spinner_item);
@@ -84,19 +109,18 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-        ArrayAdapter<CharSequence> year_adapter = ArrayAdapter.createFromResource(this,
-                R.array.year_array, android.R.layout.simple_spinner_item);
+        List<String> dynamicTwoYear = DateUtils.INSTANCE.getDynamicTwoYear();
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter year_adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, dynamicTwoYear);
         year_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnr_year.setAdapter(year_adapter);
         spnr_year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    year = 0;
-                } else {
-                    String year_str = String.valueOf(spnr_year.getSelectedItem());
-                    year = Integer.parseInt(year_str);
-                }
+
+                String year_str = String.valueOf(spnr_year.getSelectedItem());
+                year = Integer.parseInt(year_str);
+
             }
 
             @Override
@@ -104,20 +128,7 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                 year = 0;
             }
         });
-
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBPin)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            etPin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            etAcc.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnConfirm.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBPin)).setTypeface(AppController.getInstance().getAponaLohitFont());
-            etPin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            ((TextView) mLinearLayout.findViewById(R.id.tvPBAccount)).setTypeface(AppController.getInstance().getOxygenLightFont());
-            etAcc.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnConfirm.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+        spnr_year.setSelection(1);
         btnConfirm.setOnClickListener(this);
     }
 
@@ -152,52 +163,63 @@ public class PBBillStatusActivity extends BaseActivity implements View.OnClickLi
                     mMonth = String.valueOf(month);
                 }
                 mYear = String.valueOf(year);
+                mMonth = spnr_month.getSelectedItem().toString().trim().substring(0, 3).toUpperCase();
                 handleBillStatusCheckRequest();
             }
+        } else if (v.getId() == R.id.imageView_info) {
+            showBillImageGobal(R.drawable.ic_polli_biddut_sms_acc_no);
+
         }
     }
 
     private void handleBillStatusCheckRequest() {
         showProgressDialog();
 
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+
         final RequestBillStatus requestBillStatus = new RequestBillStatus();
-        requestBillStatus.setmUsername("" + mAppHandler.getImeiNo());
+        requestBillStatus.setmUsername("" + mAppHandler.getUserName());
         requestBillStatus.setmPassword("" + mPin);
         requestBillStatus.setmAccountNo("" + mAcc);
         requestBillStatus.setmMonth("" + mMonth);
         requestBillStatus.setmYear("" + mYear);
+        requestBillStatus.setRefId( ""+ uniqueKey);
         requestBillStatus.setmFormat("json");
 
-        Call<RequestBillStatusData> responseBodyCall = ApiUtils.getAPIService()
-                .callBillStatusRequestAPI(requestBillStatus.getmUsername(), requestBillStatus.getmPassword(),
-                        requestBillStatus.getmAccountNo(), requestBillStatus.getmMonth(),
-                        requestBillStatus.getmYear(), requestBillStatus.getmFormat());
+        Call<ResBIllStatus> responseBodyCall = ApiUtils.getAPIServiceV2().callBillStatusRequestAPI(requestBillStatus);
 
-        responseBodyCall.enqueue(new Callback<RequestBillStatusData>() {
+        responseBodyCall.enqueue(new Callback<ResBIllStatus>() {
             @Override
-            public void onResponse(Call<RequestBillStatusData> call, Response<RequestBillStatusData> response) {
+            public void onResponse(Call<ResBIllStatus> call, Response<ResBIllStatus> response) {
                 dismissProgressDialog();
-                showReposeUI(response.body());
+
+                ResBIllStatus m = response.body();
+
+                if (response.code() == 200){
+                    if (m.getApiStatus() == 200){
+                        showReposeUI(m);
+                    }  else {
+                        showErrorMessagev1(m.getApiStatusName());
+                    }
+                }  else {
+                    showErrorMessagev1(m.getApiStatusName());
+                }
+
             }
 
             @Override
-            public void onFailure(Call<RequestBillStatusData> call, Throwable t) {
+            public void onFailure(Call<ResBIllStatus> call, Throwable t) {
                 dismissProgressDialog();
-                Log.d(KEY_TAG, "onFailure:");
-                Snackbar snackbar = Snackbar.make(mLinearLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+                showTryAgainDialog();
             }
         });
     }
 
-    private void showReposeUI(RequestBillStatusData response) {
-        final RequestBillStatusData data = response;
+    private void showReposeUI(ResBIllStatus response) {
+        final ResponseDetails data = response.getResponseDetails();
         AlertDialog.Builder builder = new AlertDialog.Builder(PBBillStatusActivity.this);
         builder.setTitle("Message");
-        builder.setMessage(getString(R.string.trx_id_des) + " " + response.getTrxId() + "\n\n" + getString(R.string.status_des) + " " + response.getMessage());
+        builder.setMessage(getString(R.string.trx_id_des) + " " + data.getTrxId() + "\n\n" + getString(R.string.status_des) + " " + data.getMessage());
         builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int id) {

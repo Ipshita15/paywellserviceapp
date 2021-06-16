@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.notification;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
@@ -16,8 +15,12 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+import androidx.annotation.Nullable;
 
 public class ImageViewActivity extends BaseActivity {
 
@@ -59,6 +62,8 @@ public class ImageViewActivity extends BaseActivity {
                         imageView.setImage(ImageSource.bitmap(bitmap)); //For SubsampleImage
                     }
                 });
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_NOTIFICATION_FULL_IMAGE_VIEW);
 
     }
 

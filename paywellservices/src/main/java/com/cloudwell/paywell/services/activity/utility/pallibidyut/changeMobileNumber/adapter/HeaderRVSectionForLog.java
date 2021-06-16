@@ -1,7 +1,6 @@
 package com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.adapter;
 
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,11 +9,11 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.MessageEventMobileNumberChange;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.model.ResMobileChangeLog;
 import com.cloudwell.paywell.services.app.AppController;
-
-import org.greenrobot.eventbus.EventBus;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 /**
@@ -22,14 +21,12 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
  */
 public class HeaderRVSectionForLog extends StatelessSection {
     private static final String TAG = HeaderRVSectionForLog.class.getSimpleName();
-    private int mIndex;
     private String title;
     private List<ResMobileChangeLog> list;
     private boolean mIsEnglish;
 
-    public HeaderRVSectionForLog(int index, String title, List<ResMobileChangeLog> list, boolean isEnglish) {
+    public HeaderRVSectionForLog(String title, List<ResMobileChangeLog> list, boolean isEnglish) {
         super(R.layout.dialog_both_header, R.layout.dialog_polli_reg_inq_new_log);
-        mIndex = index;
         this.title = title;
         this.list = list;
         mIsEnglish = isEnglish;
@@ -92,7 +89,7 @@ public class HeaderRVSectionForLog extends StatelessSection {
             public void onClick(View v) {
 
                 MessageEventMobileNumberChange messageEvent = new MessageEventMobileNumberChange(position, object);
-                EventBus.getDefault().post(messageEvent);
+                GlobalApplicationBus.getBus().post(messageEvent);
 
             }
         });

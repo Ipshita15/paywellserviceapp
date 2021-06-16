@@ -4,37 +4,40 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.location.LocationActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
-import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
-public class SettingsActivity extends AppCompatActivity {
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
+
+public class SettingsActivity extends BaseActivity {
 
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private UpdateChecker mUpdateChecker;
-    private Button home_change_pin, home_upgrade, home_password_reset, home_change_language, home_help;
+    private Button home_change_pin, home_upgrade, home_change_language, home_help;
     private String selectedOption = "";
     private int flag = 0;
 
@@ -52,15 +55,17 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         mRelativeLayout = findViewById(R.id.linearLayout);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
         /*Buttons Initialization*/
         home_change_pin = findViewById(R.id.homeBtnChangPin);
         home_upgrade = findViewById(R.id.homeBtnUpgrade);
-        home_password_reset = findViewById(R.id.homeBtnPasswordReset);
         home_change_language = findViewById(R.id.homeBtnChangeLanguage);
         home_help = findViewById(R.id.homeBtnHelp);
 
         RefreshStringsOfButton();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
     }
 
     public void onSettingsButtonClicker(View v) {
@@ -73,27 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_UPGRADE_MENU);
                 checkPermission();
                 break;
-            case R.id.homeBtnPasswordReset:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_RESET_PIN_MENU);
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
-                builder.setTitle(R.string.home_settings_reset_pin);
-                builder.setMessage(R.string.reset_pin_msg);
-                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.dismiss();
-                        startActivity(new Intent(SettingsActivity.this, ResetPinActivity.class));
-                    }
-                });
-                builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                break;
+
             case R.id.homeBtnChangeLanguage:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_CHANGE_LANGUAGE_MENU);
                 ShowLanguagePrompt();
@@ -102,9 +87,8 @@ public class SettingsActivity extends AppCompatActivity {
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
                 startHelpMenu();
                 break;
-//            case R.id.homeBtnLocation:
-//                checkLocationPermission();
-//                break;
+
+
             default:
                 break;
         }
@@ -112,7 +96,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void startHelpMenu() {
         startActivity(new Intent(SettingsActivity.this, HelpMainActivity.class));
-        finish();
+
     }
 
     private void checkForUpgrade() {
@@ -120,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
         new Thread() {
             @Override
             public void run() {
-                mUpdateChecker.checkForUpdateByVersionName(getResources().getString(R.string.check_version));
+                mUpdateChecker.checkForUpdateByVersionName(AllUrl.URL_check_version);
                 if (mUpdateChecker.isUpdateAvailable()) {
                     runOnUiThread(new Runnable() {
 
@@ -164,7 +148,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
+                mUpdateChecker.downloadAndInstall(AllUrl.URL_update_check);
             }
         });
         builder.setNegativeButton(R.string.cancel_btn, new DialogInterface.OnClickListener() {
@@ -288,14 +272,10 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                         if (selectedOption.equalsIgnoreCase("English")) {
                             mAppHandler.setAppLanguage("en");
-                            Configuration config = new Configuration();
-                            config.locale = Locale.ENGLISH;
-                            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+                            switchToCzLocale(new Locale(KEY_ENGLISH, ""));
                         } else {
                             mAppHandler.setAppLanguage("bn");
-                            Configuration config = new Configuration();
-                            config.locale = Locale.FRANCE;
-                            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+                            switchToCzLocale(new Locale(KEY_BANGLA, ""));
                         }
                         invalidateOptionsMenu();
                         RefreshStringsOfButton();
@@ -316,22 +296,19 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.home_settings);
         home_change_pin.setText(R.string.home_settings_change_pin);
         home_upgrade.setText(R.string.home_settings_upgrade);
-        home_password_reset.setText(R.string.home_settings_reset_pin);
         home_change_language.setText(R.string.home_settings_change_language);
-        home_help.setText(R.string.home_settings_help);
+        home_help.setText(R.string.home_tutorial);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_upgrade.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_password_reset.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_change_language.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_help.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_change_pin.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_upgrade.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_password_reset.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_change_language.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_help.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+//        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+////            home_change_pin.setTypeface(AppController.getInstance().getOxygenLightFont());
+////            home_upgrade.setTypeface(AppController.getInstance().getOxygenLightFont());
+//            home_change_language.setTypeface(AppController.getInstance().getOxygenLightFont());
+//            home_help.setTypeface(AppController.getInstance().getOxygenLightFont());
+//        } else {
+////            home_change_pin.setTypeface(AppController.getInstance().getAponaLohitFont());
+////            home_upgrade.setTypeface(AppController.getInstance().getAponaLohitFont());
+//            home_change_language.setTypeface(AppController.getInstance().getAponaLohitFont());
+//            home_help.setTypeface(AppController.getInstance().getAponaLohitFont());
+//        }
     }
 }

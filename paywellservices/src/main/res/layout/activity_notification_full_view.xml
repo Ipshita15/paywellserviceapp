@@ -3,57 +3,50 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            xmlns:tools="http://schemas.android.com/tools"
             android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayoutNotiFullView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin_notification"
-            android:layout_marginTop="@dimen/activity_horizontal_margin_notification"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_notification"
-            card_view:cardBackgroundColor="@color/card_background"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            card_view:cardBackgroundColor="#ffffff"
             card_view:cardCornerRadius="4dp"
             card_view:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:orientation="vertical">
+
 
                 <TextView
                     android:id="@+id/notiTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:text="fcrubfvurbfvur"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#355689"
-                    android:textStyle="bold" />
+                    android:textColor="#278134"
+                    android:textStyle="bold"
+                    tools:text="Title" />
 
                 <TextView
                     android:id="@+id/notiMessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="5dp"
                     android:autoLink="all"
-                    android:text="hvbudbvudbvudv"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#666666" />
+                    android:textColor="#545454"
+                    tools:text="Message" />
+
 
                 <ImageView
                     android:id="@+id/notiImg"
@@ -66,7 +59,10 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
                     android:contentDescription="@string/app_name"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
+
+
+
 
                 <EditText
                     android:id="@+id/notiEditText"
@@ -79,9 +75,12 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="5dp"
                     android:inputType="numberPassword"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
 
                 <Button
+                    tools:visibility="visible"
                     android:id="@+id/notiButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -99,10 +98,81 @@
                     android:text="@string/okay_btn"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorText"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btResubmitREB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_green"
+                    android:shadowColor="#000000"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="2"
+                    android:text="@string/okay_btn"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorText"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:id="@+id/btAccept"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/greenShadeLight"
+                        android:text="@string/accept"/>
+
+                    <Button
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:id="@+id/btTicketCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@color/color_red"
+                        android:text="@string/decline"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/notification_calendar" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text="20 Jul"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#C9CED3" />
+
+                </LinearLayout>
+
             </LinearLayout>
-        </android.support.v7.widget.CardView>
-
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-
 </ScrollView>

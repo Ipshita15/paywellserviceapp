@@ -8,11 +8,12 @@
     <string name="home_topup">Topup</string>
     <string name="home_topup_offer_title">Bundle &amp; Pack</string>
     <string name="home_utility">Utility</string>
+    <string name="home_fee">Fee</string>
     <string name="home_eticket">eTicket</string>
-    <string name="home_mfs">Mobile\nBanking</string>
+    <string name="home_mfs">Mobile Banking</string>
     <string name="home_mfs_fav">Mobile Banking</string>
     <string name="nav_mfs">Mobile Banking</string>
-    <string name="home_product_catalog">Product\nCatalog</string>
+    <string name="home_product_catalog">Product Catalog</string>
     <string name="nav_product_catalog">Product Catalog</string>
     <string name="nav_check_balance">Check Balance</string>
     <string name="nav_terms_and_conditions">Terms &amp; Conditions</string>
@@ -21,14 +22,15 @@
     <string name="nav_about">About</string>
     <string name="nav_more_title">More&#8230;</string>
     <string name="home_statement">Statement</string>
-    <string name="home_refill_balance">Refill\nBalance</string>
+    <string name="home_refill_balance">Refill Balance</string>
     <string name="home_refill_balance_title">Refill Balance</string>
     <string name="home_settings">Settings</string>
-    <string name="home_chat">Chat With Us</string>
     <string name="home_statement_mini">Mini Statement</string>
     <string name="home_statement_balance">Balance Statement</string>
     <string name="home_statement_sales">Sales Statement</string>
     <string name="home_statement_transaction">Transaction Statement</string>
+
+    <string name="home_nagad_balance_title">Refill Balance By Nagad</string>
     `
     <!-- Sub Menu Names -->
     <string name="home_topup_trx_log">Trx. Log</string>
@@ -36,6 +38,7 @@
     <string name="home_utility_pollibiddut_registion">Polli Biddut\nReg.</string>
     <string name="home_utility_pollibiddut_bill_pay_favorite">Polli Biddut\nBill Pay</string>
     <string name="home_utility_ivac">IVAC</string>
+    <string name="home_product_ekshop">Ekshop</string>
     <string name="home_utility_banglalion">Banglalion</string>
     <string name="home_utility_karnaphuli">Karnaphuli</string>
     <string name="home_utility_karnaphuli_bill_pay">Karnaphuli \nBill Pay</string>
@@ -68,8 +71,6 @@
     <string name="home_eticket_air">Air Ticket</string>
     <string name="home_product_ajker_deal">Ajker Deal</string>
     <string name="home_product_pw_wholesale">PayWell\nWholesale</string>
-    <string name="home_product_pw_wholesale_title">PayWell Wholesale</string>
-    <string name="home_settings_reset_pin">Reset PIN</string>
     <string name="home_settings_change_pin">Change PIN</string>
     <string name="home_settings_upgrade">Upgrade</string>
     <string name="home_settings_change_language">Change\nLanguage</string>
@@ -112,6 +113,8 @@
     <string name="home_utility_desco_pay_inquiry">Desco \nBill Inquiry</string>
     <string name="home_utility_desco_pay_title">Desco Bill Pay</string>
     <string name="home_utility_desco_inquary_title">Desco Bill Inquiry</string>
+    <string name="home_utility_desco_prepaid_title">Desco prepaid Bill Pay</string>
+    <string name="home_utility_desco_prepaid_inquiry">Desco prepaid \nBill Inquiry</string>
     <string name="home_utility_dpdc">DPDC</string>
     <string name="home_utility_dpdc_bill_title">DPDC Bill Pay</string>
     <string name="home_utility_dpdc_inquary_title">DPDC Bill Inquiry</string>
@@ -154,7 +157,7 @@
     <string name="try_again_msg">Please try again!</string>
     <string name="try_again_correct_msg">Please try again correctly!</string>
     <string name="connection_error_msg">Unable to connect to the Internet, please try again</string>
-    <string name="phone_no_title_msg">Phone Number</string>
+    <string name="phone_no_title_msg">Phone Number:</string>
     <string name="phone_no_error_msg">Enter valid phone number</string>
     <string name="amount_error_msg">Enter at least 1 digit</string>
     <string name="pin_no_error_msg">Enter PIN number</string>
@@ -162,13 +165,6 @@
     <string name="pb_acc_mismatch_error_msg">Account number do not match</string>
     <string name="pb_full_name_error_msg">Enter full name</string>
     <string name="banglalion_acc_error_msg">Enter at least 4 digits</string>
-    <string name="selection_error_msg">Please fill up all the fields</string>
-    <string name="journey_date_select_error_msg">Select your journey date</string>
-    <string name="route_select_error_msg">Bus routes are not available</string>
-    <string name="seat_select_error_msg">Please select your seat</string>
-    <string name="seat_limit_select_error_msg">Select maximum 4 seats at a time</string>
-    <string name="ticket_name_error_msg">Enter name</string>
-    <string name="ticket_destination_error_msg">Enter 1st 3 characters</string>
     <string name="old_pin_error_msg">Enter old pin</string>
     <string name="new_pin_error_msg">Enter correct new pin</string>
     <string name="bill_no_error_msg">Enter bill number</string>
@@ -176,7 +172,6 @@
     <string name="mycash_pin_error_msg">Enter MYCash pin number</string>
     <string name="location_error_msg">Enter location</string>
     <string name="otp_error_msg">Enter OTP</string>
-    <string name="cust_pin_msg">Enter Customer Pin</string>
     <string name="select_month_msg">Select Month</string>
     <string name="select_year_msg">Select Year</string>
     <string name="mycash_acc_error_msg">Enter at least 12 digits</string>
@@ -199,29 +194,9 @@
     <string name="postpaid_msg">Postpaid</string>
     <string name="confirm_title_msg">Confirmation</string>
     <string name="alert_confirm_msg">Did you receive cash?</string>
-    <string name="from_city_msg">From City</string>
-    <string name="to_city_msg">To City</string>
-    <string name="select_city_ticket_msg">Enter City</string>
-    <string name="calendar_ticket_msg">Calendar</string>
-    <string name="bus_list_ticket_msg">Bus List</string>
-    <string name="all_list_ticket_msg">All</string>
-    <string name="ac_list_ticket_msg">A/C</string>
-    <string name="non_ac_list_ticket_msg">Non A/C</string>
-    <string name="seat_list_ticket_msg">Seat List</string>
-    <string name="purchase_ticket_msg">Purchase Ticket</string>
-    <string name="tk_with_charge_msg">Tk.(including charge)</string>
-    <string name="journey_date_title_ticket_msg">Select Your Journey Date</string>
-    <string name="personal_info_msg">Personal Information</string>
-    <string name="agree_statement_msg">I agree with the terms and conditions</string>
-    <string name="three_char_msg">1st three characters</string>
-    <string name="hint_source_msg">**Type 1st 3 characters for destination</string>
-    <string name="reset_pin_msg">Are you sure, you want to reset PIN?</string>
-    <string name="today_msg">Today</string>
     <string name="change_pin_status_msg">Your PIN changed successfully</string>
     <string name="bank_transfer_header_msg">Please press any of the logos below to find out our bank account details and
         also upload deposit slip</string>
-    <string name="unread_first_msg">You have</string>
-    <string name="unread_second_msg">new notification(s)</string>
     <string name="language_title_msg">Select Language</string>
     <string name="wait_msg">Please wait for a moment</string>
     <string name="bell_msg">bell</string>
@@ -234,17 +209,18 @@
     <string name="merchant_type_error_msg">Select merchant type</string>
     <string name="business_type_error_msg">Select business type</string>
     <string name="center_error_msg">Select center</string>
-    <string name="input_error_msg">Enter properly</string>
+    <string name="input_error_msg">Invalid account name</string>
+    <string name="input_error_msg_account_name">Invalid account name</string>
+    <string name="input_error_msg_account_number">Invalid account number</string>
     <string name="please_type_in_english">Please type in English</string>
     <string name="info_collect_title">Important Information Collection</string>
-    <string name="phn_num_hint">Please enter your current phone number</string>
-    <string name="verify_quote">You will receive a PIN in the above phone number and your phone number will verify
-        automatically.</string>
     <string name="allow_error_msg">Not allowed. Change the Pin first</string>
     <string name="select_phn_title_msg">Choose a number</string>
+    <string name="select_phn_title_air_ticket">Call for help:</string>
     <string name="amount_transfer_msg">Amount transfer successful</string>
     <string name="success_msg">Successful</string>
     <string name="request_failed_msg">Failed</string>
+    <string name="failed_msg">Failed</string>
     <string name="coming_soon_msg">Coming Soon</string>
     <string name="data_error_msg">Unable to get data properly</string>
     <string name="permission_error_msg">You need to click on the allow buttons in order to let PayWell app function properly</string>
@@ -277,33 +253,11 @@
     <string name="cust_name_des">Full Name:</string>
     <string name="package_type_des">Package Type:</string>
     <string name="date_des">Date:</string>
-    <string name="time_des">Time:</string>
     <string name="using_paywell_des">THANKS FOR USING PAYWELL</string>
     <string name="hotline_des">HOTLINE:</string>
     <string name="tbps_charge_des">TBPS Charge:</string>
     <string name="total_des">Total Amount:</string>
     <string name="tk_des">Tk</string>
-    <string name="from_city_ticket_des">From:</string>
-    <string name="to_city_ticket_des">To:</string>
-    <string name="journey_date_ticket_des">Journey Date:</string>
-    <string name="selected_seat_des">Selected Seat:</string>
-    <string name="coach_des">Coach Type:</string>
-    <string name="ticket_des">Ticket:</string>
-    <string name="boarding_des">Boarding:</string>
-    <string name="droping_des">Dropping:</string>
-    <string name="passenger_name_des">Passenger Name:</string>
-    <string name="coach_number_des">Coach Number:</string>
-    <string name="seat_type_des">Seat Type:</string>
-    <string name="purchase_date_des">Purchase Date:</string>
-    <string name="passenger_type_des">Passenger Type:</string>
-    <string name="no_of_passenger_des">No. of Passenger:</string>
-    <string name="age_of_passenger_des">Age of Passenger:</string>
-    <string name="select_train_des">Select Train:</string>
-    <string name="select_class_des">Select Class:</string>
-    <string name="train_name_and_number_des">Train Name/No:</string>
-    <string name="service_carge_des">Service Charge:</string>
-    <string name="total_fare_des">Total Fare:</string>
-    <string name="collect_before_des">Collect Before:</string>
     <string name="old_pin_des">Old PIN Number:</string>
     <string name="new_pin_des">New PIN Number:</string>
     <string name="mycash_balance_des">MYCash Balance:</string>
@@ -330,19 +284,13 @@
 
     <string name="pre_paid_str">prepaid</string>
     <string name="post_paid_str">postpaid</string>
-    <string name="image_city_str">City</string>
-
+    <string name="comment">Comment</string>
     <string name="star_sign">*</string>
 
 
     <!-- Paywell Services string level -->
     <string name="paywell_reg">পেওয়েল নিবন্ধন</string>
     <string name="paywell_reg_missing">অনুপস্থিত তথ্য</string>
-    <string name="search_hint">Search hint</string>
-    <string name="search_label">search label</string>
-    <string name="search_global_description">search global description</string>
-    <string name="date_format">EEE dd-MMM-yyyy</string>
-    <string name="time_format">"yyyy-MM-dd</string>
     <string name="paywell_footer">https://www.paywellonline.com</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -363,139 +311,26 @@
         <item>November</item>
         <item>December</item>
     </string-array>
-    <string-array name="year_array">
-        <item>Select Year</item>
-        <item>2018</item>
-        <item>2019</item>
-    </string-array>
+
 
     <string-array name="sampleStrings" formatted="false">
-        <item>"PayWell is an organized retail approach by CloudWell Limited, focusing on providing convenient payments and value added services to major consumer service organizations in the utility, telecoms, healthcare, financial services, transport, retail, e-commerce, gaming and public sectors in Bangladesh.\nPayWell intends to deliver payments and services through a uniquely strong combination of local shops, internet and mobile distribution channels. The company follows standard distribution architecture, where layers of channel partners are involved i.e distributor &amp; retailers in its value chain.\n\nWe are located in:\nSkill House (L-7), KA-53/2, Shahajadpur, Gulshan, Dhaka-1212.\nPhone: 09666773333\nemail: contact@cloudwell.co"</item>
-    </string-array>
-    <string-array name="train_destination_array">
-        <item>ABDULPUR</item>
-        <item>AGIMNAGAR</item>
-        <item>AHASANGONJ</item>
-        <item>AKHAURA</item>
-        <item>AKKELPUR</item>
-        <item>ASHGONJ</item>
-        <item>AZAMPUR</item>
-        <item>BAHADURABAD</item>
-        <item>BAJITPUR</item>
-        <item>BAMANDANGA</item>
-        <item>BARAL BRIDGE</item>
-        <item>BHAIRAB BAZAR</item>
-        <item>BHANUGACH</item>
-        <item>BHARAMARA</item>
-        <item>BIRAMPUR</item>
-        <item>BOGRA</item>
-        <item>BOJRA</item>
-        <item>BONARPARA</item>
-        <item>BRAHMAN BARIA</item>
-        <item>CHANDPUR</item>
-        <item>CHANDPUR COURT</item>
-        <item>CHATMOHOR</item>
-        <item>CHITOSI ROAD</item>
-        <item>CHITTAGONG</item>
-        <item>CHOUMUHANI</item>
-        <item>CHUADANGA</item>
-        <item>COMILLA</item>
-        <item>DEWANGANJBAZAR</item>
-        <item>DHAKA BIMAN BANDAR</item>
-        <item>DHAKA KAMALAPUR</item>
-        <item>DINAJPUR</item>
-        <item>FENI</item>
-        <item>GACHIHATA</item>
-        <item>GAFORGAON</item>
-        <item>GAIBANDHA</item>
-        <item>HAJIGANJ</item>
-        <item>HARASHPUR</item>
-        <item>IBRAHIMABAD</item>
-        <item>ISHARDHI</item>
-        <item>ISLAMPUR BAZAR</item>
-        <item>JAMALPUR TOWN</item>
-        <item>JAMTOIL</item>
-        <item>JAYDEBPUR</item>
-        <item>JESSORE</item>
-        <item>JOYPURHAT</item>
-        <item>KAUNIA</item>
-        <item>KHULNA</item>
-        <item>KISHORGANJ</item>
-        <item>KULAURA</item>
-        <item>KULIARCHAR</item>
-        <item>LAKSHAM</item>
-        <item>LALMONIR HAT</item>
-        <item>MAIJDI COURT</item>
-        <item>MAIJGAON</item>
-        <item>MALANDHA BAZAR</item>
-        <item>MANIKHALI</item>
-        <item>MEHER</item>
-        <item>MIRZAPUR</item>
-        <item>MONTALA</item>
-        <item>MUKUNDUPUR</item>
-        <item>MYMENSINGH</item>
-        <item>NANDINA</item>
-        <item>NANGAL KOT</item>
-        <item>NARSINGDI</item>
-        <item>NATHAR PATUA</item>
-        <item>NATOR</item>
-        <item>NILPHAMARI</item>
-        <item>NOAKHALI</item>
-        <item>NOAPARA</item>
-        <item>NOAYPARA</item>
-        <item>PANCHBIBI</item>
-        <item>PARBATIPUR</item>
-        <item>PHULBURI</item>
-        <item>PIRGACHA</item>
-        <item>PORADAHA</item>
-        <item>QOSBA</item>
-        <item>RAJSHAHI</item>
-        <item>SADANANDAPUR</item>
-        <item>SANTAHAR</item>
-        <item>SARARCHAR</item>
-        <item>SARISHABARI</item>
-        <item>SAYEDPUR</item>
-        <item>SHAHAGI BAZAR</item>
-        <item>SHAISTAGONJ</item>
-        <item>SHAMSHERNAGAR</item>
-        <item>SHORDHA ROAD</item>
-        <item>SONAIMURI</item>
-        <item>SONATALA</item>
-        <item>SRIMONGAL</item>
-        <item>SYLHET</item>
-        <item>TANGAIL</item>
-        <item>TARAKANDI</item>
-        <item>ULLAH PARA</item>
+        <item>PayWell is a digital service platform that provides a variety of payment services, including mobile recharge, utility bills, visa fees, bus tickets, air tickets, education and entertainment content subscription fees. PayWell follows standard distribution architecture, where layers of channel partners like distributors  and retailers are involved in its value chain. \n\nWe are located at:
+\nSkill House(L-7)\nKA-53/2, Shahjadpur, \nGulshan, Dhaka-1212.
+\nPhone: 096663333, 09610116566, 09638016566\nEmail: contact@cloudwell.co\nWebsite: https://www.paywellonline.com/</item>
     </string-array>
 
     <!-- paywell apis -->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_test.php?</string>-->
-    <!--<string name="pw_auth">https://www.paywellonline.com/crs3291/android/paywell_app_api/tab_user_service_profiling_new.php?</string>-->
-    <string name="pw_auth">https://api.paywellonline.com/PaywelltransactionRetailer/TabUserServiceProfiling?</string>
-    <string name="notif_url">https://www.paywellonline.com/default/api/notification_check_android.php?</string>
-    <string name="notification_token_url">https://www.paywellonline.com/paywellapi/setUserFCMToken.php</string>
 
-    <!--<string name="update_check">https://app.paywellonline.com/apk_test/app-release.apk</string>-->
-    <!--<string name="check_version">https://app.paywellonline.com/apk_update_test/version/paywellservice_update.txt</string>-->
     <string name="app_next_version_no">vten_seventeen</string>
-    <string name="update_check">https://app.paywellonline.com/apk/PaywellServices_v10_18.apk</string>
-    <string name="check_version">https://app.paywellonline.com/version_update_info/paywellservice_update.txt</string>
 
-    <string name="update_location">https://api.paywellonline.com/PaywellRetailerInformation/doUpdateRetailersCurrentLocation</string>
+    <!-- privacy -->
 
-    <!-- Registration -->
-    <!--<string name="business_type_url">https://api.paywellonline.com/Android/business_type</string>-->
-    <string name="business_type_url">https://api.paywellonline.com/Android/userSubBusinessType</string>
-    <string name="district_info_url">https://www.paywellonline.com/crs3291/android/sales_manager/district_info_bangladesh.php</string>
-    <!--<string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/Retailer_Add_Request_Info.php</string>-->
-    <string name="final_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getRetailerInformationForRegistration.php</string>
-    <string name="missing_reg_url">https://www.paywellonline.com/crs3291/android/sales_manager/getUnverifiedData.php</string>
 
-    <!-- Topup -->
-    <string name="inq_top">https://www.paywellonline.com/default/api/enquiry.php?</string>
-    <string name="trx_log">https://www.paywellonline.com/crs3291/live/view_log.php?</string>
-    <string name="topup_offer">https://api.paywellonline.com/Android/GetRechargeOffer?</string>
-    <string name="operator"> অপারেটর</string>
+    <!-- privacy -->
+    <string name="privacy" translatable="false">https://www.paywellonline.com/Privacy.php</string>
+
+
+    <string name="operator">Operator</string>
     <string name="mobileOperator">Mobile Operators</string>
     <string name="brilliant">Brilliant</string>
     <string name="brilliant_topup">Brilliant Topup</string>
@@ -504,86 +339,7 @@
     <string name="brilliant_num">Brilliant Number:</string>
     <string name="brilliant_trx_log">Brilliant Trx Log</string>
 
-    <!-- Utility -->
-    <string name="pb_reg">https://www.paywellonline.com/default/api/polli/polli_regs.php?</string>
-    <string name="pb_reg_with_otp">https://www.paywellonline.com/default/api/polli/polli_reg_otp.php</string>
-    <string name="pb_bill_pay">https://www.paywellonline.com/default/api/polli/polli.php?</string>
-    <string name="pb_bill_pay_pollyBiddyutPhoneNoChange">https://api.paywellonline.com/PaywelltransactionPollyBiddyut/pollyBiddyutPhoneNoChange?</string>
-
-    <string name="desco_bill_enq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-    <string name="desco_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DESCO</string>
-
-    <string name="dpdc_postpaid_bill_inq">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-    <string name="dpdc_postpaid_bill_pay">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_DPDC</string>
-
-    <string name="wasa_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WASA</string>
-
-    <string name="west_zone_bill">https://api.paywellonline.com/PaywelltransactionMYCash/Utility_WZPDCL</string>
-
-    <string name="utility_multi_trx_inq">https://api.paywellonline.com/PaywellTransactionReport/TransactionReport?</string>
-
-    <string name="utility_ivac_get_center">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacCenter</string>
-    <string name="utility_ivac_fee_pay">https://api.paywellonline.com/PaywelltransactionIVAC/IVACRequest</string>
-    <string name="utility_ivac_fee_pay_inq">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxList</string>
-    <string name="utility_ivac_fee_pay_inq_with_web_file_no">https://api.paywellonline.com/PaywelltransactionIVAC/getIvacTrxByWebFileNo</string>
-
-    <string name="banglalion_bill_pay">https://api.paywellonline.com/PayWellInternateBillPay/banglalionBillPay</string>
-    <string name="banglalion_bill_inquiry">https://api.paywellonline.com/PayWellInternateBillPay/banglalionEnquiry</string>
-
-    <string name="karnaphuli_bill">https://api.paywellonline.com/PaywelltransactionMYCash/kgdcl_billinfo</string>
-
-    <!-- Eticket -->
-    <string name="bus_ticket_url">https://www.paywellonline.com/final/BdTickets/BdBusTicket.php?</string>
-    <string name="train_source_url">https://www.paywellonline.com/banglalink_services/train.php?</string>
-
-    <!-- Payment -->
-    <string name="bkash_balance_check">https://bkapi.paywellonline.com/retailer/userBalanceCheck.php?</string>
-    <!--<string name="bkash_pending_req_conf">https://bkapi.paywellonline.com/retailer/ConfirmPaymentRequestFromCoOrSda_test.php?</string>-->
-
-    <!-- MFS -->
-    <string name="mycash_generate_otp">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/GenerateOTP?</string>
-    <string name="mycash_balance_check">https://api.paywellonline.com/PaywelltransactionMYCash/GetMYCashRetailerPayWellBalance?</string>
-    <string name="mycash_cash_in">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/CashIn?</string>
-    <string name="mycash_management">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Fund_Management?</string>
-    <string name="mycash_customer_reg">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Customer_Registration?</string>
-    <string name="mycash_statement">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Mini_Statement?</string>
-    <string name="mycash_balance_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/Balance_Enquiry?</string>
-    <string name="mycash_trx_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastTransactionList?</string>
-    <string name="mycash_cashout_inq">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/lastSuccessfulCashOutList?</string>
-    <string name="mycash_change_pin">https://api.paywellonline.com/index.php/PaywelltransactionMYCash/PIN_Change?</string>
-    <string name="mycash_balance_transfer">https://api.paywellonline.com/PaywelltransactionMYCash/DoMyCahsToCashOrBankTransfer?</string>
-    <string name="mycash_balance_transfer_confirm_pending">https://api.paywellonline.com/PaywelltransactionMYCash/CheckMyCashPendingCashRequest?</string>
-    <string name="mycash_balance_transfer_confirm">https://api.paywellonline.com/PaywelltransactionMYCash/MyCashPendingCashRequestConfirmation?</string>
-
-    <!-- Refill -->
-    <string name="refill_sda_info">https://api.paywellonline.com/Android/SDAinformation?</string>
-    <string name="refill_mfs_info">https://api.paywellonline.com/Android/paymentInfo?</string>
-
-    <!-- Product -->
-    <string name="ajd_token">http://ajkerdeal.paywellonline.com/api/Paywell/CreateToken?</string>
-    <string name="ajd_login">http://ajkerdeal.paywellonline.com/Home/CheckLoginByToken?</string>
-    <string name="ajd_refresh_token">http://ajkerdeal.paywellonline.com/MetaData/PingServer</string>
-    <string name="ajd_share">http://ajkerdeal.paywellonline.com</string>
-
-    <string name="b2b_token">https://wholesale.paywellonline.com/Retailer/Home/CreateToken?</string>
-    <string name="b2b_login">https://wholesale.paywellonline.com/Retailer/Home/CheckLoginByToken?</string>
-    <string name="b2b_refresh_token">https://wholesale.paywellonline.com/Retailer/MetaData/PingServer</string>
-    <string name="b2b_share">https://wholesale.paywellonline.com</string>
-
-    <!-- Settings -->
-    <string name="pin">https://www.paywellonline.com/crs3291/live/change_password.php?</string>
-    <string name="reset_pin">https://api.paywellonline.com/paywellSetting/passwordChange?</string>
-
-    <!-- Verification -->
-    <string name="otp_for_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/GetRetailerPhoneNumberVerificationOTP</string>
-    <string name="conf_phn_num">https://api.paywellonline.com/PaywelltransactionRetailer/ConfirmRetaileOTPForPhoneNumberVerification</string>
-    <string name="conf_merchant_type">https://api.paywellonline.com/PaywelltransactionRetailer/UpdateMarchentAndBusinessType</string>
-
-    <!-- Chat -->
-    <string name="chat">https://www.paywellonline.com/chatting-retailer/?</string>
-
-    <string name="merchant_balance_return_url">https://api.paywellonline.com/PaywelltransactionSDA/SDAToMerchentBalanceReturn</string>
-    <string name="title_activity_my_favorite_menu">My favorite</string>
+    <string name="title_activity_my_favorite_menu">My Favorites</string>
     <string name="can_not_add_more_than">Can\'t add more than 8 menu</string>
     <string name="Added">Added:</string>
     <string name="add_fav">Add</string>
@@ -599,6 +355,889 @@
     <string name="home_utility_ivac_inquiry_title">IVAC Fee Inquiry</string>
     <string name="home_karnaphuli_bill_title">Karnaphuli Bill Pay</string>
     <string name="home_karnaphuli_inquiryl_title">Karnaphuli Bill Inquiry</string>
+    <string name="details">Details:</string>
+    <string name="home_utility_pb_request_inquiry_bt">Bill Status</string>
+    <string name="home_utility_pb_bill_statu_inquery_bt">Bill Status \nInquiry</string>
+    <string name="home_utility_pb_bill_change_number_bt">Number Change</string>
+    <string name="home_utility_pb_phone_number_inquiry_bt">Number Change \nInquiry</string>
+
+    <string name="title_activity_air_tricket_menu">Air Ticket</string>
+    <string name="title_serach_view">Search Flights</string>
+    <string name="no_search_results">No search results</string>
+    <string name="search_again">Search again</string>
+    <string name="search">Search</string>
+    <string name="cancel">Booking Cancellation</string>
+    <string name="ticket_void_menu_text">Ticket Void</string>
+    <string name="ticket_refund_menu_text">Ticket Refund</string>
+    <string name="ticket_reissue_menu_text">Re-issue Ticket</string>
+    <string name="ticket_docs_update_info_menu_text">Docs/Info update</string>
+    <string name="ticket_issue_menu_text">Issue Ticket</string>
+    <string name="transaction_log">Booking Log</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
+    <string name="refundable">Refundable</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
+    <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
+    <string name="title_booking_and_review">Review and Book</string>
+    <string name="fares_information">Fare Information</string>
+    <string name="fares">Fare</string>
+    <string name="roles">Air Rules</string>
+    <string name="title_flightDetails2">Review page 2</string>
+    <string name="title_passenger_list">Passenger Info</string>
+    <string name="title_add_passenger">Add Passenger</string>
+    <string name="add">Add</string>
+    <string name="title">Title *</string>
+    <string name="first_name">First Name *</string>
+    <string name="last_name">Last Name *</string>
+    <string name="gender">Gender *</string>
+    <string name="country">Country *</string>
+    <string name="contact_number">Contact Number *</string>
+    <string name="email">Email *</string>
+    <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
+    <string name="hit_passport_number">Passport Number</string>
+    <string name="hit_web_file_number" translatable="false">Web File Number</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="book">Booking Status</string>
+    <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?</string>
+    <string name="ok">OK</string>
+    <string name="cancel_booking">Cancel Booking</string>
+    <string name="title_all_summary">All Summary</string>
+    <string name="lbl_take_camera_picture">Camara</string>
+    <string name="lbl_choose_from_gallery">Gallery</string>
+    <string name="lbl_set_profile_photo" />
+    <string name="tile_cencel_booking">Cancel Booking</string>
+    <string name="airport_search_hit">Airport name or code or country name </string>
+    <string name="from" translatable="false">From</string>
+    <string name="to" translatable="false">To</string>
+    <string name="mr">Mr</string>
+    <string name="ms">Ms</string>
+    <string name="mrs">Mrs</string>
+    <string name="mstr">Mstr</string>
+    <string name="miss">Miss</string>
+    <string name="name_title">Title</string>
+    <string name="passenger_type">Passenger type *</string>
+    <string name="adult">Adult</string>
+    <string name="child">Child</string>
+    <string name="infant">Infant</string>
+    <string name="kg_per_adult">per adult ticket</string>
+    <string name="baggage">Baggage :</string>
+    <string name="n_a">N/A</string>
+    <string name="slycalendar_save">Save</string>
+    <string name="slycalendar_cancel">Cancel</string>
+    <string name="slycalendar_next">Next</string>
+    <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
+    <string name="continue_text">Continue</string>
+    <string name="details_text">Details</string>
+    <string name="edit">Edit</string>
+
+    <string name="multicity_limit_msg" translatable="false">Currently we are accepting only 5 requests</string>
+    <string name="bookingId">Booking Id</string>
+    <string name="depart">Depart</string>
+    <string name="date">Date</string>
+    <string name="class_text">Class</string>
+    <string name="economy">Economy</string>
+    <string name="passengers">Passengers</string>
+    <string name="search_text">Search</string>
+    <string name="airline_code">Airlines code: </string>
+    <string name="airless_name">Airlines Name: </string>
+    <string name="flight_number">Flight number: </string>
+    <string name="booking_class">Booking Class: </string>
+    <string name="cabin_class">Cabin class :</string>
+    <string name="operating_carrier">Operating carrier: </string>
+    <string name="baggage_info">Baggage info</string>
+    <string name="airport_code">Airport Code: </string>
+    <string name="airport_name">Airport Name: </string>
+    <string name="terminal">Terminal:</string>
+    <string name="city_code">City Code: </string>
+    <string name="city_name">City Name: </string>
+    <string name="country_code">Country code: </string>
+    <string name="country_name">Country name: </string>
+    <string name="arrival_time">Arrival Time: </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="invalid_passenger_type">Invalid passenger type</string>
+    <string name="invalid_title">Invalid Title</string>
+    <string name="invalid_first_name">Invalid First Name</string>
+    <string name="invalid_last_name">Invalid Last Name</string>
+    <string name="invalid_country_name">Invalid Country Name</string>
+    <string name="invalid_gender">Invalid Gender</string>
+    <string name="invalid_contact_name">Invalid Contact number</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="please_select_from_airport">Please select from airport</string>
+    <string name="please_select_arrival_airport">Please select arrival airport</string>
+    <string name="please_select_depart_date">Please select depart date</string>
+    <string name="total_fare_text">Total Fare</string>
+    <string name="depart_time_">Departure Time: </string>
+    <string name="one_way_menu_title">One-way</string>
+    <string name="round_trip_menu_title">Round-Trip</string>
+    <string name="multi_city_menu_title">Multi-City</string>
+    <string name="search_flights">Search Flights</string>
+    <string name="bbc">BBC</string>
+    <string name="return_text">Return</string>
+    <string name="airport">Airport</string>
+    <string name="more">More</string>
+    <string name="price_details">Price Details</string>
+    <string name="rules">Rules:</string>
+    <string name="extra_serviex">Extra Services</string>
+    <string name="base_fare">Base Fare</string>
+    <string name="tax">Tax</string>
+    <string name="currency">Currency</string>
+    <string name="othercharges">Other Charges</string>
+    <string name="discount">Discount</string>
+    <string name="paxtype">Pax Type</string>
+    <string name="passenger_count">Passenger Count</string>
+    <string name="service_fee">Service Fee</string>
+    <string name="book_text">Book</string>
+    <string name="select_a_saved_passenger_or_add_a_new_one">Select a saved passenger or add a new one</string>
+    <string name="review">Review</string>
+    <string name="please_enter_the_passenger_">Please enter the passenger\'s name exactly as it appears on their ID. Modifications after submission are often not permitted or may incur an additional fee.</string>
+    <string name="lead_passenger">Lead Passenger</string>
+    <string name="add_edit">Add/Edit</string>
+    <string name="flight_information">Flight Information</string>
+    <string name="add_passenger">Add passenger</string>
+    <string name="national_id">NID/Office ID/Student ID Number</string>
+    <string name="booking_now">Book Now</string>
+    <string name="booking_id">Booking ID: </string>
+    <string name="ticket_status">Ticket status :</string>
+    <string name="view_tricket">View Ticket</string>
+    <string name="title_ticket_viewer">Ticket View</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="send_email">Send Email</string>
+    <string name="title_email_list">Email List</string>
+    <string name="hit_email">Email</string>
+    <string name="email_address_already_exists">Email address already exists</string>
+    <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
+    <string name="indian_menu_title">Indian</string>
+    <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
+    <string name="earnings">Earnings</string>
+    <string name="issue_ticket">Issue Ticket</string>
+    <string name="tricking">Issue Ticket</string>
+    <string name="new_ticket_prices">New prices Tk.</string>
+    <string name="old_ticket_prices">Old prices Tk.</string>
+    <string name="outbound">Outbound</string>
+    <string name="inbound">Inbound</string>
+    <string name="flight">Flight</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
+
+    <string name="Passport_number_mandatory">Passport number mandatory</string>
+    <string name="passport_expiry_date_mandatory">Passport expiry date mandatory</string>
+    <string name="passport_nationality">Passport nationality</string>
+    <string name="passport_nationality_mannotory">Passport Nationality</string>
+    <string name="back_to_search">Back To Search</string>
+    <string name="please_search_for_another_flight">Please search for another flight</string>
+    <string name="date_of_birth">Date Of Birth *</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="amount">Amount</string>
+    <string name="booking_log_limit_title_msg">Booking Log Limit</string>
+    <string name="amount_optional">Amount(optional)</string>
+    <string name="passport_image_mandatory">passport image mandatory</string>
+    <string name="visa_image_mandatory">Visa image mandatory</string>
+    <string name="booking_info">Booking Info</string>
+    <string name="ekshop">Ekshop</string>
+    <string name="report">Report</string>
+    <string name="home_title_ek_shope">Ekshop</string>
+    <string name="invalid_date">Invalid date</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="or">OR</string>
+    <string name="order_code">Order code</string>
+    <string name="optional">Optional</string>
+    <string name="search_report">Search report</string>
+    <string name="is_center_lock">Lock</string>
+    <string name="is_center_unlock">Unlock</string>
+    <string name="cencel">Cancel</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_decline">Decline</string>
+    <string name="title_edit_passenger">Edit Passenger Info</string>
+    <string name="docs_info_update">Docs/Info Update</string>
+    <string name="ticket_refund">Ticket Refund</string>
+    <string name="re_issue">Re-issue</string>
+    <string name="ticket_void">Ticket Void</string>
+    <string name="title_docs_update">Docs/Info Update</string>
+    <string name="update_request">Update Request</string>
+
+    <string name="title_bus_transtport_list">Search transport</string>
+    <string name="coach_no" translatable="false">Coach no</string>
+    <string name="departure" translatable="false">Departure</string>
+    <string name="available_seat" translatable="false">Available Seat</string>
+    <string name="please_select_a_transport">Please select a transport</string>
+    <string name="continue_booking" translatable="false">Continue Booking</string>
+    <string name="title_bus_passenger_booth"><![CDATA[Passenger information & boarding point]]></string>
+    <string name="boarding_point">Boarding Point</string>
+    <string name="full_name" translatable="false">Full Name *</string>
+    <string name="your_seats">Your seats:</string>
+    <string name="total_price">Total price:</string>
+    <string name="mobile_number" >Mobile Number *</string>
+    <string name="age" translatable="false">Age *</string>
+    <string name="bus_info_gender" translatable="false">Gender</string>
+    <string name="et_email" translatable="false">Email</string>
+    <string name="bus_address" translatable="false">Address *</string>
+    <string name="not_available">Not available</string>
+    <string name="invalid_full_name">Invalid full name</string>
+    <string name="Invalid_mobile_number">Invalid mobile number</string>
+    <string name="invalid_age">Invalid age</string>
+    <string name="invalid_address">Invalid address</string>
+    <string name="no_data_found">No data found.</string>
+    <string name="network_error">Network error!</string>
+    <string name="popular_city" translatable="false">Popular City</string>
+    <string name="transport">Transport</string>
+    <string name="search_transport_ticket">Search Bus Ticket</string>
+    <string name="search_transport_ticket_lunch">Search Launch Ticket</string>
+    <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="bus_validation_message_location">Please seleted correct location</string>
+    <string name="no_boarding_point_found">No boarding point found!!!</string>
+    <string name="sort">Sort</string>
+    <string name="selected_seat" translatable="false">Selected seat:</string>
+    <string name="boarding_point_optional">Boarding Point (Optional)</string>
+    <string name="select_your_seat">Select your seat</string>
+    <string name="select" translatable="false">Select</string>
+    <string name="do_you_want_to_buy_this_ticket">Do you want to buy this ticket?</string>
+    <string name="buy">Buy</string>
+    <string name="clear_all">Clear all</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="bill_number">SMS Bill Number</string>
+    <string name="bill_amount">Taka</string>
+    <string name="bill_number_length">Bill number length must be greater than 5</string>
+    <string name="bill_limit_msg">Currently this is the limit of our support</string>
+    <string name="conf_bill_title_msg">Bill Request</string>
+    <string name="bill_status">Bill Status</string>
+    <string name="amount_limit_error_msg">Amount must be greater than 1 taka</string>
+
+    <string name="nagad_refill_msg">Nagad </string>
+    <string name="nagad_balance_refill_msg">Balance Refill</string>
+    <string name="nagad_qr_code_msg">QR Code</string>
+    <string name="nagad_balance_claim_msg">Balance Claim</string>
+    <string name="nagad_refill_log_msg">Refill Log</string>
+    <string name="home_title_nagad_balance_claim">Balance claim</string>
+    <string name="hint_mobile_number_or_transtion_id">Mobile number/transaction ID</string>
+    <string name="bill_amount_naged">Amount</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="nagad_refill_log_inquiry">Refill Log Inquiry</string>
+    <string name="log_refill_limit_title_msg">Refill Log Limit</string>
+    <string name="re_submit_reb">Resubmit</string>
+    <string name="title_issue_ticket">Issue Ticket</string>
+    <string name="view_ticket_with_fare">View Ticket With Fare</string>
+    <string name="send_email_with_fare">Send Email With Fare</string>
+    <string name="scanner">Scanner</string>
+    <string name="no_bill_number_found_message">No bill number found, please try again</string>
+
+
+    <string name="m_first_ni_error" translatable="false">Sorry, can\'t process first page of your input NID</string>
+    <string name="m_second_ni_error" translatable="false">Sorry, can\'t process second page of your input NID</string>
+    <string name="m_please_input_both_nid_page" translatable="false">Please input both NID page</string>
+
+
+    <string name="finished">সম্পূর্ণ</string>
+    <string name="next_text">পরবর্তী</string>
+    <string name="title_nid">National ID Card information</string>
+    <string name="title_smart">Smart card information</string>
+    <string name="text_nid">NID</string>
+    <string name="text_smart_card">Smart card</string>
+    <string name="desco_prepaid_string">Desco Prepaid</string>
+    <string name="desco_postpaid_string">Desco Postpaid</string>
+    <string name="desco_postpaid_inquiry">Desco Postpaid Inquiry</string>
+    <string name="meter_number">Meter number</string>
+    <string name="txt_login">Sign in</string>
+    <string name="txt_signup">Create an new account</string>
+    <string name="rid_mobile_number">Mobile Number</string>
+    <string name="pin_number">Pin Number</string>
+    <string name="submit">Login</string>
+    <string name="forget_pin">Forget Pin?</string>
+    <string name="member_login">User Login</string>
+    <string name="txt_user_registration">New Agent Registration</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="ok_text">OK</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="verify_your_phone_number">Verify phone number</string>
+    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">Verify  mobile number by entering  four digit OTP sent to your mobile number</string>
+    <string name="didn_t_you_received_any_code">(If OTP is not received)</string>
+    <string name="request_format_pin">Request forgot pin</string>
+    <string name="last_4_digit_mobile_number">Mobile number</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">Please enter your registered  number</string>
+    <string name="forgot_pin">Forgot Pin</string>
+    <string name="device_not_support">Your device not support, Please contact our call center</string>
+    <string name="device_not_support_root">For Security Purpose rooted device not use this App, Please contact our call center</string>
+    <string name="retype_pin_number">Retype PIN Number:</string>
+    <string name="message">Message</string>
+    <string name="title_error_message">Message</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="no_internet_connection_please_check_your_internet_connection">No internet connection Please check your internet connection</string>
+    <string name="retry">Retry</string>
+    <string name="logout_message">Are you sure you want to logout of your account?</string>
+    <string name="logout_text">Logout</string>
+    <string name="fee">Fee</string>
+    <string name="home_insurance">Digital Health Care</string>
+    <string name="home_education">Education</string>
+    <string name="home_entertainment">Entertainment</string>
+    <string name="selectedCourse">course</string>
+    <string name="account_number">Account Number</string>
+    <string name="direct_refil">Direct Balance\nRefill</string>
+    <string name="direct_refil_title">Direct Balance Refill</string>
+    <string name="bbc_janala">BBC Janala</string>
+    <string name="subscription">Subscription</string>
+    <string name="bbc_course">BBC Janala Course List</string>
+    <string name="courses">Course List</string>
+    <string name="check_status">Check Status</string>
+    <string name="start_course">Start a Course</string>
+    <string name="bbc_registation_actionbar">Course Registration</string>
+    <string name="reg_korun">Registration</string>
+    <string name="reg_guid">Complete the form below to create your account and begin your English course. Remember that the name given at the time of registration will be mentioned in your Topic Report and Course Report.</string>
+    <string name="reg_must">Must write in English. (*) Marked The cells must be filled.</string>
+    <string name="paywell_pin">Paywell Pin</string>
+    <string name="reg_dialog">Registration Result</string>
+    <string name="reg_dialog_msg">Registration Successfully Done </string>
+    <string name="bongo">Bongo</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="title_message_comming_soon">Service Information</string>
+    <string name="text_comming_soon">Coming soon....</string>
+    <string name="bongo_bd">Bongo BD</string>
+    <string name="bongo_sub">Subscription</string>
+    <string name="bongo_sub_count">Subscription Count</string>
+    <string name="bongo_trx">Transaction Log</string>
+    <string name="bongo_select_package">Select the package</string>
+    <string name="bongo_pay_text">Make the payment</string>
+    <string name="bongo_des1">Popular dramas, TV series, movies and music videos</string>
+    <string name="bongo_des2">No extra advertising and no other hassle</string>
+    <string name="bongo_des3">Uninterrupted and complete original video</string>
+    <string name="password">Pin*</string>
+    <string name="subscription_success">Subscription successful</string>
+    <string name="bongo_counter">"Subscription Count "</string>
+    <string name="bbc_trx_action_title">"Previous transaction"</string>
+    <string name="bbc_subscription">"Subscription ID: "</string>
+    <string name="bbc_expair">"Expiration Start date - "</string>
+    <string name="bbc_expair_end">"Expiration End date - "</string>
+    <string name="name">"Name: "</string>
+    <string name="bank_btn">Link bank account</string>
+    <string name="aclink_btn_txt">Bank Account Link</string>
+    <string name="aclist_btn_txt">Bank Account List</string>
+    <string name="checkbook_txt">Take Check Book Picture</string>
+    <string name="bank">Bank</string>
+    <string name="district">District</string>
+    <string name="branch">Branch</string>
+    <string name="bank_list">Link account list</string>
+    <string name="ac_no">Account No:</string>
+    <string name="ac_name">Account name:</string>
+    <string name="bank_added">Thank you for your information. The bank account will be linked to Powell ID within 24 hours.</string>
+    <string name="bank_delate">Are you want to delate your thia account?</string>
+    <string name="most_used_services">Most used services-</string>
+    <string name="bongo_trx_tag" translatable="false">bongoTrx</string>
+    <string name="launch">Launch Ticket</string>
+    <string name="text_bus_from_error">You must type the city from you want to travel</string>
+    <string name="text_bus_to_error">You must type the destination city you want to travel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="bus_transction_log">Transaction Log</string>
+    <string name="cancel_ticket_list">Cancel Ticket</string>
+    <string name="title_ticket_cancel_list">Ticket cancel list</string>
+    <string name="paywell_account_user_login">Log in to PayWell</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="account_id">Account ID</string>
+    <string name="forgot_pin_new">Forgot PIN?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="title_login">Sign In</string>
+    <string name="bill_number_ocr_hit_text">Please hold the scanner on customer number and select OK if scanned number shown below is correct if not , please Retake for new scan.</string>
+
+
+    <string name="hit_passport_number_ivac">Passport Number</string>
+    <string name="hit_web_file_number_ivac">Web File Number</string>
+    <string name="title_otp_verfication">Mobile number verification</string>
+    <string name="next">Next</string>
+    <string name="acccount_name_link_bank">Account Name</string>
+    <string name="account_number_link_bank">Account Number</string>
+    <string name="one_way" translatable="false">One way</string>
+    <string name="round_trip" translatable="false">Round trip</string>
+    <string name="advance_search" translatable="false">Advance search</string>
+    <string name="journey_date" translatable="false">Journey Date</string>
+    <string name="journey_type" translatable="false">Journey type</string>
+    <string name="journey_time" translatable="false">Journey time</string>
+    <string name="return_type" translatable="false">Return type</string>
+    <string name="return_time" translatable="false">Return time</string>
+    <string name="title_passgender_inf" translatable="false">Passenger Information</string>
+    <string name="total_amount_bus" translatable="false">Total amount:</string>
+    <string name="departure_ticket" translatable="false">Departure</string>
+    <string name="totat_amont_bus" translatable="false">Total amount </string>
+    <string name="round_bus" translatable="false">Return Ticket</string>
+    <string name="ticket_cancelable" translatable="false">Ticket Cancelable</string>
+    <string name="this_ticket_can_t_be_cancelable" translatable="false">This ticket can’t be cancelable</string>
+    <string name="any_kind_of_ticket_cancellation_bus" translatable="false">Any kind of ticket cancellation might not be allowed during Public Holidays journey as per bus company decision.</string>
+    <string name="any_kind_of_ticket_cancellation_lunch" translatable="false">Any kind of ticket cancellation might not be allowed during public holidays journey as per launch company decision.​</string>
+
+    <string name="custom_filter" translatable="false">Custom filter</string>
+    <string name="time" translatable="false">Time</string>
+    <string name="sort_by_price" translatable="false">Sort by price</string>
+    <string name="include_prices" translatable="false">(include charges)</string>
+    <string name="search_text_bus" translatable="false">Search</string>
+    <string name="booked" translatable="false">Booked</string>
+    <string name="available" translatable="false">Available</string>
+    <string name="place_a_barcode_inside_the_rectangle_to_scan_it" translatable="false">Place a Barcode inside the rectangle to scan it</string>
+    <string name="all_city" translatable="false">All City</string>
+    <string name="search_city" translatable="false">Search City</string>
+    <string name="going_to" translatable="false">Going To</string>
+    <string name="leaving_from" translatable="false">Leaving From</string>
+    <string name="bus_transction_log_title">Transaction Log</string>
+    <string name="cancel_ticket_list_button">Cancel Ticket</string>
+    <string name="what_new_in_new_apps">What\'s new in this version</string>
+    <string name="play_video">Play Video</string>
+    <string name="skip">Skip</string>
+    <string name="faq">Help</string>
+    <string name="title_activity_f_a_q" translatable="false">FAQActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="previous" translatable="false">Previous</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="call_center">Our call center</string>How to login to
+    the new app>/string>
+
+    <string name="home_tutorial">Tutorial</string>
+    <string name="get_help_home_page">Get help?</string>
+    <string name="chat">Chat</string>
+    <string name="call">Call</string>
+    <string name="wellcome_text">Welcome to PayWell Agent Registration. Complete the registration process by providing correct information.</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="i_agree_with_rules">I agree to the <font color="#5aac40"> terms and conditions</font></string>
+    <string name="check_roles_">Please check the terms and conditions</string>
+    <string name="outlet_name">Outlet name</string>
+    <string name="address">Address</string>
+    <string name="owner_name">Owner name</string>
+    <string name="merchant_type">Merchant type</string>
+    <string name="business_type">Business type</string>
+    <string name="email_hit"><![CDATA[<font color=#41882b> Email </font> <font color=#b3b3b3> (Optional)</font>]]></string>
+    <string name="first_step">Step 1</string>
+    <string name="district_reg">District:</string>
+    <string name="thana_reg">Thana:</string>
+    <string name="post_code_reg">Post code:</string>
+    <string name="back">Back</string>
+    <string name="refcode"><font color="#41882b">Reference code: </font> <font color="#b3b3b3">(Optional)</font></string>
+    <string name="step_3">Step 3</string>
+    <string name="landmark"><![CDATA[<font color=#41882b>Landmark </font> <font color=#b3b3b3>(Optional)</font>]]></string>
+    <string name="pleaes_fill_up_correctly">Please fill up in correctly</string>
+    <string name="step2">Step 2</string>
+    <string name="outlet_image">Outlet image</string>
+    <string name="owner_photo">Owner\'s Photo</string>
+    <string name="trade_license">Trade license </string>
+    <string name="passport_reg">Passport</string>
+    <string name="birth_certificate">Birth certificate</string>
+    <string name="driving_license">Driving license</string>
+    <string name="visiting_card">Visiting card</string>
+    <string name="step4">Step 4</string>
+    <string name="retiler_q1">Are you currently  doing  mobile recharge business?</string>
+    <string name="retailer_q2">Are you a mobile banking agent?</string>
+    <string name="retailer_q3">Did you get the app from the Play Store?</string>
+    <string name="grameenphone">Grameenphone</string>
+    <string name="banglalink">Banglalink</string>
+    <string name="robi">Robi</string>
+    <string name="airtel">Airtel</string>
+    <string name="teletalk">Teletalk</string>
+    <string name="service">Service</string>
+    <string name="bkash">Bkash</string>
+    <string name="rocket">Rocket</string>
+    <string name="mcash">Mcash</string>
+    <string name="mobile_money">Mobile money</string>
+    <string name="mycash">Mycash</string>
+    <string name="first_page_nid">Take a picture with the camera on the front of your national identity card</string>
+    <string name="nid_second_page">Take pictures with the camera on the back of your national identity card</string>
+    <string name="national_id_card">National ID Card</string>
+
+    <string name="didital_hospital">Digital Hospital</string>
+    <string name="package_list_digital_health">All Package List</string>
+    <string name="insurance_claim">Insurance Claim</string>
+    <string name="selected_healthmart_package" translatable="false">healthmart_package</string>
+    <string name="active_btn">Active</string>
+    <string name="amount_title">Total Amount</string>
+    <string name="validity">validity</string>
+    <string name="contact_eith_doctor">Counsel with the doctor</string>
+    <string name="in_pack">In This Package</string>
+    <string name="call_doctor">Call Doctor</string>
+    <string name="doctor_vedio_call">Vedio Call</string>
+    <string name="call_limit">Unlimited</string>
+    <string name="doctor_chat">Doctor Chat</string>
+    <string name="degital_prescription">digital prescription</string>
+    <string name="free_prescription">Free</string>
+    <string name="helth_cashback">Health Cashback</string>
+    <string name="in_package">In This Package</string>
+    <string name="next_step">Next Step</string>
+    <string name="type_of_identy">Type of ID</string>
+    <string name="helth_birth_certificate">Birth registration 18+</string>
+    <string name="passport">Passport</string>
+    <string name="nid_paper">National ID Card</string>
+    <string name="document" translatable="false">helth_doc_type</string>
+    <string name="user_details">User info</string>
+    <string name="healthmobile" translatable="false">mobile_number</string>
+    <string name="helth_active_to">Activating</string>
+    <string name="type_name_in_english">Your Name (Type in English)</string>
+    <string name="relation">Relation</string>
+    <string name="number_in_english">Number (Type in English)</string>
+    <string name="father">Father</string>
+    <string name="mother">Mother</string>
+    <string name="husband_wife">Husband/Wife</string>
+    <string name="son">Son</string>
+    <string name="daughter">Daughter</string>
+    <string name="selectfrom">Select from</string>
+    <string name="selected_helth_p">Package</string>
+    <string name="trx_details">Transaction log</string>
+    <string name="health_trx_tag" translatable="false">health_trx</string>
+    <string name="health_claim_tag" translatable="false">health_claim</string>
+    <string name="health_trx_id">Activation Id:</string>
+    <string name="month_validity">Month validity</string>
+    <string name="nominir_info">Nominee Information (Optional)</string>
+    <string name="birthday">Date of Birth</string>
+    <string name="h_gender">Gender</string>
+    <string name="nomine_mobile_number">Mobile Number</string>
+    <string name="please_select">Please Select</string>
+
+    <array name="faq_header">
+        <item>How do I login to the new app version for the first time?</item>
+        <item>What is a registered mobile number?</item>
+        <item>What is OTP?</item>
+        <item>If I do not get the OTP number?</item>
+        <item>How do I login next time to the new app version of PayWell?</item>
+        <item>What is PayWell email address?</item>
+    </array>
+
+    <array name="faq_child">
+        <item>Click the login option to log in. Then enter your mobile number used in PayWell and
+            enter your PIN number and click on the login option. 4 digit OTP number will be sent to
+            your registered mobile number. Enter the OTP number in the right place and click on the <b>
+                “Next”
+            </b> option. When the OTP verification is complete, click on the <b>“OK”</b> option.
+        </item>
+        <item>The mobile number used while registering at PayWell is your registered mobile
+            number.
+        </item>
+        <item>When you login for the first time, A 4 digit OTP (One Time Password) number will be
+            sent to your registered mobile number.
+        </item>
+        <item>If you do not get the OTP number, click the Resend OTP option.</item>
+        <item>Login with registered mobile number and PIN number.</item>
+        <item>helpdesk@cloudwell.co or salesops@cloudwell.co</item>
+    </array>
+
+    <array name="parent">
+        <item>Registration?</item>
+        <item>Query about PayWell Balance Refill Process?</item>
+        <item>Mobile topup?</item>
+        <item>Palli Bidyut bill payment?</item>
+        <item>DESCO, DPDC And WASA?</item>
+        <item>MyCash?</item>
+        <item>Air, Bus and Launch Ticket?</item>
+    </array>
+
+    <array name="q1">
+        <item>1. What is PayWell?</item>
+        <item>2. How can I use PayWell service?</item>
+        <item>3. How can I register with PayWell as a retailer?</item>
+        <item>4. Can I open a PayWell account without a valid trade license?</item>
+        <item>5. Can I use someone else\'s trade license to open a PayWell account?</item>
+        <item>6. How do I transfer my PayWell account to another person?</item>
+        <item>7. Is there any charge for PayWell registration?</item>
+        <item>8. If I want to use PayWell service on web version?</item>
+        <item>9. What can I do now after registration, it\'s showing your request is "Pending"?
+        </item>
+        <item>10. How do I cancel the registration?</item>
+        <item>11. What to do to change the mobile?</item>
+    </array>
+    <array name="a1">
+        <item>PayWell acts as a one-stop solution for various payments through a large network of
+            outlets, providing users the most convenient, fastest secured platform. Customers can
+            easily recharge all mobile operators and brilliant numbers, can pay Palli Bidyut, DESO,
+            DPDC, Dhaka WASA, Karnafuli Gas , Internet Bill can purchase Bus, Launch and Air Ticket
+            , BBC Windows and Bongo Pakage, payment of Indian visa fee and difference services as
+            well.
+        </item>
+        <item>Android app, Web portal &amp; POS machine.</item>
+        <item>Retailers must have physical outlet/valid trade license, National ID Card and basic
+            understanding of app/device usage. Business types include but are not limited to
+            convenience stores, pharmacies, super-stores, grocery stores, telecom servicing centers,
+            bookshops, photocopy stations, electronic stores and cyber cafés. If want to be an agent
+            of PayWell, you can download PayWell Services app from Google Play Store in your android
+            device and fill up registration form and upload required documents. Upon approval by our
+            verification team, you will get PIN number and can access to PayWell services. If you
+            want to use other means i.e. POS terminal, computer or web panel, please contact our
+            helpdesk 096667773333, 09638016566 for know about manual registration process.
+        </item>
+        <item>No, If you do not have a trade license, you will not be able to open any account to
+            start any business with PayWell.
+        </item>
+        <item>We recommend using your own trade license.</item>
+        <item>For the POS machine, contact your nearest dealer/collection officer with 1 copy
+            passport size photo of the new agent, NID photo, photo of trade licensee, and clear
+            photo with signboard/banner from outside the outlet. In the case of the Mobile App and
+            Web Portal, we recommend to open a new account.
+        </item>
+        <item>There is no charge for registration at PayWell.</item>
+        <item>You need to email us your details information. salesops@cloudwell.co or
+            helpdesk@cloudwell.co, including 1 copy of your passport size photo, NID photo (both
+            directions), photo of the trade license and outlet image, to open a PayWell webportal
+            access for your computer.
+        </item>
+        <item>All the information of the agent will verifying from the PayWell head office so your
+            request is showing "Pending". After 1 hour if the text "Pending" then contacts us
+            096101-16566, 096380-16566, 16566 helpline.
+        </item>
+        <item>To cancel the registration, contact us on 096101-16566, 096380-16566, 16566
+            helpline.
+        </item>
+        <item>Sir, contact us to relaunch the PayWell app on the new mobile.</item>
+    </array>
+    <array name="q2">
+        <item>1. How can I get balance to sell PayWell services?</item>
+        <item>2. Do I need to have separate balance for each service?</item>
+        <item>3. From which banks can I refill the balance at PayWell?</item>
+        <item>4 Can I refill the PayWell balance from bKash?</item>
+        <item>5. How do I refill the PayWell balance from Nagad?</item>
+        <item>6. How do I claim the balance from Nagad to PayWell?</item>
+        <item>7. What is the charge of balance refill from Nagad?</item>
+        <item>8. Balance showing zero (0). What to do about it?</item>
+        <item>9. PayWell balance mismatch what can I do now?</item>
+        <item>10. What do I do to get my monthly transaction report?</item>
+    </array>
+    <array name="a2">
+        <item>You can easily refill PayWell balance in 3 ways lift from our local distributor,
+            deposit to any of our designated banks and can also refill balance through Nagad
+            payments.
+        </item>
+        <item>No. You can sell any services from single PayWell balance.</item>
+        <item>You can refill the balance at PayWell from BRAC Bank, Dutch Bangla Bank, Islamic Bank
+            Bangladesh Limited, Pubali Bank, Standard Chartered Bank and The City Bank.
+        </item>
+        <item>Currently this service is not available.</item>
+        <item>Select the Direct Balance Refill option. Enter the amount of money and "Confirm". Give
+            the PayWell PIN number. Select “I agree to the terms and conditions” with your Nagad
+            account number and proceed. “Proceed” with the “OTP” number sent via SMS from Nagad to
+            your mobile. Give the Nagad PIN number. PayWell balance will be added immediately.
+        </item>
+        <item>For balance, go to the balance claim option of PayWell app and complete the claim
+            process with your cash account number / transaction ID and amount of money. (1.2%
+            service charge applicable). If the balance is not added within 5 minutes, call the
+            PayWell Help Desk. \n
+            <b>Note: The PayWell Authority does not bear the responsibility if
+                the balance is not added due to error of 11 digit mobile number or RID. Please be
+                careful when making any payments.
+            </b>
+        </item>
+        <item>1.2 service charge is applicable.</item>
+        <item>If PayWell does not recognize your POS properly, your balance may show zero. If there
+            is a problem in the registration of your POS, such a problem may occur. In that case,
+            wait a while and try again. For “web portal” close your computer\\\'s browser
+            completely, clear the browser history and start a new web portal page. In the case of a
+            mobile app, login again.
+        </item>
+        <item>Please contact us at 096101-16566, 096380-16566, 16566 helpline. In 24 to 48 hours you
+            will be given a detailed statement of the specified time period.
+        </item>
+        <item>Please contact us on 096101-16566, 096380-16566, 16566 helpline.</item>
+    </array>
+
+    <array name="q3">
+        <item>1. What to do if I get the message "Internet Connection Error" when trying to top
+            up?
+        </item>
+        <item>2. What do I do if I see “Time limit Error” when topup a number?</item>
+        <item>3. What do I do if I get the status “Invalid Topup Value”?</item>
+        <item>4. What do I do if I get “Authentication Error” when topup?</item>
+        <item>5. What do I do if it shows “Technical Error” when topup?</item>
+        <item>6. Repeatedly showing “Can Not Be Processed” when topup?</item>
+        <item>7. What do I do if topup shows an error message?</item>
+        <item>8. What to do if topup shows "Successful" response but customer did not get the
+            balance?
+        </item>
+    </array>
+
+
+    <array name="a3">
+        <item>This message shows if you have trouble getting internet in POS. If you get “Internet
+            Connection Error” message, wait for 45 seconds before making the next transaction. Even
+            then, if the problem is not solved, open the battery of the POS machine, open the SIM
+            card and try to put it again, because if the SIM card is displaced, the POS will not get
+            internet connection.
+        </item>
+        <item>Once you have successfully topped any Grameenphone, Skitt, Banglalink, Teletalk,
+            Airtel or Robi number, you will not be able to topup the same amount within next 5
+            minutes for the next 05 minutes.
+        </item>
+        <item>Minimum 10 taka for “Prepaid” Number and minimum 50 taka for “Postpaid” Number can be
+            topup. You can\'t topup any number above 1000 taka at once. If you give any amount
+            outside this, this status will show.
+        </item>
+        <item>This error is usually shown by giving wrong PIN number.</item>
+        <item>This status can be due to two reasons - the number you want to topup if you get this
+            error from the operator or the Internet connection of the POS is disconnected during the
+            transaction. In both cases you have to go to "Inquire Topup" and check the transaction.
+            \n In the case of the first reason, you will see "Technical Error" in the Status of the
+            transaction in response to the search, this is a technical problem received from the
+            operator. There is no possibility of cutting your balance for this.
+            In the case of the second reason, sometimes the transaction is successful. This is
+            because, even though your request from POS reaches our server during the transaction,
+            the POS internet connection is disconnected before it can be answered, which shows the
+            error. In this case, there is no need to repeat Topup.
+        </item>
+        <item>This status is given by the operator (eg: Grameenphone, Banglalink, Robi, Airtel,
+            Teletalk). In this case, after waiting for a while, you can request Topup again at
+            number.
+        </item>
+        <item>Usually, the answer to your request comes within 45 seconds through Sending, Receiving
+            and Connecting. If there is no response after 45 seconds, first check your internet
+            connection, if the internet connection is OK, then wait 3-5 minutes and call Customer
+            Care to report your problem. If you exit the menu without any error, go to "Inquire
+            Topup" and search for the topup to see if the topup is done.
+        </item>
+        <item>You will be informed of the details of Topup within 24 to 48 hours subject to the
+            appropriate evidence obtained by contacting the concerned operator from PayWell. In that
+            case, if the topup is done, the customer\'s complaint will not be accepted and the
+            retailer will not get any refund. If Topup has failed due to any kind of problem then
+            the same amount of Topup will be refunded in the retailer balance. Just go to “Inquire
+            Topup” and search for Topup and if you show “fail” then you can request to send the
+            recharge again
+        </item>
+    </array>
+
+    <array name="q4">
+        <item>1. How can I get Palli Bidyut bill payment service?</item>
+        <item>2. How do I get a stamped copy of the contract?</item>
+        <item>3. Is it possible to pay Palli Bidyut bill from anywhere in Bangladesh?</item>
+        <item>4. What do I do if shows "to be processed" when I trying to pay the Palli Bidyut bill
+            payment?
+        </item>
+        <item>5. What do I do if it shows "Canceled due to duplicate" request when I trying to pay
+            the Palli Bidyut bill payment?
+        </item>
+        <item>6. What do I do when I trying to pay the Palli Bidyut bill payment, the bill shows not
+            processed?
+        </item>
+        <item>7. What do I do if I see the wrong bill number when I go to pay the Palli Bidyut
+            bill?
+        </item>
+        <item>8. I paid the Palli Bidyut bill, after checking the Inquiry check - TBPS Response
+            Error, what should I do?
+        </item>
+        <item>9. What do I do if Palli Bidyut bill not paid (Update)?</item>
+        <item>10. Which number should I use when paying Palli Bidyut bill, SMS bill number or SMS
+            account number?
+        </item>
+        <item>11. Showing "Invalid Bill Number" while paying Palli Bidyut bill?</item>
+        <item>12. What to do to upload Palli Bidyut bill?</item>
+        <item>13. Showing "Service not rendered" while paying Palli Bidyut bill?</item>
+        <item>14. Is it possible to pay Palli Bidyut pre-paid bill?</item>
+    </array>
+
+    <array name="a4">
+        <item>You can get Palli Bidyut bill payment service by signing a contract with us. After the
+            contract reaches us, the Palli Bidyut service will be active in your app.
+        </item>
+        <item>If a copy of the stamp is emailed to you, you will fill it with your signature and if
+            you email us a scanned copy of the stamp, we will start the rural electricity service.
+            The original copy of the stamp has to be couriered to our place.
+        </item>
+        <item>Yes. You can pay Palli Bidyut bill from anywhere in Bangladesh.</item>
+        <item>Wait a while and try again. You tried to pay the bill again before your first attempt
+            to pay the bill was successful or unsuccessful, or while it was in the process. In that
+            case, wait for 3-5 minutes and try to clear the bill again.
+        </item>
+        <item>You are trying to pay the same bill again and again. Or your bill has not been updated
+            at the Palli Bidyut office. If the bill has not been updated, please contact our call
+            center. We will take steps to update your bill.
+        </item>
+        <item>Please try again later.</item>
+        <item>You are giving the wrong bill number.</item>
+        <item>Try again after a while.</item>
+        <item>Give us your bill number. We are trying to resolve your issue by contacting Palli
+            Bidyut.
+        </item>
+        <item>Dear Agent, for your information, Dhaka-1/3/4, Gazipur-1, Narayanganj-1, Jessore-1,
+            Bhola, Sunamganj, Tangail, Mymensingh-1, Barisal-2, Sylhet-1, Jhenaidah , Faridpur,
+            Brahmanbaria and Cox\'s Bazar-Palli biddut Samiti bill have to be paid with SMS account
+            number.\n
+            <b>Note: In case of bills other than the mentioned Palli biddut Samiti, the bill has to
+                be paid with SMS bill number.
+            </b>
+        </item>
+        <item>If you show "Invalid Bill Number" while paying Palli Bidyut bill, please contact us on
+            096101-16566, 096380-16566, 16566 helpline.
+        </item>
+        <item>For uploading Palli Bidyut bill, contact us on 096101-16566, 096380-16566, 16566
+            helpline.
+        </item>
+        <item>If you show "Service not rendered" while paying the rural electricity bill, it means
+            that your rural electricity service is not running. Contact us 096101-16566,
+            096380-16566, 16566 helpline to start the rural electricity service.
+        </item>
+        <item>Currently this service in not available.</item>
+    </array>
+
+
+    <array name="q5">
+        <item>1. Is it possible to pay DESCO pre-paid bill?</item>
+        <item>2. Is it possible to pay DESCO due bill?</item>
+        <item>3. Which number should I give while paying DPDC bill?</item>
+        <item>4. Which number should I give while paying WASA bill?</item>
+    </array>
+
+    <array name="a5">
+        <item>Yes, You can payment DESCO pre-paid bill.</item>
+        <item>Yes.</item>
+        <item>Use the bill copy
+            <b>“Customer No”.</b>
+        </item>
+        <item>Use the bill copy
+            <b>“Bill No”.</b>
+        </item>
+    </array>
+
+
+    <array name="q6">
+        <item>1. How do I register for MyCash service?</item>
+        <item>2.I live outside Dhaka. How do I register My Cash from outside Dhaka?</item>
+        <item>3. What are the benefits of MyCash service?</item>
+        <item>4. How many transactions can I see from the mini statement?</item>
+        <item>5. What is OTP?</item>
+        <item>6. OTP validity period?</item>
+        <item>7. What do I do when the OTP expires?</item>
+    </array>
+
+    <array name="a6">
+        <item>To register MyCash, you will become an agent of MyCash by submitting 2 copies of
+            passport size photo (lab print) of the agent, photocopy of trade license, copy of NID
+            and 1 copy photo of the nominee (lab print) and NID. Become an agent of MyCash after
+            verifying all your information. Contact us for registration form 096101-16566,
+            096380-16566, 16566 helpline. \n
+            <b>Note: Grameenphone and Teletalk mobile numbers cannot be used during registration in
+                Mycash.
+            </b>
+        </item>
+        <item>Contact us for registration 096101-1858, 097360-1656, 1858 Help Line.</item>
+        <item>You can cash in / out through MyCash</item>
+        <item>The last 5.</item>
+        <item>OTP (one time password) is a 6 digit security code. This code will be required for
+            each payment.
+        </item>
+        <item>7 days</item>
+        <item>Set the OTP again</item>
+    </array>
+
+
+    <array name="q7">
+        <item>1.What are the bus and launch ticket service charges and commissions?</item>
+        <item>2. What are the bus and launch ticket cancellation service charges and commissions?
+        </item>
+        <item>3. How much is the air ticket commission?</item>
+    </array>
+
+    <array name="a7">
+        <item>The customer has to pay 20 (twenty) taka service charge for each ticket. The retailer
+            will get 10 (ten) taka commission for each ticket.
+        </item>
+        <item>The customer has to pay 20 (twenty) taka service charge for each ticket cancellation.
+            The retailer will get 10 (ten) taka commission for each ticket.
+        </item>
+        <item>The commission on air tickets is 5% of base fare.</item>
+    </array>
 
 
 </resources>

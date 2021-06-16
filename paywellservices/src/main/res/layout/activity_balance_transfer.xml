@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/linearLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/layout_background"
-    android:orientation="vertical">
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/linearLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/layout_background"
+              android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -45,7 +45,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:id="@+id/tvAmount"
@@ -53,7 +53,7 @@
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
                             android:text="@string/amount_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -69,7 +69,7 @@
                         android:inputType="number"
                         android:maxLength="8"
                         android:maxLines="1"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -83,14 +83,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/star_sign"
-                            android:textColor="#FF4719" />
+                            android:textColor="#FF4719"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="2dp"
                             android:text="@string/otp_des"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
                     </LinearLayout>
 
                     <EditText
@@ -105,16 +105,16 @@
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <Button
                 android:id="@+id/mycash_confirm"
@@ -129,7 +129,7 @@
                 android:shadowRadius="2"
                 android:text="@string/confirm_btn"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -4,24 +4,48 @@
     <dimen name="activity_horizontal_margin_half">8dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="activity_horizontal_margin_notification">8dp</dimen>
 
     <!-- Paywell Services dimension -->
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_button">15sp</dimen>
 
-    <!-- bluetooth api -->
+    <!-- bluetooth api -->app_bar_height
 
     <!-- Paywell topup dimension -->
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="radioButtonPadding">29dp</dimen>
     <dimen name="menuTextSize">22sp</dimen>
 
-    <dimen name="card_radius">4dp</dimen>
-
     <!-- Paywell Startup -->
     <dimen name="dots_height">30dp</dimen>
     <dimen name="dots_margin_bottom">20dp</dimen>
 
     <dimen name="radio_button_text_size">16sp</dimen>
+
+
+    <!-- Month -->
+    <dimen name="mti_month_height">48dp</dimen>
+
+    <!-- Timeline -->
+    <dimen name="mti_timeline_lbl_day_text">10sp</dimen>
+
+
+    <dimen name="sequence_active_step_padding_top">12dp</dimen>
+    <dimen name="sequence_active_step_padding_bottom">16dp</dimen>
+    <dimen name="sequence_anchor_min_width">48dp</dimen>
+    <dimen name="sequence_anchor_max_width">120dp</dimen>
+
+
+    <!--NAVIGATION-->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">200dp</dimen>
+    <dimen name="nav_header_userprofil_height">60sp</dimen>
+    <dimen name="nav_header_username_textsize">20sp</dimen>
+    <dimen name="nav_header_job_textsize">14sp</dimen>
+    <dimen name="nav_menu_height">50dp</dimen>
+    <dimen name="nav_menu_margin_left">20dp</dimen>
+    <dimen name="nav_menu_icon_height">20dp</dimen>
+    <dimen name="nav_menu_title_textsize">14sp</dimen>
+    <dimen name="nav_submenu_title_textsize">12sp</dimen>
+    <dimen name="nav_submenu_title_margin_left">60dp</dimen>
 </resources>

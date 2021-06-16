@@ -2,7 +2,6 @@ package com.cloudwell.paywell.services.activity.utility;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +9,8 @@ import android.widget.Button;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DescoMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASAMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.westzone.WZPDCLMainActivity;
@@ -21,6 +21,8 @@ import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class UtilityMainActivity extends AppCompatActivity {
 
@@ -33,7 +35,7 @@ public class UtilityMainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility);
         }
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnDesco = findViewById(R.id.homeBtnDESCO);
         Button btnDpdc = findViewById(R.id.homeBtnDPDC);
@@ -63,6 +65,9 @@ public class UtilityMainActivity extends AppCompatActivity {
             btnBanglalion.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnKarnaphuli.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_MENU);
+
     }
 
     @Override
@@ -85,7 +90,7 @@ public class UtilityMainActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.homeBtnDESCO:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
-                startActivity(new Intent(this, DESCOMainActivity.class));
+                startActivity(new Intent(this, DescoMainActivity.class));
                 break;
             case R.id.homeBtnDPDC:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);

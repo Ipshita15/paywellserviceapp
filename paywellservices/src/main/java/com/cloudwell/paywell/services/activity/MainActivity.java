@@ -6,15 +6,15 @@ import android.accounts.AccountManager;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
@@ -26,55 +26,70 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cloudwell.paywell.services.BuildConfig;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.about.AboutActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.chat.ChatActivity;
+import com.cloudwell.paywell.services.activity.education.EducationMainActivity;
+import com.cloudwell.paywell.services.activity.education.bbc.BBC_Main_Activity;
+import com.cloudwell.paywell.services.activity.entertainment.EntertainmentMainActivity;
+import com.cloudwell.paywell.services.activity.entertainment.bongo.BongoMainActivity;
 import com.cloudwell.paywell.services.activity.eticket.ETicketMainActivity;
+import com.cloudwell.paywell.services.activity.eticket.airticket.menu.AirTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.eticket.busticketNew.menu.BusTicketMenuActivity;
+import com.cloudwell.paywell.services.activity.faq.PostLoginFAQActivity;
+import com.cloudwell.paywell.services.activity.fee.FeeMainActivity;
+import com.cloudwell.paywell.services.activity.healthInsurance.HealthInsuranceMainActivity;
+import com.cloudwell.paywell.services.activity.home.HomeActivity;
+import com.cloudwell.paywell.services.activity.location.model.CurrentLocationModel;
 import com.cloudwell.paywell.services.activity.mfs.MFSMainActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.MyFavoriteMenuActivity;
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
-import com.cloudwell.paywell.services.activity.notification.NotificationActivity;
-import com.cloudwell.paywell.services.activity.notification.NotificationAllActivity;
+import com.cloudwell.paywell.services.activity.navigationdrawer.Constant;
+import com.cloudwell.paywell.services.activity.navigationdrawer.NavMenuAdapter;
+import com.cloudwell.paywell.services.activity.navigationdrawer.NavMenuModel;
+import com.cloudwell.paywell.services.activity.navigationdrawer.SubTitle;
+import com.cloudwell.paywell.services.activity.navigationdrawer.TitleMenu;
+import com.cloudwell.paywell.services.activity.notification.allNotificaiton.NotificationAllActivity;
 import com.cloudwell.paywell.services.activity.product.ProductMenuActivity;
-import com.cloudwell.paywell.services.activity.product.productHelper.ProductHelper;
+import com.cloudwell.paywell.services.activity.product.ekShop.EKShopActivity;
 import com.cloudwell.paywell.services.activity.refill.RefillBalanceMainActivity;
 import com.cloudwell.paywell.services.activity.refill.banktransfer.BankTransferMainActivity;
 import com.cloudwell.paywell.services.activity.refill.card.CardTransferMainActivity;
+import com.cloudwell.paywell.services.activity.refill.nagad.NagadMainActivity;
 import com.cloudwell.paywell.services.activity.scan.DisplayQRCodeActivity;
+import com.cloudwell.paywell.services.activity.settings.ChangePinActivity;
+import com.cloudwell.paywell.services.activity.settings.HelpMainActivity;
 import com.cloudwell.paywell.services.activity.settings.SettingsActivity;
 import com.cloudwell.paywell.services.activity.statements.StatementMainActivity;
 import com.cloudwell.paywell.services.activity.statements.ViewStatementActivity;
@@ -82,12 +97,17 @@ import com.cloudwell.paywell.services.activity.terms.TermsActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMainActivity;
 import com.cloudwell.paywell.services.activity.topup.TopupMenuActivity;
 import com.cloudwell.paywell.services.activity.topup.brilliant.BrilliantTopupActivity;
+import com.cloudwell.paywell.services.activity.topup.model.MobileOperator;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
 import com.cloudwell.paywell.services.activity.utility.UtilityMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionMainActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeActivity;
 import com.cloudwell.paywell.services.activity.utility.banglalion.BanglalionRechargeInquiryActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOBillPayActivity;
-import com.cloudwell.paywell.services.activity.utility.electricity.desco.DESCOMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.DescoMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.postpaid.DESCOPostpaidMainActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.DescoPrepaidBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.electricity.desco.prepaid.DescoPrepaidMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCMainActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.dpdc.DPDCPostpaidBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.electricity.wasa.WASABillPayActivity;
@@ -100,7 +120,8 @@ import com.cloudwell.paywell.services.activity.utility.ivac.IvacMainActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.karnaphuli.KarnaphuliMainActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.PBMainActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.dialog.BannerDetailsDialog;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
@@ -112,14 +133,21 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.app.model.APIResBalanceCheck;
+import com.cloudwell.paywell.services.app.model.RequestBalanceCheck;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
 import com.cloudwell.paywell.services.constant.AllConstant;
 import com.cloudwell.paywell.services.database.DatabaseClient;
 import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.eventBus.GlobalApplicationBus;
+import com.cloudwell.paywell.services.recentList.MyRecyclerViewAdapterRecentUsed;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
-import com.cloudwell.paywell.services.service.notificaiton.NotificationCheckerService;
 import com.cloudwell.paywell.services.service.notificaiton.model.EventNewNotificaiton;
-import com.cloudwell.paywell.services.service.notificaiton.model.StartNotificationService;
+import com.cloudwell.paywell.services.utils.AppHelper;
+import com.cloudwell.paywell.services.utils.AppTestVersionUtility;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.CountryUtility;
 import com.cloudwell.paywell.services.utils.LocationUtility;
 import com.cloudwell.paywell.services.utils.ResorceHelper;
 import com.cloudwell.paywell.services.utils.UpdateChecker;
@@ -134,52 +162,55 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.orhanobut.logger.Logger;
+import com.squareup.otto.Subscribe;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ss.com.bannerslider.Slider;
 import ss.com.bannerslider.event.OnSlideClickListener;
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence;
+import uk.co.deanwild.materialshowcaseview.ShowcaseConfig;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener {
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_BANGLA;
+import static com.cloudwell.paywell.services.utils.LanuageConstant.KEY_ENGLISH;
 
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener, View.OnClickListener, NavMenuAdapter.MenuItemClickListener {
+
+    public static String KEY_COMMING_NEW_NOTIFICATION = "COMMING_NEW_NOTIFICATION";
     private static final long KEY_BALANCE_CHECK_INTERVAL = 5000;
     private boolean doubleBackToExitPressedOnce = false;
     public CoordinatorLayout mCoordinateLayout;
+    private LinearLayout linearLayoutRecentUsedList;
     private AppHandler mAppHandler;
     private UpdateChecker mUpdateChecker;
     public final long UPDATE_SOFTWARE_INTERVAL = 24 * 60 * 60;// 1 day
@@ -189,14 +220,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     DotProgressBar pb_dot;
     private ConnectionDetector mCd;
     public int mNumOfNotification;
-    private TextView mNotification = null;
     private Toolbar mToolbar;
     private boolean mIsNotificationShown;
     private final String TAG_RESPONSE_STATUS = "status";
-    private final String TAG_RESPONSE_TOTAL_UREAD_MSG = "unread_message";
-    private final String TAG_RESPONSE_MSG_ARRAY = "detail_message";
     private final String TAG_RESPONSE_MESSAGE = "message";
-    private final String TAG_RESPONSE_OTP = "otp";
     private NavigationView navigationView;
     boolean checkNotificationFlag = false;
 
@@ -205,7 +232,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Slider viewPager;
     private int currentPage;
 
-    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings;
+    private Button home_topup, home_utility, home_eticket, home_mfs, home_product_catalog, home_statement, home_refill_balance, home_settings, home_Eduction;
 
     private final int PERMISSIONS_FOR_QR_CODE_SCAN = 100;
     private final int PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE = 101;
@@ -220,7 +247,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private GoogleApiClient googleApiClient;
 
-    private String selectedPhnNo;
 
     private int downloadType = 0;
     private int TAG_DOWNLOAD_PLAY_STORE = 1;
@@ -232,8 +258,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private AsyncTask<String, Intent, String> mPushFirebaseIdTask;
 
     // hidden balance menu
-    boolean isBalacedCheckProcessRunning;
+    boolean isBalaceCheckProcessRunning;
+    boolean isBalaceBoxOpen = true;
     ImageView ivBalanceBorder;
+    ScreenStateReceiver mReceiver;
+    //
 
     int start = 9;
     int end = 18;
@@ -241,31 +270,42 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     Calendar cal;
 
     private int lastFavoitePosition = 0;
-    private boolean isFirstTime = true;
     DrawerLayout drawer;
     ImageView ivRightSliderUpDown;
     ObjectAnimator animation;
+    private BottomSheetBehavior sheetBehavior;
+    LinearLayout layoutBottomSheet;
+
+    private ImageView notif_bell;
+
+
+    ArrayList<NavMenuModel> menu;
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         changeStatusBarColor();
+
+        changeAppThemeForNoActionBar();
+
         setContentView(R.layout.activity_main);
 
+        PayWellShortcutManager.Companion.enableShortcutList(this);
+
+        String bd = CountryUtility.getCountryCode("BD");
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
-        mToolbarHeading = (mToolbar.findViewById(R.id.txtHeading));
+        mToolbarHeading = findViewById(R.id.txtHeading);
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         pb_dot = findViewById(R.id.dot_progress_bar);
-        ivBalanceBorder = findViewById(R.id.ivBalanceBorder);
-        ivBalanceBorder.setOnClickListener(this);
+        linearLayoutRecentUsedList  = findViewById(R.id.linearLayoutRecentUsedList);
 
         mCd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         builderNotification = new AlertDialog.Builder(this);
         alertNotification = builderNotification.create();
@@ -283,6 +323,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         cal.set(Calendar.HOUR_OF_DAY, end);
         endHourMilli = cal.getTimeInMillis() / 1000;
 
+        notif_bell = findViewById(R.id.notif_bell);
+
+
         InitializeData();
 
         AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_DASHBOARD);
@@ -290,9 +333,260 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         checkBalance();
         getAllFavoriteDate();
         setupRightNagivationView();
+        setScreenStateReciver();
+        setUpBottomSheet();
+        setNavigationDrawerMenu();
+        setUserRID();
+
+        // newVersionShowcase();
 
 
     }
+
+    private void newVersionShowcase() {
+//        new MaterialShowcaseView.Builder(this)
+//                .setTarget(home_Eduction)
+//                .setDismissText("GOT IT")
+//                .setContentText("This is some amazing feature you should know about")
+//                .show();
+
+        // sequence example
+        ShowcaseConfig config = new ShowcaseConfig();
+        config.setDelay(500); // half second between each showcase view
+
+        MaterialShowcaseSequence sequence = new MaterialShowcaseSequence(this, "" + home_Eduction.getId());
+
+        sequence.setConfig(config);
+
+        sequence.addSequenceItem(home_Eduction,
+                "This is button one", "GOT IT");
+
+        sequence.addSequenceItem(home_settings,
+                "This is button two", "GOT IT");
+
+
+        sequence.start();
+
+
+    }
+
+    private void setUserRID() {
+        TextView _pwId = findViewById(R.id.pwId);
+        assert _pwId != null;
+
+        try {
+            String rid = getString(R.string.rid) + mAppHandler.getRID();
+            if (BuildConfig.DEBUG) {
+                rid = rid + "(" + AppTestVersionUtility.testVersion + ")";
+            }
+            _pwId.setText(rid);
+            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
+                _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
+            } else {
+                _pwId.setTypeface(AppController.getInstance().getAponaLohitFont());
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
+            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
+            View snackBarView = snackbar.getView();
+            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+        }
+    }
+
+    private void setRecentList() {
+
+
+        final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+        favoriteMenuDab.getAllRecentUsedMenu().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<RecentUsedMenu>>() {
+                    @Override
+                    public void accept(List<RecentUsedMenu> favoriteMenus) throws Exception {
+                        generatedRecentUsedRecycView(favoriteMenus);
+                    }
+                });
+
+
+
+
+    }
+
+    private void generatedRecentUsedRecycView(List<RecentUsedMenu> favoriteMenus) {
+
+
+        if(favoriteMenus.size() == 0){
+            linearLayoutRecentUsedList.setVisibility(View.GONE);
+        }else {
+            linearLayoutRecentUsedList.setVisibility(View.VISIBLE);
+        }
+
+
+        boolean isEnglish = mAppHandler.getAppLanguage().equalsIgnoreCase("en");
+
+
+        List<Object> objects = Arrays.asList(RecentUsedStackSet.getInstance().getAll());
+        List<MobileOperator> TEMP  = (List<MobileOperator>)(Object) objects;
+        ArrayList<MobileOperator> mobileOperatorArrayList = new ArrayList<>(TEMP);
+
+
+        // new recycle view
+        final RecyclerView recyclerView = findViewById(R.id.rvRecent);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.getLayoutManager().setMeasurementCacheEnabled(false);
+        MyRecyclerViewAdapterRecentUsed adapter = new MyRecyclerViewAdapterRecentUsed(this, favoriteMenus,isEnglish);
+
+
+        adapter.setClickListener(new MyRecyclerViewAdapterRecentUsed.ItemClickListener() {
+            @Override
+            public void onItemClick(int position, RecentUsedMenu favoriteMenu) {
+                onRecentUsedItemClick(favoriteMenu);
+               // lastFavoitePosition = position;
+            }
+        });
+
+
+
+        recyclerView.setAdapter(adapter);
+    }
+
+
+
+    private void setUpBottomSheet() {
+
+        layoutBottomSheet = findViewById(R.id.bottom_sheet);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+
+        /**
+         * bottom sheet state change listener
+         * we are changing button text when sheet changed state
+         * */
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+
+    }
+
+    private void setScreenStateReciver() {
+        mReceiver = new ScreenStateReceiver();
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        mReceiver = new ScreenStateReceiver();
+        registerReceiver(mReceiver, intentFilter);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GlobalApplicationBus.getBus().register(this);
+
+        refreshStringsOfButton();
+        if (alertNotification.isShowing()) {
+            alertNotification.dismiss();
+        }
+
+        viewPager.setInterval(2000);
+        updateMyFavorityView();
+
+        mNumOfNotification = 0;
+
+        AppHelper.notificationCounterCheck(mCd, getApplicationContext());
+
+        startRightLeftAnimation();
+
+        isBalaceBoxOpen = true;
+
+
+        mToolbarHeading.setText(getString(R.string.balance_pre_text));
+
+        setRecentList();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewPager.setInterval(0);
+        GlobalApplicationBus.getBus().unregister(this);
+
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopRightLefAnimation();
+        isBalaceBoxOpen = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Logger.v("onDestroy");
+        if (mNotificationAsync != null) {
+            mNotificationAsync.cancel(true);
+        }
+
+
+        if (mRequestPhnNumberAddAsync != null) {
+            mRequestPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mConfirmPhnNumberAddAsync != null) {
+            mConfirmPhnNumberAddAsync.cancel(true);
+        }
+
+        if (mPushFirebaseIdTask != null) {
+            mPushFirebaseIdTask.cancel(true);
+        }
+
+        if (viewPager != null) {
+            Slider.imageLoadingService = null;
+            viewPager = null;
+        }
+
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+        }
+
+        super.onDestroy();
+    }
+
 
     private void changeStatusBarColor() {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -305,7 +599,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void setupRightNagivationView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
+        NavigationView navigationView = findViewById(R.id.nav_view_right);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -376,7 +670,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         recyclerViewFavoirte.getLayoutManager().setMeasurementCacheEnabled(false);
 
 
-
         HomeFavoriteAdapter adapter = new HomeFavoriteAdapter(this, result, isEnglish);
 
         adapter.setClickListener(new HomeFavoriteAdapter.ItemClickListener() {
@@ -393,19 +686,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         }
 
-        if (isFirstTime) {
-            isFirstTime = false;
-
-        }
 
     }
 
     private void updateMyFavorityView() {
         getAllFavoriteDate();
+        PayWellShortcutManager.Companion.enableShortcutList(this);
+
     }
 
 
     private void InitializeData() {
+
         /*Buttons Initialization*/
         home_topup = findViewById(R.id.homeBtnTopup);
         home_utility = findViewById(R.id.homeBtnUtility);
@@ -416,53 +708,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement = findViewById(R.id.homeBtnMiniStatement);
         home_refill_balance = findViewById(R.id.homeBtnRefillBalance);
         home_settings = findViewById(R.id.homeBtnSettings);
+        home_Eduction = findViewById(R.id.homeBtnEduction);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
 
         drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
         drawer.setDrawerListener(toggle);
+        mToolbar.setNavigationIcon(R.drawable.ic_nav_back);
+
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Bundle delivered = getIntent().getExtras();
-        if (delivered != null && !delivered.isEmpty()) {
-            mIsNotificationShown = delivered.getBoolean(NotificationActivity.IS_NOTIFICATION_SHOWN);
-        }
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("bn") || mAppHandler.getAppLanguage().equalsIgnoreCase("unknown")) {
-            Configuration config = new Configuration();
-            config.locale = Locale.FRANCE;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_BANGLA, ""));
         } else {
-            Configuration config = new Configuration();
-            config.locale = Locale.ENGLISH;
-            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            switchToCzLocale(new Locale(KEY_ENGLISH, ""));
         }
 
-        // mToolbarHeading.setText(getString(R.string.balance) + mAppHandler.getPwBalance() + getString(R.string.tk));
+         mToolbarHeading.setText(mAppHandler.getPwBalance() + getString(R.string.tk));
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             mToolbarHeading.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
@@ -497,19 +766,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             checkLocationUpdate();
         }
 
-        if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false") || mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
-            checkPhnNoUpdate();
+        if (mAppHandler.getMerchantTypeVerificationStatus().equalsIgnoreCase("false")) {
+
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                startActivity(new Intent(MainActivity.this, MerchantTypeVerify.class));
+            }
+
         }
+
+//        else  if (mAppHandler.getInitialChangePinStatus().equalsIgnoreCase("false")){
+//            Intent intent = new Intent(MainActivity.this, ChangePinActivity.class);
+//            intent.putExtra("isFirstTime", true);
+//            startActivity(intent);
+//            finish();
+//        }
+
+
 //      Handle possible data accompanying notification message.
         if (getIntent().getExtras() != null) {
             for (String key : getIntent().getExtras().keySet()) {
                 String value = getIntent().getExtras().getString(key);
                 if (key.equals("Notification") && value.equals("True")) {
-                    mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+                    // mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
                 }
             }
         }
-        subscribeToPushService();
+       // subscribeToPushService();
         initializePreview();
 
         //Tutorial
@@ -552,37 +836,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         home_statement.setText(R.string.home_statement);
         home_refill_balance.setText(R.string.home_refill_balance);
         home_settings.setText(R.string.home_settings);
+        home_Eduction.setText(R.string.home_education);
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            home_topup.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_utility.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_eticket.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_mfs.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_statement.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getOxygenLightFont());
-            home_settings.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            home_topup.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_utility.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_eticket.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_mfs.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_product_catalog.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_statement.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_refill_balance.setTypeface(AppController.getInstance().getAponaLohitFont());
-            home_settings.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
 
-        navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
-        navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
-        navigationView.getMenu().findItem(R.id.nav_eticket).setTitle(R.string.home_eticket);
-        navigationView.getMenu().findItem(R.id.nav_mfs).setTitle(R.string.nav_mfs);
-        navigationView.getMenu().findItem(R.id.nav_product).setTitle(R.string.nav_product_catalog);
-        navigationView.getMenu().findItem(R.id.nav_more).setTitle(R.string.nav_more_title);
-        navigationView.getMenu().findItem(R.id.nav_check_balance).setTitle(R.string.nav_check_balance);
-        navigationView.getMenu().findItem(R.id.nav_terms).setTitle(R.string.nav_terms_and_conditions);
-        navigationView.getMenu().findItem(R.id.nav_policy).setTitle(R.string.nav_policy_statement);
-        navigationView.getMenu().findItem(R.id.nav_about).setTitle(R.string.nav_about);
+//        navigationView.getMenu().findItem(R.id.nav_topup).setTitle(R.string.home_topup);
+//        navigationView.getMenu().findItem(R.id.nav_utility).setTitle(R.string.home_utility);
+//        navigationView.getMenu().findItem(R.id.nav_eticket).setTitle(R.string.home_eticket);
+//        navigationView.getMenu().findItem(R.id.nav_mfs).setTitle(R.string.nav_mfs);
+//        navigationView.getMenu().findItem(R.id.nav_product).setTitle(R.string.nav_product_catalog);
+//        navigationView.getMenu().findItem(R.id.nav_more).setTitle(R.string.nav_more_title);
+//        navigationView.getMenu().findItem(R.id.nav_check_balance).setTitle(R.string.nav_check_balance);
+//        navigationView.getMenu().findItem(R.id.nav_terms).setTitle(R.string.nav_terms_and_conditions);
+//        navigationView.getMenu().findItem(R.id.nav_policy).setTitle(R.string.nav_policy_statement);
+//        navigationView.getMenu().findItem(R.id.nav_about).setTitle(R.string.nav_about);
     }
 
     @Override
@@ -591,36 +857,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mToolbar.inflateMenu(R.menu.main);
         Menu _menu = mToolbar.getMenu();
 
-        TextView _pwId = findViewById(R.id.pwId);
-        assert _pwId != null;
 
-        try {
-            _pwId.setText(getString(R.string.rid) + mAppHandler.getRID());
-            if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-                _pwId.setTypeface(AppController.getInstance().getOxygenLightFont());
-            } else {
-                _pwId.setTypeface(AppController.getInstance().getAponaLohitFont());
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-        }
 
         MenuItem menuNotification = _menu.findItem(R.id.menu_notification);
         View notificationView = MenuItemCompat.getActionView(menuNotification);
+        notif_bell = notificationView.findViewById(R.id.notif_bell);
 
         //Scanner
         MenuItem menuScan = _menu.findItem(R.id.menu_scanner);
 
-        mNotification = notificationView.findViewById(R.id.tvNotification);
-        mNotification.setVisibility(View.INVISIBLE);
         if (!mIsNotificationShown) {
             if (!mCd.isConnectingToInternet())
                 AppHandler.showDialog(getSupportFragmentManager());
-            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
+//            mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
         }
         notificationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -628,15 +877,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NOTIFICATION_ICON);
                 if (mNumOfNotification != 0) {
-                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
-                    startActivity(intent);
                     mNumOfNotification = 0;
-                    finish();
+                    Intent intent = new Intent(MainActivity.this, NotificationAllActivity.class);
+                    intent.putExtra(KEY_COMMING_NEW_NOTIFICATION, true);
+                    startActivity(intent);
                 } else {
-
                     startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                    finish();
-
                 }
             }
         });
@@ -656,7 +902,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             generateQRCode();
         }
         startActivity(new Intent(MainActivity.this, DisplayQRCodeActivity.class));
-        finish();
+
         return true;
     }
 
@@ -665,12 +911,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (newNotification == 0)
-                    mNotification.setVisibility(View.INVISIBLE);
-                else {
-                    String notification = Integer.toString(newNotification);
-                    mNotification.setVisibility(View.VISIBLE);
-                    mNotification.setText(notification);
+                if (newNotification == 0) {
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.ic_bell));
+                } else {
+                    notif_bell.setImageDrawable(getResources().getDrawable(R.drawable.group_180));
                 }
             }
         });
@@ -780,7 +1024,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             startActivity(new Intent(MainActivity.this, TermsActivity.class));
         } else if (id == R.id.nav_policy) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRIVACY_MENU);
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paywellonline.com/Privacy.php"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AllUrl.privacy));
             startActivity(browserIntent);
         } else if (id == R.id.nav_about) {
             AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ABOUT_MENU);
@@ -789,6 +1033,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             } else {
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
             }
+        } else if (id == R.id.nav_logout) {
+            logout();
+
+
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         assert drawer != null;
@@ -796,42 +1044,68 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
+    private void logout() {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_LOGOUT);
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_logout);
+
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(getString(R.string.logout_message)).setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtHeading:
                 Log.e("check balance", "check balance");
-                if (!isBalacedCheckProcessRunning) {
+                if (!isBalaceCheckProcessRunning) {
                     checkPayWellBalance();
                 }
 
                 break;
-
-            case R.id.ivBalanceBorder:
-                Log.e("check balance", "check balance");
-                if (!isBalacedCheckProcessRunning) {
-                    checkPayWellBalance();
-                }
-
-                break;
-
-
         }
     }
 
     private void initializePreview() {
 
-        String[] imageUrl = new String[mAppHandler.getDisplayPictureCount()];
-        for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
-            imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/retailer_pic_" + len + ".jpg";
-        }
+        String[] imageUrl = new Gson().fromJson(mAppHandler.getImageAddress(), String[].class);
+//        for (int len = 0; len < mAppHandler.getDisplayPictureCount(); len++) {
+//            imageUrl[len] = AllUrl.len + len + ".jpg";
+////                        imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/Banner_Bus.9.png";
+//        }
 
-        Slider.init(new PicassoImageLoadingService(this));
+        String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getImageAddress();
+
+        Slider.init(new PicassoImageLoadingService(imageUpdateVersionString));
 
         viewPager.setAdapter(new MainSliderAdapter(getApplicationContext(), imageUrl));
         viewPager.setInterval(2000);
         viewPager.hideIndicators();
         viewPager.setLoopSlides(true);
+
+
+        String[] bannerDetails = new Gson().fromJson(mAppHandler.getBannerDetails(), String[].class);
 
         viewPager.setOnSlideClickListener(new OnSlideClickListener() {
 
@@ -870,11 +1144,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                         WebViewActivity.TAG_LINK = link;
                         startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                     }
+
+                    String bannerDetail = bannerDetails[position];
+                    String image = imageUrl[position];
+
+                    if (!bannerDetail.equals("")){
+                        showBannerDetails(image, bannerDetail);
+                    }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void showBannerDetails(String image, String bannerDetail) {
+
+        BannerDetailsDialog bannerDetailsDialog = new BannerDetailsDialog(image, bannerDetail);
+        bannerDetailsDialog.show(getSupportFragmentManager(), "bannerDetailsDialog");
+
     }
 
     private void checkPayWellBalance() {
@@ -884,49 +1174,66 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void checkBalance() {
 
-        isBalacedCheckProcessRunning = true;
+        isBalaceCheckProcessRunning = true;
         pb_dot.setVisibility(View.VISIBLE);
-        mToolbarHeading.setVisibility(View.GONE);
+        mToolbarHeading.setVisibility(View.INVISIBLE);
 
-        String imeiNo = mAppHandler.getImeiNo();
-        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIService().callCheckBalance(imeiNo);
+        String userName = mAppHandler.getUserName();
+
+        RequestBalanceCheck m = new RequestBalanceCheck();
+        m.setUsername(userName);
+        m.setDeviceId(mAppHandler.getAndroidID());
+
+
+        Call<APIResBalanceCheck> responseBodyCall = ApiUtils.getAPIServiceV2().callCheckBalance(m);
         responseBodyCall.enqueue(new Callback<APIResBalanceCheck>() {
             @Override
             public void onResponse(Call<APIResBalanceCheck> call, Response<APIResBalanceCheck> response) {
+                try {
+                    pb_dot.setVisibility(View.INVISIBLE);
+                    mToolbarHeading.setVisibility(View.VISIBLE);
+                    isBalaceCheckProcessRunning = false;
 
-                pb_dot.setVisibility(View.GONE);
-                mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalacedCheckProcessRunning = false;
+                    if (response.isSuccessful()) {
+                        if (((response.body() != null) ? response.body().getStatus() : null) != 200) {
 
-                assert response.body() != null;
-                if (response.body().getStatus() == 200) {
-                    String balance = response.body().getBalanceData().getBalance();
+                            showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
 
-                    BigDecimal a = new BigDecimal(balance);
-                    BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                        } else {
+                            String balance = Objects.requireNonNull(response.body()).getBalanceData().getBalance();
+
+                            BigDecimal a = new BigDecimal(balance);
+                            BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
 
-                    mAppHandler.setPWBalance("" + roundOff);
+                            mAppHandler.setPWBalance("" + roundOff);
 
-                    String strBalance = mAppHandler.getPwBalance() + getString(R.string.tk);
-                    mToolbarHeading.setText(strBalance);
+                            String strBalance = mAppHandler.getPwBalance();
+                            mToolbarHeading.setText(strBalance);
 
-                    startHiddenBalance();
+                        }
+
+                    } else {
+
+                        showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+                    }
+                } catch (Exception ignored) {
+                    showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
                 }
+
             }
 
             @Override
             public void onFailure(Call<APIResBalanceCheck> call, Throwable t) {
-                pb_dot.setVisibility(View.GONE);
+                pb_dot.setVisibility(View.INVISIBLE);
                 mToolbarHeading.setVisibility(View.VISIBLE);
-                isBalacedCheckProcessRunning = false;
+                isBalaceCheckProcessRunning = false;
 
-                Logger.e("onFailure:" + t.getLocalizedMessage());
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
+                showSnackMessageWithTextMessage(getString(R.string.try_again_msg));
+
+
             }
         });
     }
@@ -946,7 +1253,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[],
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         switch (requestCode) {
             case PERMISSIONS_REQUEST_FOR_WRITE_EXTERNAL_STORAGE: {
@@ -955,7 +1262,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     if (getMailAddress()) {
                         mUpdateChecker.launchMarketDetails();
                     } else {
-                        mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
+                        mUpdateChecker.downloadAndInstall(AllUrl.URL_update_check);
                     }
                 } else {
                     // permission denied
@@ -1003,21 +1310,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
             }
-            case PERMISSIONS_REQUEST_ACCESS_CALL: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was grantedTask
 
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" + selectedPhnNo));
-                    startActivity(intent);
-
-                } else {
-                    // permission denied
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},
-                            PERMISSIONS_REQUEST_ACCESS_CALL);
-                }
-                break;
-            }
         }
     }
 
@@ -1039,7 +1332,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         new Thread() {
             @Override
             public void run() {
-                mUpdateChecker.checkForUpdateByVersionName(getResources().getString(R.string.check_version));
+                mUpdateChecker.checkForUpdateByVersionName(AllUrl.URL_check_version);
                 if (mUpdateChecker.isUpdateAvailable()) {
                     runOnUiThread(new Runnable() {
 
@@ -1097,7 +1390,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (downloadType == TAG_DOWNLOAD_PLAY_STORE) {
                 mUpdateChecker.launchMarketDetails();
             } else {
-                mUpdateChecker.downloadAndInstall(getResources().getString(R.string.update_check));
+                mUpdateChecker.downloadAndInstall(AllUrl.URL_update_check);
             }
         }
     }
@@ -1182,9 +1475,55 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.homeBtnMessage:
                 startActivity(new Intent(MainActivity.this, ChatActivity.class));
                 break;
+
+            case R.id.llChat:
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                break;
+
             case R.id.homeBtnCall:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
-                callPreview();
+                callPreview(false, "");
+                break;
+
+            case R.id.LLCall:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CALL_MENU);
+                callPreview(false, "");
+                break;
+
+
+            case R.id.homeBtnEduction:
+
+                startActivity(new Intent(this, EducationMainActivity.class));
+
+                break;
+
+
+            case R.id.homeBtnFee:
+
+                startActivity(new Intent(this, FeeMainActivity.class));
+
+                break;
+
+
+            case R.id.homeBtnInsurance:
+
+//                CommingSoonDialog commingSoonDialog = new CommingSoonDialog();
+//                commingSoonDialog.show(getSupportFragmentManager(), "commingSoonDialog");
+                startActivity(new Intent(getApplicationContext(), HealthInsuranceMainActivity.class));
+
+
+                break;
+
+            case R.id.homeBtnEntertainment:
+
+                startActivity(new Intent(this, EntertainmentMainActivity.class));
+
+                break;
+
+            case R.id.homeBtnFaq:
+
+                startFAQActiivty();
+
                 break;
 
             default:
@@ -1256,20 +1595,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         snackbar.show();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshStringsOfButton();
-        if (alertNotification.isShowing()) {
-            alertNotification.dismiss();
-        }
-
-        viewPager.setInterval(2000);
-        updateMyFavorityView();
-        notificationCounterCheck();
-        startRightLeftAnimation();
-
-    }
 
     private void startRightLeftAnimation() {
         if (animation == null) {
@@ -1347,81 +1672,22 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return directory.getAbsolutePath();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // stop auto scroll when onPause
-        // viewPager.stopNestedScroll();
-        viewPager.setInterval(0);
-    }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe
     public void onNewnotificationcomming(EventNewNotificaiton eventNewNotificaiton) {
         int counter = eventNewNotificaiton.getCounter();
-
-        notificationCount(counter);
-        builderNotification = new AlertDialog.Builder(MainActivity.this);
-        builderNotification.setTitle(R.string.home_notification);
-        builderNotification.setMessage(getString(R.string.unread_first_msg) + " " + counter + " " + getString(R.string.unread_second_msg));
-        builderNotification.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_CEHCK_NEW_NOTIFICATION);
-                dialogInterface.dismiss();
-                checkNotificationFlag = true;
-                mNotificationAsync = new NotificationAsync().execute(getResources().getString(R.string.notif_url));
-            }
-        });
-        alertNotification = builderNotification.create();
-        alertNotification.show();
-        TextView messageText = alertNotification.findViewById(android.R.id.message);
-        messageText.setGravity(Gravity.CENTER);
-
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-        stopRightLefAnimation();
-    }
-
-    private void notificationCounterCheck() {
-        if (mCd.isConnectingToInternet()) {
-            boolean myServiceRunning = isMyServiceRunning(NotificationCheckerService.class);
-            if (!myServiceRunning) {
-                Intent intent = new Intent(getApplicationContext(), NotificationCheckerService.class);
-                startService(intent);
-            } else {
-                boolean apiCalledRuing = NotificationCheckerService.Companion.isAPICalledRunning();
-                if (!apiCalledRuing) {
-                    EventBus.getDefault().post(new StartNotificationService(1));
-                }
-            }
+        mNumOfNotification = counter;
+        if (mNumOfNotification > 0) {
+            notificationCount(counter);
+        } else {
+            notificationCount(counter);
         }
-    }
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
 
     private boolean getMailAddress() {
         String gmail = "";
-
         Pattern gmailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
         Account[] accounts = AccountManager.get(this).getAccounts();
         for (Account account : accounts) {
@@ -1429,366 +1695,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 gmail = account.name;
             }
         }
-        if (gmail.length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return gmail.length() > 0;
     }
 
-    private void checkPhnNoUpdate() {
-        if ((System.currentTimeMillis() / 1000) >= (mAppHandler.getPhnUpdateCheck() + PHN_NUM_CHECK_INTERVAL)) {
-            if (!mCd.isConnectingToInternet()) {
-                AppHandler.showDialog(getSupportFragmentManager());
-            } else {
-                if (mAppHandler.getPhnNumberVerificationStatus().equalsIgnoreCase("false")) {
-                    checkForPhnUpdate();
-                } else {
-                    mAppHandler.setPhnUpdateCheck(System.currentTimeMillis() / 1000);
-                    startActivity(new Intent(MainActivity.this, MerchantTypeVerify.class));
-                }
-            }
-        }
-    }
-
-    private void checkForPhnUpdate() {
-        phn_num_count = mAppHandler.getDayCount();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.info_collect_title));
-        LinearLayout layout = new LinearLayout(this);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(20, 10, 20, 5);
-
-        final EditText etPhn = new EditText(this);
-        etPhn.setHint(getString(R.string.phn_num_hint));
-        etPhn.setRawInputType(InputType.TYPE_CLASS_NUMBER); //for decimal numbers
-        layout.addView(etPhn);
-
-        final TextView tvPhnQuote = new TextView(this);
-        String text = "\"" + getString(R.string.verify_quote) + "\"";
-        tvPhnQuote.setText(text);
-        layout.addView(tvPhnQuote);
-        builder.setView(layout);
-
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                InputMethodManager inMethMan = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inMethMan.hideSoftInputFromWindow(etPhn.getWindowToken(), 0);
-
-                if (etPhn.getText().toString().length() == 11) {
-                    dialogInterface.dismiss();
-                    phn_num = etPhn.getText().toString();
-                    if (mCd.isConnectingToInternet()) {
-                        mRequestPhnNumberAddAsync = new RequestPhnNumberAddAsync().execute(getResources().getString(R.string.otp_for_phn_num), phn_num);
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                    checkForPhnUpdate();
-                }
-            }
-        });
-
-        if (phn_num_count < 3) {
-            builder.setNegativeButton(R.string.skip_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    mAppHandler.setDayCount(phn_num_count + 1);
-                }
-            });
-        }
-        AlertDialog alert = builder.create();
-        alert.setCanceledOnTouchOutside(false);
-        alert.show();
-
-        mAppHandler.setPhnUpdateCheck(System.currentTimeMillis() / 1000);
-    }
-
-    private class RequestPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("phone", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-                String msg = jsonObject.getString(TAG_RESPONSE_MESSAGE);
-                String foundOtp = jsonObject.getString(TAG_RESPONSE_OTP);
-
-                if (status.equalsIgnoreCase("200")) {
-                    otp = foundOtp;
-                    checkForOTP();
-                } else if (status.equalsIgnoreCase("335")) {
-                    mAppHandler.setPhnNumberVerificationStatus("verified");
-                    mAppHandler.setPhnNumber(phn_num);
-                    mAppHandler.setDayCount(0);
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                } else {
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } catch (Exception ex) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-    private void checkForOTP() {
-        if (otp_check < 3) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(getString(R.string.info_collect_title));
-            LinearLayout layout = new LinearLayout(this);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.setPadding(20, 10, 20, 5);
-
-            final EditText etOtp = new EditText(this);
-            etOtp.setHint(getString(R.string.otp_error_msg));
-            etOtp.setRawInputType(InputType.TYPE_CLASS_NUMBER); //for decimal numbers
-            layout.addView(etOtp);
-
-            builder.setView(layout);
-            builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int id) {
-                    InputMethodManager inMethMan = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inMethMan.hideSoftInputFromWindow(etOtp.getWindowToken(), 0);
-
-                    if (etOtp.getText().toString().length() > 0) {
-                        dialogInterface.dismiss();
-                        String inputedOtp = etOtp.getText().toString();
-                        if (inputedOtp.equalsIgnoreCase(otp)) {
-                            mConfirmPhnNumberAddAsync = new ConfirmPhnNumberAddAsync().execute(getResources().getString(R.string.conf_phn_num), phn_num, otp);
-                        } else {
-                            Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
-                            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                            View snackBarView = snackbar.getView();
-                            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                            snackbar.show();
-                            otp_check++;
-                            checkForOTP();
-                        }
-                    } else {
-                        Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_correct_msg, Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
-                    }
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.setCanceledOnTouchOutside(false);
-            alert.show();
-        } else {
-            Snackbar snackbar = Snackbar.make(mCoordinateLayout, getString(R.string.try_again_msg), Snackbar.LENGTH_LONG);
-            snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-            View snackBarView = snackbar.getView();
-            snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            snackbar.show();
-            otp_check = 0;
-        }
-    }
-
-    private class ConfirmPhnNumberAddAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @SuppressWarnings("deprecation")
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("phone", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("otp", data[2]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-
-                String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-                String msg = jsonObject.getString(TAG_RESPONSE_MESSAGE);
-
-                if (status.equalsIgnoreCase("200")) {
-                    mAppHandler.setPhnNumberVerificationStatus("verified");
-                    mAppHandler.setPhnNumber(phn_num);
-                    mAppHandler.setDayCount(0);
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Result");
-                builder.setMessage(msg);
-
-                builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int id) {
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-            } catch (Exception ex) {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-    private void subscribeToPushService() {
-        if (mAppHandler.getFirebaseTokenStatus().equals("true")) {
-            if (mCd.isConnectingToInternet()) {
-                mPushFirebaseIdTask = new PushFirebaseIdTask().execute(getString(R.string.notification_token_url), mAppHandler.getFirebaseId());
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
-
-
-    private class PushFirebaseIdTask extends AsyncTask<String, Intent, String> {
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("usertype", "Retailer"));
-                nameValuePairs.add(new BasicNameValuePair("token", params[1]));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                    if (status.equalsIgnoreCase("200")) {
-                        mAppHandler.setFirebaseTokenStatus("false");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -1876,191 +1785,58 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             if (!mAppHandler.getLatitude().equalsIgnoreCase("unknown")
                     && !mAppHandler.getLongitude().equalsIgnoreCase("unknown")) {
-                new PushLocationLonLatTask().execute(getResources().getString(R.string.update_location));
+                pushLocationLonLat();
             }
         }
     }
 
-
-    @SuppressWarnings("deprecation")
-    private class PushLocationLonLatTask extends AsyncTask<String, Intent, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String result = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("latitude", mAppHandler.getLatitude()));
-                nameValuePairs.add(new BasicNameValuePair("longitude", mAppHandler.getLongitude()));
-                nameValuePairs.add(new BasicNameValuePair("accuracy", mAppHandler.getAccuracy()));
-                nameValuePairs.add(new BasicNameValuePair("country", mAppHandler.getCountry()));
-                nameValuePairs.add(new BasicNameValuePair("address", mAppHandler.getAddress()));
-
-                Logger.v("username " + mAppHandler.getImeiNo() +
-                        " latitude " + mAppHandler.getLatitude() +
-                        " longitude " + mAppHandler.getLongitude() +
-                        " accuracy " + mAppHandler.getAccuracy() +
-                        " country" + mAppHandler.getCountry() +
-                        " address" + mAppHandler.getAddress()
-                );
+    private void pushLocationLonLat(){
+        CurrentLocationModel currentLocationModel = new CurrentLocationModel();
+        currentLocationModel.setUsername(mAppHandler.getUserName());
+        currentLocationModel.setLatitude(mAppHandler.getLatitude());
+        currentLocationModel.setLongitude(mAppHandler.getLongitude());
+        currentLocationModel.setAccuracy(mAppHandler.getAccuracy());
+        currentLocationModel.setCountry(mAppHandler.getCountry());
+        currentLocationModel.setAddress(mAppHandler.getAddress());
 
 
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        ApiUtils.getAPIServiceV2().updateCurrentLocation(currentLocationModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                result = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return result;
-        }
+                if (response.code() == 200){
 
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        int status = object.getInt(TAG_RESPONSE_STATUS);
+                        if (status == 200){
+                            mAppHandler.setLocationUpdateCheck(System.currentTimeMillis() / 1000);
+                        }else {
+                            showErrorMessagev1(getString(R.string.try_again_msg));
+                        }
 
-                    if (status.equalsIgnoreCase("200")) {
-                        mAppHandler.setLocationUpdateCheck(System.currentTimeMillis() / 1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.conn_timeout_msg));
                 }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
-    private void callPreview() {
-        final String[] numbers = {"09610116566", "09666773333", "09666716566", "09638016566"};
-        selectedPhnNo = "09610116566";
-        AlertDialog dialog;
-        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle(getString(R.string.select_phn_title_msg));
-
-        builder.setSingleChoiceItems(numbers, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                selectedPhnNo = numbers[arg1];
             }
 
-        }).create();
-        builder.setPositiveButton(R.string.okay_btn, new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                call();
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showErrorMessagev1(getString(R.string.conn_timeout_msg));
             }
         });
-        dialog = builder.create();
-        dialog.show();
+
+
     }
 
-    private void call() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSIONS_REQUEST_ACCESS_CALL);
-        } else {
-            Intent intent = new Intent(Intent.ACTION_CALL);
 
-            intent.setData(Uri.parse("tel:" + selectedPhnNo));
-            startActivity(intent);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private class NotificationAsync extends AsyncTask<String, Intent, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String notifications = null;
-            try {
-                HttpClient httpClients = new DefaultHttpClient();
-                HttpPost httpPost = new HttpPost(params[0]);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("mes_type", "all_message"));
-                nameValuePairs.add(new BasicNameValuePair("message_status", "all"));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-
-                httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                notifications = httpClients.execute(httpPost, responseHandler);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return notifications;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_RESPONSE_STATUS);
-
-                    if (status.equalsIgnoreCase("200")) {
-
-                        String totalUnreadMsg = jsonObject.getString(TAG_RESPONSE_TOTAL_UREAD_MSG);
-
-                        mNumOfNotification = Integer.parseInt(totalUnreadMsg);
-
-                        JSONArray jsonArray = jsonObject.getJSONArray(TAG_RESPONSE_MSG_ARRAY);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            if (checkNotificationFlag) {
-                                checkNotificationFlag = false;
-                                mNumOfNotification = 0;
-                                startActivity(new Intent(MainActivity.this, NotificationAllActivity.class));
-                                finish();
-                            }
-                        }
-                    } else {
-                        mNumOfNotification = 0;
-                    }
-                    notificationCount(mNumOfNotification);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.conn_timeout_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     private void goToFacebook() {
         try {
@@ -2074,7 +1850,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private String getFacebookPageURL() {
-        String FACEBOOK_URL = "https://www.facebook.com/PayWellOnline/";
+        String FACEBOOK_URL = AllUrl.FACEBOOK_URL;
         String facebookurl = null;
 
         try {
@@ -2103,6 +1879,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_LOCATION:
                 switch (resultCode) {
@@ -2134,10 +1911,27 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.closeDrawer(GravityCompat.END);
 
 
-        Intent intent;
 
         int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
 
+        handleFavoriteAndRecientListOnclicl(resId);
+
+
+    }
+
+
+    private void onRecentUsedItemClick(RecentUsedMenu favoriteMenu) {
+        drawer.closeDrawer(GravityCompat.END);
+
+
+        int resId = ResorceHelper.getResId(favoriteMenu.getName(), R.string.class);
+
+        handleFavoriteAndRecientListOnclicl(resId);
+
+    }
+
+    private void handleFavoriteAndRecientListOnclicl(int resId) {
+        Intent intent;
         switch (resId) {
 
             case R.string.mobileOperator:
@@ -2156,24 +1950,41 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_utility_desco:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_MENU);
 
-                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                intent = new Intent(getApplicationContext(), DescoMainActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_utility_desco_pay:
+            case R.string.desco_postpaid_string:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY);
 
-                intent = new Intent(getApplicationContext(), DESCOBillPayActivity.class);
+                intent = new Intent(getApplicationContext(), DESCOPostpaidBillPayActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_utility_desco_pay_inquiry:
+            case R.string.desco_postpaid_inquiry:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_BILL_PAY_INQUIRY);
 
-                intent = new Intent(getApplicationContext(), DESCOMainActivity.class);
+                intent = new Intent(getApplicationContext(), DESCOPostpaidMainActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
                 startActivityWithFlag(intent);
                 break;
+
+            case R.string.home_utility_desco_prepaid_title:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DESCO_PRE_PAID_BILL_PAY);
+
+                intent = new Intent(getApplicationContext(), DescoPrepaidBillPayActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
+            case R.string.home_utility_desco_prepaid_inquiry:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.UtilityDescoPrepaidBillInquiry);
+
+                intent = new Intent(getApplicationContext(), DescoPrepaidMainActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_DESCO_INQUERY, true);
+                startActivityWithFlag(intent);
+                break;
+
 
             case R.string.home_utility_dpdc:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_DPDC_MENU);
@@ -2214,7 +2025,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.string.home_utility_pollibiddut_bill_pay_favorite:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY);
 
-                intent = new Intent(getApplicationContext(), PBBillPayActivity.class);
+                intent = new Intent(getApplicationContext(), PBBillPayNewActivity.class);
                 startActivityWithFlag(intent);
                 break;
 
@@ -2379,18 +2190,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
 
             case R.string.home_eticket_bus:
+
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW, true);
+
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_BUS);
 
 
-                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent = new Intent(getApplicationContext(), BusTicketMenuActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
                 startActivityWithFlag(intent);
                 break;
 
+            case R.string.launch:
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.IS_BUS_Ticket_USER_FLOW, false);
+
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_LUUNCH);
+
+                intent = new Intent(getApplicationContext(), BusTicketMenuActivity.class);
+                intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_BUS, true);
+                startActivityWithFlag(intent);
+                break;
+
+
             case R.string.home_eticket_air:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_ETICKET_AIR);
 
-                intent = new Intent(getApplicationContext(), ETicketMainActivity.class);
+                intent = new Intent(getApplicationContext(), AirTicketMenuActivity.class);
                 intent.putExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AIR, true);
                 startActivityWithFlag(intent);
                 break;
@@ -2403,69 +2228,34 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivityWithFlag(intent);
                 break;
 
-            case R.string.home_product_ajker_deal:
+            case R.string.home_product_ekshop:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_AJKER_DEAL_MENU);
-
-
-                new ProductHelper().getToken(this, 1);
-
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_EK_SHOP);
+                startActivity(new Intent(this, EKShopActivity.class));
                 break;
 
-            case R.string.home_product_pw_wholesale:
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_PRODUCT_WHOLESALE_MENU);
-
-                new ProductHelper().getToken(this, 2);
-
-                break;
 
             case R.string.home_statement_mini:
 
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
-
-                ViewStatementActivity.title = "mini";
-                ViewStatementActivity.url = "https://api.paywellonline.com/AndroidWebViewController/StatementInquiry?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                startActivityWithFlag(intent);
+                openMiniStatment();
 
                 break;
             case R.string.home_statement_balance:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
-                ViewStatementActivity.title = "balance";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/balanceStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                startActivityWithFlag(intent);
+                openBalanceStatment();
 
                 break;
 
 
             case R.string.home_statement_sales:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
-                ViewStatementActivity.title = "sales";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/salesStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                startActivityWithFlag(intent);
+                openSalesStatement();
 
                 break;
             case R.string.home_statement_transaction:
 
-                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
-                ViewStatementActivity.title = "trx";
-                ViewStatementActivity.url = "http://api.cloudwell.co/AndroidWebViewController/getAllTransactionStatement?username="
-                        + mAppHandler.getImeiNo() + "&language=" + mAppHandler.getAppLanguage();
-
-                intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
-                startActivityWithFlag(intent);
+                openTransactionStatement();
 
                 break;
 
@@ -2484,11 +2274,75 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 intent = new Intent(getApplicationContext(), CardTransferMainActivity.class);
                 startActivityWithFlag(intent);
 
+            case R.string.nagad_refill_msg:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BALANCE_REFILL_NAGAD);
+
+                intent = new Intent(getApplicationContext(), NagadMainActivity.class);
+                startActivityWithFlag(intent);
+
                 break;
 
+            case R.string.bbc_janala:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_BBC);
+
+                intent = new Intent(getApplicationContext(), BBC_Main_Activity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
+            case R.string.bongo_bd:
+                AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_Bongo);
+
+                intent = new Intent(getApplicationContext(), BongoMainActivity.class);
+                startActivityWithFlag(intent);
+
+                break;
+
+
         }
+    }
+
+    private void openTransactionStatement() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_TRX_MENU);
+
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "trx");
+
+        startActivityWithFlag(intent);
+    }
+
+    private void openSalesStatement() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_SALES_MENU);
+
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "sales");
 
 
+        startActivityWithFlag(intent);
+    }
+
+    private void openBalanceStatment() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_BALANCE_MENU);
+
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "balance");
+
+
+        startActivityWithFlag(intent);
+    }
+
+    private void openMiniStatment() {
+        Intent intent;
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_FAVORITE_MENU, AnalyticsParameters.KEY_STATEMENT_MINI_MENU);
+        intent = new Intent(getApplicationContext(), ViewStatementActivity.class);
+        intent.putExtra(ViewStatementActivity.DESTINATION_TITLE, "mini");
+        startActivityWithFlag(intent);
     }
 
     private void startActivityWithFlag(Intent intent) {
@@ -2509,30 +2363,138 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //                .show();
     }
 
+    public class ScreenStateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                Logger.v("On");
+                checkBalance();
+                //code
+            } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                //code
+                Logger.v("off");
+            }
+        }
+    }
+
+    private void setNavigationDrawerMenu() {
+        NavMenuAdapter adapter = new NavMenuAdapter(this, getMenuList(), this);
+        RecyclerView navMenuDrawer = (RecyclerView) findViewById(R.id.main_nav_menu_recyclerview);
+        navMenuDrawer.setAdapter(adapter);
+        navMenuDrawer.setLayoutManager(new LinearLayoutManager(this));
+        navMenuDrawer.setAdapter(adapter);
+//
+////        INITIATE SELECT MENU
+//        adapter.selectedItemParent = menu.get(0).menuTitle;
+//        onMenuItemClick(adapter.selectedItemParent);
+//        adapter.notifyDataSetChanged();
+    }
+
+    private List<TitleMenu> getMenuList() {
+        List<TitleMenu> list = new ArrayList<>();
+
+        menu = Constant.getMenuNavigasi(getApplicationContext());
+        for (int i = 0; i < menu.size(); i++) {
+            ArrayList<SubTitle> subMenu = new ArrayList<>();
+            if (menu.get(i).subMenu.size() > 0) {
+                for (int j = 0; j < menu.get(i).subMenu.size(); j++) {
+                    subMenu.add(new SubTitle(menu.get(i).subMenu.get(j).subMenuTitle));
+                }
+            }
+
+            list.add(new TitleMenu(menu.get(i).menuTitle, subMenu, menu.get(i).menuIconDrawable));
+        }
+
+        return list;
+    }
+
+
     @Override
-    protected void onDestroy() {
-        if (mNotificationAsync != null) {
-            mNotificationAsync.cancel(true);
-        }
+    public void onMenuItemClick(String itemString) {
+        for (int i = 0; i < menu.size(); i++) {
+            if (itemString.equals(menu.get(i).menuTitle)) {
+
+                handleNavMemuClick(itemString);
+
+                break;
+            } else {
+                for (int j = 0; j < menu.get(i).subMenu.size(); j++) {
+                    if (itemString.equals(menu.get(i).subMenu.get(j).subMenuTitle)) {
+
+                        Log.e("", "");
+
+                        if (itemString.equals(Constant.KEY_home_statement_mini)) {
+                            openMiniStatment();
+                        } else if (itemString.equals(Constant.KEY_home_statement_balance)) {
+                            openBalanceStatment();
+                        } else if (itemString.equals(Constant.KEY_home_statement_sales)) {
+                            openSalesStatement();
+                        } else if (itemString.equals(Constant.KEY_home_statement_transaction)) {
+                            openTransactionStatement();
+                        } else if (itemString.equals(Constant.KEY_home_settings_change_pin)) {
+                            openChangePinNumber();
+                        } else if (itemString.equals(Constant.KEY_home_tutorial)) {
+                            startActivity(new Intent(getApplicationContext(), HelpMainActivity.class));
+                        }
 
 
-        if (mRequestPhnNumberAddAsync != null) {
-            mRequestPhnNumberAddAsync.cancel(true);
+                        break;
+                    }
+                }
+            }
         }
 
-        if (mConfirmPhnNumberAddAsync != null) {
-            mConfirmPhnNumberAddAsync.cancel(true);
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
         }
+    }
 
-        if (mPushFirebaseIdTask != null) {
-            mPushFirebaseIdTask.cancel(true);
-        }
+    private void openChangePinNumber() {
+        AnalyticsManager.sendEvent(AnalyticsParameters.KEY_SETTINGS_MENU, AnalyticsParameters.KEY_SETTINGS_CHANGE_PIN_MENU);
+        startActivity(new Intent(this, ChangePinActivity.class));
+    }
 
-        if (viewPager != null) {
-            Slider.imageLoadingService = null;
-            viewPager = null;
+    private void handleNavMemuClick(String menuName) {
+        if (menuName.equals(Constant.KEY_logout_text)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_LOGOUT);
+            logout();
+        } else if (menuName.equals(Constant.KEY_about)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_ABOUT_MENU);
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+            }
+        } else if (menuName.equals(Constant.KEY_nav_terms_and_conditions)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_TERMS_MENU);
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                startActivity(new Intent(MainActivity.this, TermsActivity.class));
+            }
+        } else if (menuName.equals(Constant.KEY_nav_policy_statement)) {
+            AnalyticsManager.sendEvent(AnalyticsParameters.KEY_DASHBOARD, AnalyticsParameters.KEY_NAV_PRIVACY_MENU);
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(getSupportFragmentManager());
+            } else {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(AllUrl.privacy));
+                startActivity(browserIntent);
+            }
+        } else if (menuName.equals(Constant.KEY_faq_text)) {
+            startFAQActiivty();
+
+        } else if (menuName.equals(Constant.KEY_home_tutorial)) {
+
+            startActivity(new Intent(getApplicationContext(), HelpMainActivity.class));
+
         }
-        super.onDestroy();
+    }
+
+    private void startFAQActiivty() {
+        Intent intent = new Intent(this, PostLoginFAQActivity.class);
+        intent.putExtra("isAfterLogin", false);
+        startActivity(intent);
     }
 
 

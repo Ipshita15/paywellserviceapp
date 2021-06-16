@@ -9,6 +9,8 @@ public class IconConstant {
     public static final String KEY_brilli_ant = "brilli_ant";
     public static final String KEY_ic_desco = "ic_desco";
     public static final String KEY_ic_bill_pay = "ic_bill_pay";
+    public static final String KEY_ic_desco__postpaid = "desco__postpaid";
+    public static final String KEY_ic_desco_prepaid = "desco_prepaid";
     public static final String KEY_ic_dpdc = "ic_dpdc";
     public static final String KEY_ic_polli_biddut = "ic_polli_biddut";
     public static final String KEY_ic_registration = "ic_registration";
@@ -24,12 +26,18 @@ public class IconConstant {
     public static final String KEY_ic_karnafuli_gas = "ic_karnafuli_gas";
     public static final String KEY_ic_train_ticket = "ic_train_ticket";
     public static final String KEY_ic_ajker_deal = "ic_ajker_deal";
+    public static final String KEY_ic_ekshop = "ic_ekshop";
     public static final String KEY_ic_wholesale = "ic_wholesale";
     public static final String KEY_ic_statement = "ic_statement";
     public static final String KEY_ic_bank_deposit = "ic_bank_deposit";
     public static final String KEY_ic_visa_master_card = "ic_visa_master_card";
+    public static final String KEY_ic_nagad_main = "nagad_main";
     public static final String KEY_ic_my_cash = "ic_my_cash";
     public static final String KEY_ic_ticket = "ic_eticket";
+    public static final String KEY_ic_launch_ticket = "launch_ticket";
     public static final String KEY_air_ticket = "air_ticket";
+    public static final String KEY_bbc_icon = "bbc_icon";
+    public static final String KEY_bongo_icon = "bongo_ac_icon_useed";
+    public static final String KEY_HEALTH_icon = "ic_insurance_v1";
 
 }

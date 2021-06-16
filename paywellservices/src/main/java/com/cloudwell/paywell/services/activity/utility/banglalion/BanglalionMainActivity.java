@@ -2,14 +2,17 @@ package com.cloudwell.paywell.services.activity.utility.banglalion;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class BanglalionMainActivity extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class BanglalionMainActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.home_utility_banglalion);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnBLRecharge = findViewById(R.id.homeBtnRecharge);
         Button btnBLInq = findViewById(R.id.homeBtnInquiry);
@@ -37,15 +40,17 @@ public class BanglalionMainActivity extends AppCompatActivity {
             btnBLRecharge.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnBLInq.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_BANGLALION_MENU);
     }
 
     public void goToBanglalionRecharge(View view) {
-        startActivity(new Intent(BanglalionMainActivity.this,BanglalionRechargeActivity.class));
+        startActivity(new Intent(BanglalionMainActivity.this, BanglalionRechargeActivity.class));
 
     }
 
     public void goToRechargeInquiry(View view) {
-        startActivity(new Intent(BanglalionMainActivity.this,BanglalionRechargeInquiryActivity.class));
+        startActivity(new Intent(BanglalionMainActivity.this, BanglalionRechargeInquiryActivity.class));
 
     }
 

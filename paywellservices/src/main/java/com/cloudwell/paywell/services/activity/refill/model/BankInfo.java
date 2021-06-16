@@ -1,4 +1,3 @@
-
 package com.cloudwell.paywell.services.activity.refill.model;
 
 import com.google.gson.annotations.SerializedName;
@@ -10,6 +9,14 @@ public class BankInfo {
     private String mAccountNumber;
     @SerializedName("name")
     private String mName;
+
+
+    @SerializedName("branchName")
+    private String branchName;
+
+
+    @SerializedName("AccountName")
+    private String accountName;
 
     public String getAccountNumber() {
         return mAccountNumber;
@@ -27,4 +34,19 @@ public class BankInfo {
         mName = name;
     }
 
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
 }

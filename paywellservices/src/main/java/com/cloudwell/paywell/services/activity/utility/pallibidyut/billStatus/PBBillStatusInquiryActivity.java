@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,8 +16,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,6 +29,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PBBillStatusInquiryActivity extends AppCompatActivity {
 
@@ -55,10 +58,13 @@ public class PBBillStatusInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_pb_reg_statu_inquery_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_STATUS_INQUIRY);
+
     }
 
     private void initView() {
@@ -314,10 +320,21 @@ public class PBBillStatusInquiryActivity extends AppCompatActivity {
 
     private void showFullInfo(int position) {
         String array[] = adapter.mData.get(position).split("@");
-        String msg = "Acc No: " + array[0]
-                + "\nPnone: " + array[5] + "\nRequest Date: " + array[6]
-                + "\nDetails: " + array[4]
-                + "\nTrx ID: " + array[3];
+
+//        String msg = "Acc No: " + array[0]
+//                + "\nPnone: " + array[5] + "\nRequest Date: " + array[6]
+//                + "\nDetails: " + array[4]
+//                + "\nTrx ID: " + array[3];
+
+        String msg = getString(R.string.acc_no_des) + array[0] + "\n" +
+                getString(R.string.trx_id_des) + array[3] + "\n" +
+                getString(R.string.date_des) + array[6];
+
+
+        if (!array[4].equals("")) {
+            msg = msg + "\n \n" + getString(R.string.details) + "\n" + array[4];
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(PBBillStatusInquiryActivity.this);
         if (array[1].equalsIgnoreCase("200")) {
             builder.setTitle(Html.fromHtml("<font color='#008000'>Result Successful</font>"));

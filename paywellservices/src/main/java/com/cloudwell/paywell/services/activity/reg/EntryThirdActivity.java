@@ -2,44 +2,65 @@ package com.cloudwell.paywell.services.activity.reg;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.reg.nidOCR.NidInputActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import static com.cloudwell.paywell.services.activity.reg.EntryMainActivity.regModel;
 
-public class EntryThirdActivity extends AppCompatActivity {
+public class EntryThirdActivity extends BaseActivity {
     private EditText et_salesCode, et_collectionCode;
     private String str_which_btn_selected;
-    private ImageView img_one, img_two, img_three, img_four, img_five, img_six, img_seven, img_eight, img_nine;
     private static final int PERMISSION_FOR_GALLERY = 321;
     private AppHandler mAppHandler;
+    private Button btPicOutlet, btNID, btSmart, btPicOwner, btPicTrade, btPicPassport, btPicBirth, btPicDrive, bTPicVisit;
+
+    boolean isNID;
+    private String currentPhotoPath;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,55 +68,93 @@ public class EntryThirdActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration_three);
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("৩য় ধাপ");
+            getSupportActionBar().setTitle(R.string.step_3);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         ScrollView mScrollView = findViewById(R.id.scrollView_third);
         et_salesCode = findViewById(R.id.editText_salesCode);
         et_collectionCode = findViewById(R.id.editText_collectionCode);
 
-        img_one = findViewById(R.id.img1);
-        img_two = findViewById(R.id.img2);
-        img_three = findViewById(R.id.img3);
-        img_four = findViewById(R.id.img4);
-        img_five = findViewById(R.id.img5);
-        img_six = findViewById(R.id.img6);
-        img_seven = findViewById(R.id.img7);
-        img_eight = findViewById(R.id.img8);
-        img_nine = findViewById(R.id.img9);
 
-        if (mAppHandler.REG_FLAG_THREE) {
+        btPicOutlet = findViewById(R.id.btn_picOutlet);
+        btNID = findViewById(R.id.btNid);
+        btSmart = findViewById(R.id.btSmart);
+        btPicOwner = findViewById(R.id.btn_picOwner);
+        btPicTrade = findViewById(R.id.btn_picTrade);
+        btPicPassport = findViewById(R.id.btn_picPassport);
+        btPicBirth = findViewById(R.id.btn_picBirth);
+        btPicDrive = findViewById(R.id.btn_picDrive);
+        bTPicVisit = findViewById(R.id.btn_picVisit);
+
+
+//        if (mAppHandler.REG_FLAG_THREE) {
             et_salesCode.setText(regModel.getSalesCode());
             et_collectionCode.setText(regModel.getCollectionCode());
-            if (regModel.getOutletImage() != null)
-                img_one.setVisibility(View.VISIBLE);
-            if (regModel.getNidFront() != null)
-                img_two.setVisibility(View.VISIBLE);
-            if (regModel.getNidBack() != null)
-                img_three.setVisibility(View.VISIBLE);
-            if (regModel.getOwnerImage() != null)
-                img_four.setVisibility(View.VISIBLE);
-            if (regModel.getTradeLicense() != null)
-                img_five.setVisibility(View.VISIBLE);
-            if (regModel.getPassport() != null)
-                img_six.setVisibility(View.VISIBLE);
-            if (regModel.getBirthCertificate() != null)
-                img_seven.setVisibility(View.VISIBLE);
-            if (regModel.getDrivingLicense() != null)
-                img_eight.setVisibility(View.VISIBLE);
-            if (regModel.getVisitingCard() != null)
-                img_nine.setVisibility(View.VISIBLE);
+
+
+            Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
+
+
+            if (!regModel.getOutletImage().equals(""))
+
+                btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicOutlet.setCompoundDrawablePadding(100);
+
+            if (!regModel.getNidFront().equals("")) {
+
+                btNID.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btNID.setCompoundDrawablePadding(100);
+            }
+
+            if (!regModel.getSmartCardFront().equals("")) {
+
+                btSmart.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btSmart.setCompoundDrawablePadding(100);
+
+            }
+
+            if (!regModel.getOwnerImage().equals("")) {
+                btPicOwner.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicOwner.setCompoundDrawablePadding(100);
+
+            }
+        if (!regModel.getTradeLicense().equals("")) {
+            btPicTrade.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+            btPicTrade.setCompoundDrawablePadding(100);
         }
+
+            if (!regModel.getPassport().equals("")) {
+                btPicPassport.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicPassport.setCompoundDrawablePadding(100);
+            }
+
+            if (!regModel.getBirthCertificate().equals("")) {
+                btPicBirth.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicBirth.setCompoundDrawablePadding(100);
+            }
+
+            if (!regModel.getDrivingLicense().equals("")) {
+                btPicDrive.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicDrive.setCompoundDrawablePadding(100);
+            }
+
+            if (!regModel.getVisitingCard().equals("")) {
+                bTPicVisit.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                bTPicVisit.setCompoundDrawablePadding(100);
+
+            }
+
+        //}
 
         ((TextView) mScrollView.findViewById(R.id.textView_salesCode)).setTypeface(AppController.getInstance().getAponaLohitFont());
         et_salesCode.setTypeface(AppController.getInstance().getAponaLohitFont());
         ((TextView) mScrollView.findViewById(R.id.textView_collectionCode)).setTypeface(AppController.getInstance().getAponaLohitFont());
         et_collectionCode.setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.btn_picOutlet)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((Button) mScrollView.findViewById(R.id.btn_picNidFront)).setTypeface(AppController.getInstance().getAponaLohitFont());
-        ((Button) mScrollView.findViewById(R.id.btn_picNidBack)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btNid)).setTypeface(AppController.getInstance().getAponaLohitFont());
+        ((Button) mScrollView.findViewById(R.id.btSmart)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.btn_picOwner)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.btn_picTrade)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.btn_picPassport)).setTypeface(AppController.getInstance().getAponaLohitFont());
@@ -104,6 +163,11 @@ public class EntryThirdActivity extends AppCompatActivity {
         ((Button) mScrollView.findViewById(R.id.btn_picVisit)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.btn_preStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
         ((Button) mScrollView.findViewById(R.id.btn_nextStep)).setTypeface(AppController.getInstance().getAponaLohitFont());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_REGISTRATION_THIRD_PAGE);
+
+
+
     }
 
     public void previousOnClick(View view) {
@@ -131,7 +195,7 @@ public class EntryThirdActivity extends AppCompatActivity {
         regModel.setSalesCode(et_salesCode.getText().toString().trim());
         regModel.setCollectionCode(et_collectionCode.getText().toString().trim());
 
-        mAppHandler.REG_FLAG_THREE = true;
+        AppHandler.REG_FLAG_THREE = true;
 
         AnalyticsManager.sendEvent(AnalyticsParameters.KEY_REGISTRATION_MENU, AnalyticsParameters.KEY_REGISTRATION_THIRD_PORTION_SUBMIT_REQUEST);
         Intent intent = new Intent(EntryThirdActivity.this, EntryForthActivity.class);
@@ -140,194 +204,54 @@ public class EntryThirdActivity extends AppCompatActivity {
     }
 
     public void outletImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("দোকানের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "1";
-                int permissionCheckGallery = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheckGallery != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+        asked(getString(R.string.outlet_image), "1");
+
     }
 
 
     public void nidImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("ন্যাশনাল আইডি সামনের পৃষ্ঠার ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "2";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        isNID = true;
+        Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
+        intent.putExtra("isNID", isNID);
+        intent.putExtra("isMissingPage", false);
+        startActivity(intent);
     }
 
-    public void nidBackImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("ন্যাশনাল আইডি পেছনের পৃষ্ঠার ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "3";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+    public void smartImgOnClick(View v) {
+        isNID = false;
+        Intent intent = new Intent(getApplicationContext(), NidInputActivity.class);
+        intent.putExtra("isNID", isNID);
+        intent.putExtra("isMissingPage", false);
+        startActivity(intent);
+
     }
 
     public void ownerImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("মালিকের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "4";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        asked(getString(R.string.owner_photo), "4");
     }
 
 
     public void tradeLicenseImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("ট্রেড লাইসেন্সের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "5";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        asked(getString(R.string.trade_license), "5");
     }
 
     public void passportImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("পাসপোর্টের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "6";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        asked(getString(R.string.passport_reg), "6");
     }
 
     public void birthImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("বার্থ সার্টিফিকেটের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "7";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        asked(getString(R.string.birth_certificate), "7");
     }
 
     public void drivingImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("ড্রাইভিং লাইসেন্সের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "8";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        asked(getString(R.string.driving_license), "8");
     }
 
     public void visitingImgOnClick(View v) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(EntryThirdActivity.this);
-        builder.setMessage("ভিজিটিং কার্ডের ছবি");
-        builder.setNegativeButton("গ্যালারী থেকে", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int id) {
-                str_which_btn_selected = "9";
-                int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(
-                            EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-                } else {
-                    galleryIntent();
-                }
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        asked(getString(R.string.visiting_card), "9");
+
     }
 
     private void galleryIntent() {
@@ -350,6 +274,11 @@ public class EntryThirdActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Toast.makeText(EntryThirdActivity.this, R.string.try_again_msg, Toast.LENGTH_SHORT).show();
                 }
+            } else {
+
+                Bitmap selectedImage = BitmapFactory.decodeFile(currentPhotoPath);
+                encodeTobase64(selectedImage);
+
             }
         }
     }
@@ -363,42 +292,74 @@ public class EntryThirdActivity extends AppCompatActivity {
 
         String strBuild = ("xxCloud" + imageEncoded + "xxCloud");
 
+        Drawable img = getResources().getDrawable(R.drawable.icon_seleted);
+
+
         switch (str_which_btn_selected) {
             case "1":
                 regModel.setOutletImage(strBuild);
-                img_one.setVisibility(View.VISIBLE);
+                btPicOutlet.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicOutlet.setCompoundDrawablePadding(100);
+
                 break;
             case "2":
-                regModel.setNidFront(strBuild);
-                img_two.setVisibility(View.VISIBLE);
+
+
+                if (isNID){
+
+
+                }else {
+
+
+                }
+
                 break;
             case "3":
                 regModel.setNidBack(strBuild);
-                img_three.setVisibility(View.VISIBLE);
+
                 break;
             case "4":
                 regModel.setOwnerImage(strBuild);
-                img_four.setVisibility(View.VISIBLE);
+                btPicOwner.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicOwner.setCompoundDrawablePadding(100);
+
                 break;
             case "5":
                 regModel.setTradeLicense(strBuild);
-                img_five.setVisibility(View.VISIBLE);
+
+                btPicTrade.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicTrade.setCompoundDrawablePadding(100);
+
                 break;
             case "6":
                 regModel.setPassport(strBuild);
-                img_six.setVisibility(View.VISIBLE);
+
+                btPicPassport.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicPassport.setCompoundDrawablePadding(100);
+
                 break;
             case "7":
                 regModel.setBirthCertificate(strBuild);
-                img_seven.setVisibility(View.VISIBLE);
+
+                btPicBirth.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicBirth.setCompoundDrawablePadding(100);
+
+
                 break;
             case "8":
                 regModel.setDrivingLicense(strBuild);
-                img_eight.setVisibility(View.VISIBLE);
+
+                btPicDrive.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                btPicDrive.setCompoundDrawablePadding(100);
+
                 break;
             case "9":
                 regModel.setVisitingCard(strBuild);
-                img_nine.setVisibility(View.VISIBLE);
+
+
+                bTPicVisit.setCompoundDrawablesWithIntrinsicBounds(null, null, img, null);
+                bTPicVisit.setCompoundDrawablePadding(100);
+
                 break;
             default:
                 break;
@@ -406,7 +367,7 @@ public class EntryThirdActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_FOR_GALLERY: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -432,4 +393,102 @@ public class EntryThirdActivity extends AppCompatActivity {
         Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
         return resizedBitmap;
     }
+
+
+    public void asked(String title, String number) {
+
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+
+                askedDialog(title, number);
+
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+            }
+        }).check();
+
+
+    }
+
+    private void askedDialog(String title, String number) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage(title)
+                .setCancelable(true)
+                .setPositiveButton("Camera", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        str_which_btn_selected = number;
+
+                        getCamaraIntent();
+                        // filePickUtils.requestImageCamera(CAMERA_PERMISSION, false, true); // pass false if you dont want to allow image crope
+
+
+                    }
+                })
+                .setNegativeButton("Gallery", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                        str_which_btn_selected = number;
+
+                        int permissionCheck = ContextCompat.checkSelfPermission(EntryThirdActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(
+                                    EntryThirdActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
+                        } else {
+                            galleryIntent();
+                        }
+
+
+                    }
+                });
+        android.app.AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void getCamaraIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "" + getApplication().getPackageName(), photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 2);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
 }

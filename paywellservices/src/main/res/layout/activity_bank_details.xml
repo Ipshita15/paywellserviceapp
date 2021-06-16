@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cloudwell.paywell.services.activity.refill.banktransfer.BankDetailsActivity">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/constraintLayout"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context="com.cloudwell.paywell.services.activity.refill.banktransfer.BankDetailsActivity">
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -30,14 +30,38 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvBranchName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="5dp"
+                tools:text="Branch"/>
+
+            <TextView
+                android:id="@+id/tvAccountName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="5dp"
+                android:text="Account name: "/>
+
+            <TextView
                 android:id="@+id/textViewAccountNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:enabled="true"
+                android:textIsSelectable="true"
+                android:focusable="true"
+                android:longClickable="true"
+                tools:text="Account number"/>
 
             <TextView
                 android:id="@+id/textViewDistrict"
@@ -47,7 +71,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="District"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
                 android:id="@+id/spinner_district"
@@ -57,7 +81,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"/>
 
             <TextView
                 android:id="@+id/textViewBranch"
@@ -65,19 +89,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="Branch"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
                 android:id="@+id/spinner_branch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                android:layout_marginStart="@dimen/activity_horizontal_margin_half"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+
+                android:spinnerMode="dropdown"/>
+
+            <EditText
+                android:id="@+id/etAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin_half"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                android:spinnerMode="dropdown" />
+                android:hint="@string/amount_optional"
+                android:inputType="numberDecimal"
+                android:text=""/>
 
             <Button
                 android:id="@+id/btn_upload"
@@ -96,7 +135,7 @@
                 android:text="Upload"
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/colorText"/>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-</android.support.constraint.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

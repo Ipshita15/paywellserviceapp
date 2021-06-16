@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/billViewLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+            <com.cloudwell.paywell.services.customView.customView.PinEntryEditText
+                    android:id="@+id/etMobileOrRID"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/rect_text_edit"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textColor="@android:color/black"
+                    android:textCursorDrawable="@null"
+                    android:textIsSelectable="false"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otpVerificationTV" />
+
+            <Button
+                    android:id="@+id/btNextOtp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/submit_button"
+                    android:drawableLeft="@drawable/submit_icon"
+                    android:paddingLeft="26dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="26dp"
+                    android:paddingBottom="8dp"
+                    android:text="@string/next"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etMobileOrRID" />
+
+            <TextView
+                    android:id="@+id/otpVerificationTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:padding="5dp"
+                    android:text="@string/we_have_send_you_an_sms_with_a_code_to_your_number"
+                    android:textColor="#4d4d4d"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                    android:visibility="gone"
+                    android:id="@+id/btCancel"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:background="@drawable/submit_button"
+                    android:drawableLeft="@drawable/submit_icon"
+                    android:paddingLeft="26dp"
+                    android:paddingTop="8dp"
+                    android:paddingRight="26dp"
+                    android:paddingBottom="8dp"
+                    android:text="Cancel"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btNextOtp" />
+
+            <TextView
+                    android:id="@+id/textView58"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:textColor="@color/red_700"
+                    android:text="@string/didn_t_you_received_any_code"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btCancel" />
+
+
+            <com.dhruv.timerbutton.TimerButton
+                    android:id="@+id/timer_button"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="32dp"
+                    app:animationBackground="@color/mti_default_primary"
+                    app:animationCompleteText="@string/resend_otp"
+                    app:buttonBackground="@color/mti_default_primary"
+                    app:defaultText="@string/resend_otp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView58"
+                    app:textColor="@color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

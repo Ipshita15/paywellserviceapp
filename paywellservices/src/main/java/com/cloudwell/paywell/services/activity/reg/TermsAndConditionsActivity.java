@@ -1,17 +1,14 @@
 package com.cloudwell.paywell.services.activity.reg;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.webkit.WebView;
 
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.app.AppController;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 
 import java.io.InputStream;
 
-public class TermsAndConditionsActivity extends AppCompatActivity {
+public class TermsAndConditionsActivity extends BaseActivity {
 
     private WebView mWebView;
 
@@ -45,19 +42,14 @@ public class TermsAndConditionsActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        if (item.getItemId() == android.R.id.home) {
+//            this.onBackPressed();
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(TermsAndConditionsActivity.this, EntryMainActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 }

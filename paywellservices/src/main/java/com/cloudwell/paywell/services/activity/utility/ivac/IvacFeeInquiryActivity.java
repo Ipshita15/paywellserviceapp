@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,8 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +31,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class IvacFeeInquiryActivity extends AppCompatActivity {
 
@@ -60,10 +63,13 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_utility_ivac_inquiry_title);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mRelativeLayout = findViewById(R.id.relativeLayout);
         adapter = new CustomAdapter(this);
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_IVAC_BILL_INQUIRY);
+
     }
 
     private void initializeView() {
@@ -123,7 +129,7 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(adapter.mData.get(position).contains("@")) {
+                    if (adapter.mData.get(position).contains("@")) {
                         showFullInfo(position);
                     }
                 }
@@ -323,7 +329,7 @@ public class IvacFeeInquiryActivity extends AppCompatActivity {
         String array[] = adapter.mData.get(position).split("@");
         String msg = "Web File: " + array[0] + "\nPassport No: " + array[3]
                 + "\nAmount: " + getString(R.string.tk_des) + " " + array[5] + "\nCenter Name: " + array[6]
-                +"\nPhone Number: " + array[7] +"\nDate: " + array[8]
+                + "\nPhone Number: " + array[7] + "\nDate: " + array[8]
                 + "\nTrx ID: " + array[4];
 
         AlertDialog.Builder builder = new AlertDialog.Builder(IvacFeeInquiryActivity.this);

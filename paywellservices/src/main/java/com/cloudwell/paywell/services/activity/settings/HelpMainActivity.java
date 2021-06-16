@@ -2,14 +2,18 @@ package com.cloudwell.paywell.services.activity.settings;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
@@ -18,11 +22,13 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
 
     private AppHandler mAppHandler;
     private ConnectionDetector mCd;
-    private String packageNameYoutube = "com.google.android.youtube";
-    private String linkRefillBalance = "https://www.youtube.com/watch?v=mRg-yT20Iyc";
-    private String linkDpdcBillPay = "https://www.youtube.com/watch?v=EovJfDwrKSc&t=4s";
-    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
-    private String linkAllServices = "https://www.youtube.com/watch?v=RNEjADit-PQ";
+    private String packageNameYoutube = AllUrl.packageNameYoutube;
+    private String linkRefillBalance = AllUrl.linkRefillBalance;
+    private String linkDpdcBillPay =AllUrl.linkDpdcBillPay;
+    private String linkPolliBillPay = AllUrl.linkPolliBillPay;
+    private String linkAllServices = AllUrl.linkAllServices;
+    private String linkBusTicket = AllUrl.linkBusTicket;
+    private String linkAirTicket = AllUrl.linkAirTicket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +38,16 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
         assert getSupportActionBar() != null;
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_settings_help);
+            getSupportActionBar().setTitle(R.string.home_tutorial);
         }
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
+
         mCd = new ConnectionDetector(AppController.getContext());
         initializeView();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_SETTINGS_HELP_MENU);
+
     }
 
     private void initializeView() {
@@ -45,23 +55,31 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
         Button btnDpdcBillPay = findViewById(R.id.homeBtnDpdcBillPay);
         Button btnPolliBiddutBillPay = findViewById(R.id.homeBtnPolliBiddutBillPay);
         Button btnAllServices = findViewById(R.id.homeBtnAllServices);
+        Button homeBtnBusTicket = findViewById(R.id.homeBtnBusTicket);
+        Button homeBtnAirTicket = findViewById(R.id.homeBtnAirTicket);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             btnBalanceRefill.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnDpdcBillPay.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnPolliBiddutBillPay.setTypeface(AppController.getInstance().getOxygenLightFont());
             btnAllServices.setTypeface(AppController.getInstance().getOxygenLightFont());
+            homeBtnBusTicket.setTypeface(AppController.getInstance().getOxygenLightFont());
+            homeBtnAirTicket.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             btnBalanceRefill.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnDpdcBillPay.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnPolliBiddutBillPay.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnAllServices.setTypeface(AppController.getInstance().getAponaLohitFont());
+            homeBtnBusTicket.setTypeface(AppController.getInstance().getAponaLohitFont());
+            homeBtnAirTicket.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
         btnBalanceRefill.setOnClickListener(this);
         btnDpdcBillPay.setOnClickListener(this);
         btnPolliBiddutBillPay.setOnClickListener(this);
         btnAllServices.setOnClickListener(this);
+        homeBtnBusTicket.setOnClickListener(this);
+        homeBtnAirTicket.setOnClickListener(this);
     }
 
     @Override
@@ -124,6 +142,34 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
                     startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
                 }
             }
+        } else if (i == R.id.homeBtnBusTicket) {
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(this.getSupportFragmentManager());
+            } else {
+                if (isAppInstalled(packageNameYoutube)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkBusTicket));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkAllServices;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
+            }
+        } else if (i == R.id.homeBtnAirTicket) {
+            if (!mCd.isConnectingToInternet()) {
+                AppHandler.showDialog(this.getSupportFragmentManager());
+            } else {
+                if (isAppInstalled(packageNameYoutube)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkAirTicket));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setPackage(packageNameYoutube);
+                    startActivity(intent);
+                } else {
+                    WebViewActivity.TAG_LINK = linkAllServices;
+                    startActivity(new Intent(HelpMainActivity.this, WebViewActivity.class));
+                }
+            }
         }
     }
 
@@ -134,13 +180,6 @@ public class HelpMainActivity extends AppCompatActivity implements View.OnClickL
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(HelpMainActivity.this, SettingsActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     protected boolean isAppInstalled(String packageName) {

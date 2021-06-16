@@ -4,5 +4,17 @@
         <attr name="max_in_row" format="integer"/>
         <attr name="radio_buttons" format="reference"/>
         <attr name="default_button" format="string"/>
+        <attr name="stepTrackerDotBackground" format="reference"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="SlyCalendarView">
+        <attr name="backgroundColor" format="color"/>
+        <attr name="headerColor" format="color"/>
+        <attr name="headerTextColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="selectedColor" format="color"/>
+        <attr name="selectedTextColor" format="color"/>
+        <attr name="firstMonday" format="boolean"/>
     </declare-styleable>
 </resources>

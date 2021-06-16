@@ -4,15 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,36 +14,46 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.cloudwell.paywell.services.R;
-import com.cloudwell.paywell.services.activity.reg.EntryMainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.home.HomeActivity;
+import com.cloudwell.paywell.services.activity.home.model.ReposeUserProfile;
+import com.cloudwell.paywell.services.activity.home.model.ResponseDetailsUserProfile;
 import com.cloudwell.paywell.services.activity.reg.missing.MissingMainActivity;
+import com.cloudwell.paywell.services.activity.reg.model.AuthRequestModel;
+import com.cloudwell.paywell.services.activity.reg.model.RegistrationModel;
+import com.cloudwell.paywell.services.activity.settings.ChangePinActivity;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.APIService;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
+import com.cloudwell.paywell.services.utils.AppsStatusConstant;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
-import com.cloudwell.paywell.services.utils.TelephonyInfo;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class AppLoadingActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class AppLoadingActivity extends BaseActivity {
     private static final String TAG = AppLoadingActivity.class.getName();
     private static final int REQUEST_PHONE_STATE = 1;
     private ProgressBar mPBAppLoading;
     private RelativeLayout mRelativeLayout;
     private TextView mConErrorMsg;
     private Button mBtnRetry;
+    private Button btnClose;
+
     private AppHandler mAppHandler;
     private String mImeiNo;
     private ConnectionDetector mCd;
@@ -58,6 +62,10 @@ public class AppLoadingActivity extends AppCompatActivity {
     public static String pendingStr;
     boolean flag = true;
     private static final int MY_PERMISSIONS_REQUEST_ACCOUNTS = 123;
+    private RegistrationModel regModel;
+
+    String pin = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,29 +76,32 @@ public class AppLoadingActivity extends AppCompatActivity {
         mConErrorMsg = findViewById(R.id.connErrorMsg);
         mBtnRetry = findViewById(R.id.btnRetry);
         mPBAppLoading = findViewById(R.id.pbAppLoading);
-        Button btnClose = findViewById(R.id.btnClose);
+        btnClose = findViewById(R.id.btnClose);
 
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
+        pin = getIntent().getStringExtra("pin");
 
-        if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
-            mConErrorMsg.setTypeface(AppController.getInstance().getOxygenLightFont());
-            mBtnRetry.setTypeface(AppController.getInstance().getOxygenLightFont());
-            btnClose.setTypeface(AppController.getInstance().getOxygenLightFont());
-        } else {
-            mConErrorMsg.setTypeface(AppController.getInstance().getAponaLohitFont());
-            mBtnRetry.setTypeface(AppController.getInstance().getAponaLohitFont());
-            btnClose.setTypeface(AppController.getInstance().getAponaLohitFont());
-        }
+
         if (Build.VERSION.SDK_INT < 23) {
             //Do not need to check the permission
-            if (mAppHandler.getAppStatus().equalsIgnoreCase("registered")) {
-                RegisteredUserLogin();
+
+            if (mAppHandler.getUserNeedToChnagePassword()) {
+                Intent i = new Intent(this, ChangePinActivity.class);
+                i.putExtra("isFirstTime", true);
+                i.putExtra("pin", pin);
+                startActivity(i);
+                finish();
+
+            } else if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
+                //RegisteredUserLogin();
+                RegisterUser();
                 Handler handler = new Handler();
                 Runnable myRunnable = new Runnable() {
                     public void run() {
                         Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
+                        i.putExtra("pin", pin);
                         startActivity(i);
                         finish();
                     }
@@ -100,10 +111,20 @@ public class AppLoadingActivity extends AppCompatActivity {
                 RegisterUser();
             }
         } else {
-            if (checkAndRequestPermissions()) {
-                //If you have already permitted the permission
-                if (mAppHandler.getAppStatus().equalsIgnoreCase("registered")) {
-                    RegisteredUserLogin();
+            if (mAppHandler.getUserNeedToChnagePassword()){
+                Intent i = new Intent(this, ChangePinActivity.class);
+                i.putExtra("isFirstTime", true);
+                i.putExtra("pin", pin);
+                startActivity(i);
+                finish();
+
+            } else if (mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_registered) || mAppHandler.getAppStatus().equalsIgnoreCase(AppsStatusConstant.KEY_login)) {
+                    //RegisteredUserLogin();
+
+                if (checkAndRequestPermissions()) {
+                    //If you have already permitted the permission
+
+                    RegisterUser();
                     Handler handler = new Handler();
                     Runnable myRunnable = new Runnable() {
                         public void run() {
@@ -113,32 +134,44 @@ public class AppLoadingActivity extends AppCompatActivity {
                         }
                     };
                     handler.postDelayed(myRunnable, 100);
+
+                }else {
+                    //requestPhonePermission();
+                }
                 } else {
                     RegisterUser();
                 }
-            }
+
         }
+
+        mBtnRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AppLoadingActivity.this, AppLoadingActivity.class);
+                intent.putExtra("pin", pin);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
 
     private boolean checkAndRequestPermissions() {
-        int phnStatePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_PHONE_STATE);
-        int readExternalStoragePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE);
-        int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int accessFineLocationPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-//        int readSmsPermission = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.READ_SMS);
-//        int receiveSmsPermission = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.RECEIVE_SMS);
-        int cameraPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CAMERA);
-        int callPhnPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.CALL_PHONE);
-        int readContactsPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS);
+        int phnStatePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        int readExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int writeExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int accessFineLocationPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        int readContactsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
 
         List<String> listPermissionsNeeded = new ArrayList<>();
         if (phnStatePermission != PackageManager.PERMISSION_GRANTED) {
@@ -162,9 +195,9 @@ public class AppLoadingActivity extends AppCompatActivity {
         if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA);
         }
-        if (callPhnPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.CALL_PHONE);
-        }
+//        if (callPhnPermission != PackageManager.PERMISSION_GRANTED) {
+//            listPermissionsNeeded.add(Manifest.permission.CALL_PHONE);
+//        }
         if (readContactsPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.READ_CONTACTS);
         }
@@ -187,35 +220,19 @@ public class AppLoadingActivity extends AppCompatActivity {
             for (Field field : fields) {
                 androidVersionName = field.getName();
             }
-            TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-            mImeiNo = telephonyInfo.getImeiSIM1();
-            mAppHandler.setImeiNo(mImeiNo);
-            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+
+//            new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionNo());
+
+            authAsync();
         }
     }
 
-    private void RegisteredUserLogin() {
-        if (!mCd.isConnectingToInternet()) {
-            mConErrorMsg.setVisibility(View.VISIBLE);
-            mBtnRetry.setVisibility(View.VISIBLE);
-            mPBAppLoading.setVisibility(View.GONE);
-        } else {
-            Field[] fields = Build.VERSION_CODES.class.getFields();
-            for (Field field : fields) {
-                androidVersionName = field.getName();
-            }
-            TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-            mImeiNo = telephonyInfo.getImeiSIM1();
-            mAppHandler.setImeiNo(mImeiNo);
-            new AuthenticationAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
-        }
-    }
 
     private void requestPhonePermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE_STATE);
     }
 
-    private String getVersionName() {
+    private String getVersionNo() {
         String _versionName = null;
         try {
             _versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -228,284 +245,6 @@ public class AppLoadingActivity extends AppCompatActivity {
         return versionName; // Found the code!
     }
 
-    @SuppressWarnings("deprecation")
-    private class AuthAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("version_no", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("version_name", androidVersionName));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (result != null) {
-                    ArrayList<String> imgLink = new ArrayList<>();
-
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equalsIgnoreCase("200")) {
-
-                        mAppHandler.setAppStatus("registered");
-                        String rid = jsonObject.getString("retailer_code");
-                        mAppHandler.setRID(rid);
-
-                        String sme = jsonObject.getString("SME");
-                        String changePinStatus = jsonObject.getString("changePinStatus");
-                        String changePhnStatus = jsonObject.getString("isPhoneVerfied");
-                        String changeBTypeStatus = jsonObject.getString("businessTypeStatus");
-                        String displayPictureCount = jsonObject.getString("displayPictureCount");
-                        mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
-
-                        String mobileNumber = jsonObject.getString("mobile_number");
-                        mAppHandler.setMobileNumber(mobileNumber);
-
-
-                        mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
-                        JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
-                        for(int i = 0; i < pictureArrayJson.length(); i++) {
-                            String disImglink =  pictureArrayJson.getString(i);
-                            if(disImglink.isEmpty()) {
-                                mAppHandler.displayPictureArray[i] = "";
-                                imgLink.add("");
-                            } else {
-                                mAppHandler.displayPictureArray[i] = disImglink;
-                                imgLink.add(disImglink);
-                            }
-                        }
-                        mAppHandler.setDisplayPictureArrayList(imgLink);
-
-                        if (sme.equalsIgnoreCase("0")) {
-                            mAppHandler.setGatewayId("1");
-                        } else if (sme.equalsIgnoreCase("1")) {
-                            mAppHandler.setGatewayId("4");
-                        }
-
-                        if (!changePinStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setInitialChangePinStatus("true");
-                        }
-
-                        if (changePhnStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setPhnNumberVerificationStatus("false");
-                        } else {
-                            mAppHandler.setPhnNumberVerificationStatus("verified");
-                        }
-
-                        if (changeBTypeStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setMerchantTypeVerificationStatus("false");
-                        } else {
-                            mAppHandler.setMerchantTypeVerificationStatus("verified");
-                        }
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent i = new Intent(AppLoadingActivity.this, MainActivity.class);
-                        startActivity(i);
-                        finish();
-                    } else if (status.equalsIgnoreCase("502")) {
-                        mAppHandler.setAppStatus("unregistered");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent intent = new Intent(getApplicationContext(), EntryMainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (status.equalsIgnoreCase("100")) {
-                        mAppHandler.setAppStatus("pending");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        MissingMainActivity.RESPONSE_DETAILS = result;
-                        Intent intent = new Intent(getApplicationContext(), MissingMainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (status.equalsIgnoreCase("309")
-                            || status.equalsIgnoreCase("360")
-                            || status.equalsIgnoreCase("400")) {
-
-                        pendingStr = jsonObject.getString("message");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        ActivityCompat.finishAffinity(AppLoadingActivity.this);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        mConErrorMsg.setText(R.string.try_again_msg);
-                        mConErrorMsg.setVisibility(View.VISIBLE);
-                        mBtnRetry.setVisibility(View.VISIBLE);
-                        mPBAppLoading.setVisibility(View.GONE);
-                    }
-                } else {
-                    mConErrorMsg.setText(R.string.conn_timeout_msg);
-                    mConErrorMsg.setVisibility(View.VISIBLE);
-                    mBtnRetry.setVisibility(View.VISIBLE);
-                    mPBAppLoading.setVisibility(View.GONE);
-                }
-            } catch (Exception e) {
-                mConErrorMsg.setText(R.string.try_again_msg);
-                mConErrorMsg.setVisibility(View.VISIBLE);
-                mBtnRetry.setVisibility(View.VISIBLE);
-                mPBAppLoading.setVisibility(View.GONE);
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private class AuthenticationAsync extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(4);
-                nameValuePairs.add(new BasicNameValuePair("imei_no", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("version_no", params[1]));
-                nameValuePairs.add(new BasicNameValuePair("version_name", androidVersionName));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                if (result != null) {
-                    ArrayList<String> imgLink = new ArrayList<>();
-
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString("status");
-                    if (status.equalsIgnoreCase("200")) {
-
-                        mAppHandler.setAppStatus("registered");
-                        String rid = jsonObject.getString("retailer_code");
-                        mAppHandler.setRID(rid);
-
-                        String sme = jsonObject.getString("SME");
-                        String changePinStatus = jsonObject.getString("changePinStatus");
-                        String changePhnStatus = jsonObject.getString("isPhoneVerfied");
-                        String changeBTypeStatus = jsonObject.getString("businessTypeStatus");
-                        String displayPictureCount = jsonObject.getString("displayPictureCount");
-                        mAppHandler.setDisplayPictureCount(Integer.parseInt(displayPictureCount));
-
-                        mAppHandler.displayPictureArray = new String[Integer.parseInt(displayPictureCount)];
-                        JSONArray pictureArrayJson = jsonObject.getJSONArray("imageLink");
-                        for(int i = 0; i < pictureArrayJson.length(); i++) {
-                            String disImglink =  pictureArrayJson.getString(i);
-                            if(disImglink.isEmpty()) {
-                                mAppHandler.displayPictureArray[i] = "";
-                                imgLink.add("");
-                            } else {
-                                mAppHandler.displayPictureArray[i] = disImglink;
-                                imgLink.add(disImglink);
-                            }
-                        }
-                        mAppHandler.setDisplayPictureArrayList(imgLink);
-
-                        if (sme.equalsIgnoreCase("0")) {
-                            mAppHandler.setGatewayId("1");
-                        } else if (sme.equalsIgnoreCase("1")) {
-                            mAppHandler.setGatewayId("4");
-                        }
-
-                        if (!changePinStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setInitialChangePinStatus("true");
-                        }
-
-                        if (changePhnStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setPhnNumberVerificationStatus("false");
-                        } else {
-                            mAppHandler.setPhnNumberVerificationStatus("verified");
-                        }
-
-                        if (changeBTypeStatus.equalsIgnoreCase("0")) {
-                            mAppHandler.setMerchantTypeVerificationStatus("false");
-                        } else {
-                            mAppHandler.setMerchantTypeVerificationStatus("verified");
-                        }
-                        mPBAppLoading.setVisibility(View.GONE);
-                    } else if (status.equalsIgnoreCase("502")) {
-                        mAppHandler.setAppStatus("unregistered");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        Intent intent = new Intent(AppLoadingActivity.this, EntryMainActivity.class);
-                        startActivity(intent);
-                        ActivityCompat.finishAffinity(AppLoadingActivity.this);
-                        finish();
-                    } else if (status.equalsIgnoreCase("100")) {
-                        mAppHandler.setAppStatus("pending");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        MissingMainActivity.RESPONSE_DETAILS = result;
-                        Intent intent = new Intent(AppLoadingActivity.this, MissingMainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else if (status.equalsIgnoreCase("309")
-                            || status.equalsIgnoreCase("360")
-                            || status.equalsIgnoreCase("400")) {
-                        mAppHandler.setAppStatus("pending");
-                        mPBAppLoading.setVisibility(View.GONE);
-                        pendingStr = jsonObject.getString("message");
-                        Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        ActivityCompat.finishAffinity(AppLoadingActivity.this);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        mConErrorMsg.setText(R.string.try_again_msg);
-                        mConErrorMsg.setVisibility(View.VISIBLE);
-                        mBtnRetry.setVisibility(View.VISIBLE);
-                        mPBAppLoading.setVisibility(View.GONE);
-                    }
-                } else {
-                    mConErrorMsg.setText(R.string.conn_timeout_msg);
-                    mConErrorMsg.setVisibility(View.VISIBLE);
-                    mBtnRetry.setVisibility(View.VISIBLE);
-                    mPBAppLoading.setVisibility(View.GONE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                mConErrorMsg.setText(R.string.try_again_msg);
-                mConErrorMsg.setVisibility(View.VISIBLE);
-                mBtnRetry.setVisibility(View.VISIBLE);
-                mPBAppLoading.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    public void onClickRetry(View v) {
-        startActivity(new Intent(AppLoadingActivity.this, AppLoadingActivity.class));
-        finish();
-    }
-
-    public void onClickClose(View v) {
-        finish();
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -514,13 +253,12 @@ public class AppLoadingActivity extends AppCompatActivity {
             case REQUEST_PHONE_STATE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Phone permission has been granted
-                    TelephonyInfo telephonyInfo = TelephonyInfo.getInstance(this);
-                    mImeiNo = telephonyInfo.getImeiSIM1();
-                    mAppHandler.setImeiNo(mImeiNo);
+
                     if (!mCd.isConnectingToInternet()) {
                         mAppHandler.showDialog(getSupportFragmentManager());
                     } else {
-                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionName());
+//                        new AuthAsync().execute(getResources().getString(R.string.pw_auth), "" + getVersionNo());
+                        authAsync();
                     }
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, "Permission denied", Snackbar.LENGTH_LONG);
@@ -550,4 +288,252 @@ public class AppLoadingActivity extends AppCompatActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+
+    public void authAsync() {
+
+        String osVersion = android.os.Build.VERSION.RELEASE;
+        String osVersionName = "UNKNOWN";
+        Field[] fields = Build.VERSION_CODES.class.getFields();
+        for (Field field : fields) {
+            try {
+                if (Build.VERSION.SDK_INT == field.getInt(Build.VERSION_CODES.class)) {
+                    osVersionName = field.getName();
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        AuthRequestModel m = new AuthRequestModel();
+        m.setAppVersionName(androidVersionName);
+        m.setAppVersionNo(getVersionNo());
+        m.setOsName(osVersionName);
+        m.setOsVersion(osVersion);
+
+
+        APIService aPIService = ApiUtils.getAPIServiceV2();
+        Call<ReposeUserProfile> responseBodyCall;
+
+        String appStatus = AppHandler.getmInstance(getApplicationContext()).getAppStatus();
+        if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals("unknown") || appStatus.equals(AppsStatusConstant.KEY_pinNotSetUser)) {
+            m.setUsername("" + mAppHandler.getAndroidID());
+            responseBodyCall = aPIService.userServiceProfilingReg(m);
+        } else {
+            m.setUsername("" + mAppHandler.getUserName());
+            responseBodyCall = aPIService.userServiceProfiling(m);
+        }
+
+        responseBodyCall.enqueue(new Callback<ReposeUserProfile>() {
+
+            @Override
+            public void onResponse(Call<ReposeUserProfile> call, Response<ReposeUserProfile> response) {
+
+                try {
+                    ReposeUserProfile result = response.body();
+
+                    if (result.getApiStatus() == 200) {
+
+
+                        if (result != null) {
+                            ArrayList<String> imgLink = new ArrayList<>();
+
+                            ResponseDetailsUserProfile details = result.getResponseDetails();
+
+                            String status = "" + details.getMStatus();
+                            if (status.equalsIgnoreCase("200")) {
+
+
+                                if (appStatus.equals(AppsStatusConstant.KEY_pending) || appStatus.equals(AppsStatusConstant.KEY_unknown)) {
+                                    mPBAppLoading.setVisibility(View.GONE);
+                                    mBtnRetry.setVisibility(View.INVISIBLE);
+                                    btnClose.setVisibility(View.VISIBLE);
+                                    mConErrorMsg.setVisibility(View.VISIBLE);
+//                                        mConErrorMsg.setText("Congratulation on your becoming a paywell merchant, Your RIDE is " + rid + " and your password already send your mobile number, You can login by user username and password, \n\nThank you");
+                                    mConErrorMsg.setText("" + details.getMessage());
+
+
+                                    //AppHandler.getmInstance(getApplicationContext()).setIsSuccessfulPassRegistionFlow(false);
+
+                                    btnClose.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            if (status.equals("200")) {
+                                                AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_pending);
+                                                AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(true);
+
+                                                Intent i = new Intent(AppLoadingActivity.this, HomeActivity.class);
+                                                startActivity(i);
+                                                finish();
+                                            }
+
+                                        }
+                                    });
+
+
+                                } else {
+
+
+                                    String rid = details.getMRetailerCode();
+                                    int sme = details.getMSME();
+                                    String changePinStatus = details.getMChangePinStatus();
+                                    String changePhnStatus = details.getMIsPhoneVerfied();
+                                    String changeBTypeStatus = "" + details.getMBusinessTypeStatus();
+                                    int displayPictureCount = details.getMDisplayPictureCount();
+
+                                    mAppHandler.setRID(rid);
+
+
+                                    mAppHandler.setAppStatus(AppsStatusConstant.KEY_registered);
+
+                                    mAppHandler.setDisplayPictureCount(displayPictureCount);
+
+                                    String mobileNumber = details.getMMobileNumber();
+                                    mAppHandler.setMobileNumber(mobileNumber);
+
+
+                                    mAppHandler.displayPictureArray = new String[displayPictureCount];
+
+                                    List<String> pictureArrayJson = details.getMImageLink();
+                                    mAppHandler.setPictureArrayImageLink(pictureArrayJson.toString());
+
+                                    for (int i = 0; i < pictureArrayJson.size(); i++) {
+                                        String disImglink = pictureArrayJson.get(i);
+                                        if (disImglink.isEmpty()) {
+                                            mAppHandler.displayPictureArray[i] = "";
+                                            imgLink.add("");
+                                        } else {
+                                            mAppHandler.displayPictureArray[i] = disImglink;
+                                            imgLink.add(disImglink);
+                                        }
+                                    }
+                                    mAppHandler.setDisplayPictureArrayList(imgLink);
+
+                                    if (sme == 0) {
+                                        mAppHandler.setGatewayId("1");
+                                    } else if (sme == 1) {
+                                        mAppHandler.setGatewayId("4");
+                                    }
+
+
+                                    if (changePhnStatus.equalsIgnoreCase("0")) {
+                                        mAppHandler.setPhnNumberVerificationStatus("false");
+                                    } else {
+                                        mAppHandler.setPhnNumberVerificationStatus("verified");
+                                    }
+
+                                    if (changeBTypeStatus.equalsIgnoreCase("0")) {
+                                        mAppHandler.setMerchantTypeVerificationStatus("false");
+                                    } else {
+                                        mAppHandler.setMerchantTypeVerificationStatus("verified");
+                                    }
+                                    mPBAppLoading.setVisibility(View.GONE);
+
+
+                                    if (!changePinStatus.equalsIgnoreCase("0")) {
+                                        mAppHandler.setInitialChangePinStatus("true");
+                                    }
+
+
+                                    String json = new Gson().toJson(details.getImageAddress());
+                                    mAppHandler.setImageAddress(json);
+
+
+                                    String jsonDetails = new Gson().toJson(details.getDetails());
+                                    mAppHandler.setBannerDetails(jsonDetails);
+
+
+
+                                   Intent i = new Intent(AppLoadingActivity.this, MainActivity .class);
+                                    startActivity(i);
+                                    finish();
+
+
+                                }
+
+                            } else  if (status.equalsIgnoreCase("322")){
+                                AppHandler.getmInstance(getApplicationContext()).setAppStatus(AppsStatusConstant.KEY_allready_registered);
+                                AppHandler.getmInstance(getApplicationContext()).setUserNeedToChangePassword(false);
+
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                ActivityCompat.finishAffinity(AppLoadingActivity.this);
+                                startActivity(intent);
+                                finish();
+
+                            } else if (status.equalsIgnoreCase("502")) {
+                                mAppHandler.setAppStatus(AppsStatusConstant.KEY_unregistered);
+                                pendingStr = details.getMStatusName();
+                                mPBAppLoading.setVisibility(View.GONE);
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                ActivityCompat.finishAffinity(AppLoadingActivity.this);
+                                startActivity(intent);
+                                finish();
+                            } else if (status.equalsIgnoreCase("100") || status.equalsIgnoreCase("323")) {
+                                mAppHandler.setAppStatus(AppsStatusConstant.KEY_pending);
+                                mPBAppLoading.setVisibility(View.GONE);
+                                MissingMainActivity.RESPONSE_DETAILS = new Gson().toJson(details);
+                                regModel = new RegistrationModel();
+                                Intent intent = new Intent(getApplicationContext(), MissingMainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else if (status.equalsIgnoreCase("309")
+                                    || status.equalsIgnoreCase("360")
+                                    || status.equalsIgnoreCase("400")
+                                    || status.equalsIgnoreCase("324")
+                                    || status.equalsIgnoreCase("325")
+                            ) {
+
+                                pendingStr = details.getMStatusName();
+                                mPBAppLoading.setVisibility(View.GONE);
+                                Intent intent = new Intent(getApplicationContext(), PendingActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                ActivityCompat.finishAffinity(AppLoadingActivity.this);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                mConErrorMsg.setText(R.string.try_again_msg);
+                                mConErrorMsg.setVisibility(View.VISIBLE);
+                                mBtnRetry.setVisibility(View.VISIBLE);
+                                mPBAppLoading.setVisibility(View.GONE);
+                            }
+                        } else {
+                            mConErrorMsg.setText(R.string.conn_timeout_msg);
+                            mConErrorMsg.setVisibility(View.VISIBLE);
+                            mBtnRetry.setVisibility(View.VISIBLE);
+                            mPBAppLoading.setVisibility(View.GONE);
+                        }
+
+
+                    } else {
+                        mConErrorMsg.setText(result.getApiStatusName());
+                        mConErrorMsg.setVisibility(View.VISIBLE);
+                        mBtnRetry.setVisibility(View.VISIBLE);
+                        mPBAppLoading.setVisibility(View.GONE);
+
+                    }
+                } catch (Exception e) {
+                    mConErrorMsg.setText(R.string.try_again_msg);
+                    mConErrorMsg.setVisibility(View.VISIBLE);
+                    mBtnRetry.setVisibility(View.VISIBLE);
+                    mPBAppLoading.setVisibility(View.GONE);
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ReposeUserProfile> call, Throwable t) {
+                dismissProgressDialog();
+                Log.e(AppLoadingActivity.class.getName(), Objects.requireNonNull(t.getMessage()));
+                mConErrorMsg.setText(R.string.try_again_msg);
+                mConErrorMsg.setVisibility(View.VISIBLE);
+                mBtnRetry.setVisibility(View.VISIBLE);
+                mPBAppLoading.setVisibility(View.GONE);
+            }
+        });
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.cloudwell.paywell.services.activity.refill.banktransfer;
 
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,11 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,25 +17,34 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit;
 import com.cloudwell.paywell.services.activity.refill.model.BranchData;
-import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
 import com.cloudwell.paywell.services.activity.refill.model.RefillRequestData;
 import com.cloudwell.paywell.services.activity.refill.model.RequestBranch;
 import com.cloudwell.paywell.services.activity.refill.model.RequestRefillBalance;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,19 +52,19 @@ import retrofit2.Response;
 public class BankDetailsActivity extends BaseActivity {
 
     private static final int PERMISSION_FOR_GALLERY = 321;
-    public static DistrictData responseDistrictData;
+    public static ReposeDistrictListerBankDeposit responseDistrictData;
     private static String KEY_TAG = BankDetailsActivity.class.getName();
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private ConstraintLayout mConstraintLayout;
     private Spinner mSpinnerDistrict, mSpinnerBranch;
     private Button mBtnUpload;
-//            , mBtnOk;
     private ArrayList<String> district_array, branch_array;
     private boolean districtChangeStatus;
     private ArrayAdapter<String> arrayAdapterBranchSpinner;
     private RequestRefillBalance mRequestRefillBalance;
     private BranchData responseBranchData;
+    private EditText etAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,23 +72,29 @@ public class BankDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_bank_details);
 
         assert getSupportActionBar() != null;
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle(R.string.home_refill_bank);
-        }
 
-        mAppHandler = new AppHandler(this);
+
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         mRequestRefillBalance = new RequestRefillBalance();
-        mRequestRefillBalance.setmUsername("" + mAppHandler.getImeiNo());
+        mRequestRefillBalance.setmUsername("" + mAppHandler.getUserName());
         districtChangeStatus = true;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mRequestRefillBalance.setmBankId("" + bundle.getString("bankId"));
+            String bankName = bundle.getString("bankName");
+
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setTitle(bankName);
+            }
         }
 
         initializeData();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BALANCE_REFILL_BANK);
+
     }
 
     public void initializeData() {
@@ -91,31 +103,64 @@ public class BankDetailsActivity extends BaseActivity {
         mSpinnerDistrict = findViewById(R.id.spinner_district);
         mSpinnerBranch = findViewById(R.id.spinner_branch);
         mBtnUpload = findViewById(R.id.btn_upload);
-//        mBtnOk = findViewById(R.id.btn_ok);
 
         TextView textViewAccountNum = findViewById(R.id.textViewAccountNo);
+        TextView textBranchName = findViewById(R.id.tvBranchName);
+        TextView textAccountName = findViewById(R.id.tvAccountName);
+        etAmount = findViewById(R.id.etAmount);
+
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewAccountNo)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getOxygenLightFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getOxygenLightFont());
-//            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getOxygenLightFont());
+
+            textViewAccountNum.setTypeface(AppController.getInstance().getOxygenLightFont());
+            textBranchName.setTypeface(AppController.getInstance().getOxygenLightFont());
+            textAccountName.setTypeface(AppController.getInstance().getOxygenLightFont());
         } else {
             ((TextView) mConstraintLayout.findViewById(R.id.textViewAccountNo)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewDistrict)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((TextView) mConstraintLayout.findViewById(R.id.textViewBranch)).setTypeface(AppController.getInstance().getAponaLohitFont());
             ((Button) mConstraintLayout.findViewById(R.id.btn_upload)).setTypeface(AppController.getInstance().getAponaLohitFont());
-//            ((Button) mConstraintLayout.findViewById(R.id.btn_ok)).setTypeface(AppController.getInstance().getAponaLohitFont());
+
+            textViewAccountNum.setTypeface(AppController.getInstance().getAponaLohitFont());
+            textBranchName.setTypeface(AppController.getInstance().getAponaLohitFont());
+            textAccountName.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
 
+
+
+
         try {
+
+            String branchName = "Branch Name: " + responseDistrictData.getBankInfo().getBranch();
+            textBranchName.setText(branchName);
+
+            String accountName = "Account Name: " + responseDistrictData.getBankInfo().getAccountName();
+            textAccountName.setText(accountName);
+
+
             String text = "Account No: " + responseDistrictData.getBankInfo().getAccountNumber();
             textViewAccountNum.setText(text);
+
+
+            textViewAccountNum.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    ClipboardManager cm = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                    cm.setText(responseDistrictData.getBankInfo().getAccountNumber());
+                    Toast.makeText(getApplicationContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
             district_array = new ArrayList<>();
             branch_array = new ArrayList<>();
             for (int i = 0; i < responseDistrictData.getDistrictData().size(); i++) {
-                district_array.add(responseDistrictData.getDistrictData().get(i).getDistrictName());
+                district_array.add(responseDistrictData.getDistrictData().get(i).getDistrict_name());
             }
 
             final ArrayAdapter<String> arrayAdapterDistrictSpinner =
@@ -182,13 +227,6 @@ public class BankDetailsActivity extends BaseActivity {
                 }
             });
 
-//            mBtnOk.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    onSubmitRequest();
-//                }
-//            });
-
             mBtnUpload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -243,12 +281,11 @@ public class BankDetailsActivity extends BaseActivity {
         showProgressDialog();
 
         final RequestBranch requestBranch = new RequestBranch();
-        requestBranch.setmUsername("" + mAppHandler.getImeiNo());
+        requestBranch.setmUsername("" + mAppHandler.getUserName());
         requestBranch.setmBankId("" + bankId);
         requestBranch.setmDistrictId("" + districtId);
 
-        Call<BranchData> responseBodyCall = ApiUtils.getAPIService().callBranchDataAPI(requestBranch.getmUsername(),
-                requestBranch.getmBankId(), requestBranch.getmDistrictId());
+        Call<BranchData> responseBodyCall = ApiUtils.getAPIServiceV2().callBranchDataAPI(requestBranch);
 
         responseBodyCall.enqueue(new Callback<BranchData>() {
             @Override
@@ -341,15 +378,11 @@ public class BankDetailsActivity extends BaseActivity {
 
         mRequestRefillBalance.setmImagePath(imageEncoded);
 
-//        mBtnUpload.setText("Uploaded");
         onSubmitRequest();
     }
 
 
     private void onSubmitRequest() {
-//        if (!districtChangeStatus && responseBranchData.getStatus() != 200 || mRequestRefillBalance.getmImagePath() == null) {
-//            onBackPressed();
-//        } else {
         if (districtChangeStatus) {
             mRequestRefillBalance.setmDistrictId(responseDistrictData.getDistrictData().get(mSpinnerDistrict.getSelectedItemPosition()).getId());
             mRequestRefillBalance.setmBranchId(responseDistrictData.getBranch().get(mSpinnerBranch.getSelectedItemPosition()).getId());
@@ -366,16 +399,16 @@ public class BankDetailsActivity extends BaseActivity {
             snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
             snackbar.show();
         }
-//        }
     }
 
     private void submitBalanceRequest() {
         showProgressDialog();
 
-        Call<RefillRequestData> responseBodyCall = ApiUtils.getAPIService().callBalanceRefillAPI(mRequestRefillBalance.getmUsername(),
-                mRequestRefillBalance.getmBankId(), mRequestRefillBalance.getmDistrictId(),
-                mRequestRefillBalance.getmBranchId(),
-                mRequestRefillBalance.getmImagePath());
+        mRequestRefillBalance.setAmount(etAmount.getText().toString());
+
+
+
+        Call<RefillRequestData> responseBodyCall = ApiUtils.getAPIServiceV2().callBalanceRefillAPI(mRequestRefillBalance);
 
         responseBodyCall.enqueue(new Callback<RefillRequestData>() {
             @Override

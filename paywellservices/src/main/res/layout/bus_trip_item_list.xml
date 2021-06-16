@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:id="@+id/linearLayout7"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="wrap_content"
+                                                   android:layout_margin="8dp"
+                                                   android:background="@drawable/bus_trip_item_backgroud">
+
+    <ImageView
+        android:id="@+id/imageView30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:background="@drawable/ic_tk_bus"
+        app:layout_constraintBottom_toBottomOf="@+id/TransporttvPrices"
+        app:layout_constraintEnd_toStartOf="@+id/TransporttvPrices"
+        app:layout_constraintTop_toTopOf="@+id/TransporttvPrices"/>
+
+    <View
+        android:id="@+id/ivSelect"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="24dp"
+        android:background="#00203f"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView64"
+        app:layout_constraintEnd_toEndOf="@+id/ivSelect"
+        app:layout_constraintStart_toEndOf="@+id/textView64"
+        app:layout_constraintTop_toTopOf="@+id/textView64"
+        android:background="@drawable/right_arraw_bus" />
+
+    <TextView
+        android:id="@+id/textView64"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="@string/select"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSelect"
+        app:layout_constraintStart_toStartOf="@+id/ivSelect"
+        app:layout_constraintTop_toTopOf="@+id/ivSelect" />
+
+    <TextView
+        android:id="@+id/TransporttvPrices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="3500"
+        android:textColor="#f15a24"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/ivSelect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvTransportNameAndType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="GREEN Line , AC"
+        android:textColor="@color/color_tangaroa"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/coach_no"
+        android:textColor="#707070"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTransportNameAndType"/>
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/departure"
+        android:textColor="#707070"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCoachNo"/>
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/available_seat"
+        android:textColor="#707070"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <TextView
+        android:id="@+id/textView68"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+            android:text="@string/ticket_cancelable"
+            android:textColor="#707070"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvAvailableSeat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:textColor="#00203f"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/textView26"
+        tools:text=":"/>
+
+    <TextView
+        android:id="@+id/tvDepartureTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=": 9:12 AM(Morning)"
+        android:textColor="@color/color_tangaroa"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView25"
+        app:layout_constraintStart_toStartOf="@+id/tvCoachNo" />
+
+    <TextView
+        android:id="@+id/tvTicketCancelable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text=": YES "
+        android:textColor="@color/color_tangaroa"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textView68"
+        app:layout_constraintStart_toEndOf="@+id/textView68"
+        app:layout_constraintTop_toTopOf="@+id/textView68" />
+
+    <TextView
+        android:id="@+id/tvCoachNo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:textStyle="bold"
+        android:text="304-SP/KB-UPPer DEck  304-SP/KB-UPPer DEck"
+        android:textColor="@color/color_tangaroa"
+        app:layout_constraintEnd_toStartOf="@+id/imageView30"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        app:layout_constraintTop_toTopOf="@+id/textView24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tvAvailableSeat"
+        app:layout_constraintTop_toTopOf="@+id/tvAvailableSeat"
+        tools:visibility="invisible"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

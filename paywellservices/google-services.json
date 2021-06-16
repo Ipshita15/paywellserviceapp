@@ -8,6 +8,93 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:712565615849:android:3640a788e0aaca9b5ed478",
+        "android_client_info": {
+          "package_name": "cloudwell.com.testfabricanalytics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrnX1MjgJ6kLcCWxrAbBeORjeIeoQA8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712565615849:android:65ae9041f7c4e9235ed478",
+        "android_client_info": {
+          "package_name": "com.cloudwell.paywell.consumer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrnX1MjgJ6kLcCWxrAbBeORjeIeoQA8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712565615849:android:6540361c1160f84d5ed478",
+        "android_client_info": {
+          "package_name": "com.cloudwell.paywell.consumer.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrnX1MjgJ6kLcCWxrAbBeORjeIeoQA8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:712565615849:android:ce30cb7039417d77",
         "android_client_info": {
           "package_name": "com.cloudwell.paywell.services"
@@ -25,15 +112,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -46,6 +131,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "712565615849-q998j8htro3coc6t7uvbf9qflg6p7td9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cloudwell.paywell.services.debug",
+            "certificate_hash": "cdbc79cc07a5896cda2a7b4550586bc5048109a6"
+          }
+        },
+        {
           "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -56,15 +149,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712565615849-3ku8g1jnklp72k924b28nmjouelknd4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

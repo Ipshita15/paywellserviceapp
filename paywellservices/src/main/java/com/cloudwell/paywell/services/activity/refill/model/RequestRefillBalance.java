@@ -12,8 +12,11 @@ public class RequestRefillBalance {
     private String mDistrictId;
     @SerializedName("branchId")
     private String mBranchId;
-    @SerializedName("image")
+    @SerializedName("depositslip")
     private String mImagePath;
+
+    @SerializedName("amount")
+    private String amount;
 
     public String getmUsername() {
         return mUsername;
@@ -53,5 +56,18 @@ public class RequestRefillBalance {
 
     public void setmImagePath(String mImagePath) {
         this.mImagePath = mImagePath;
+    }
+
+    public void setAmount(String toString) {
+        this.amount = toString;
+
+    }
+
+    public void setBankId(String bankId) {
+        mBankId = bankId;
+    }
+
+    public String getAmount() {
+        return amount;
     }
 }

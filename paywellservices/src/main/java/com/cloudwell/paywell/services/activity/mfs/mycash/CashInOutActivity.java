@@ -3,10 +3,7 @@ package com.cloudwell.paywell.services.activity.mfs.mycash;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,23 +13,23 @@ import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.CashInActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.cash.CashOutActivity;
+import com.cloudwell.paywell.services.activity.mfs.mycash.cash.model.RequestCashOut;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AlertDialog;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CashInOutActivity extends BaseActivity {
 
@@ -54,7 +51,7 @@ public class CashInOutActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_cash_in_out_title);
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         Button btnCashIn = findViewById(R.id.homeBtnCashIn);
@@ -67,6 +64,8 @@ public class CashInOutActivity extends BaseActivity {
             btnCashIn.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCashOut.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_CASH_OUT);
     }
 
     public void onButtonClicker(View v) {
@@ -105,7 +104,8 @@ public class CashInOutActivity extends BaseActivity {
                         int limit = Integer.parseInt(selectedLimit);
 
                         if (mCd.isConnectingToInternet()) {
-                            new CashOutInquiryAsync().execute(getResources().getString(R.string.mycash_cashout_inq), String.valueOf(limit));
+                            //new CashOutInquiryAsync().execute(getResources().getString(R.string.mycash_cashout_inq), String.valueOf(limit));//
+                            callLCashOutInquiryAPI();
                         } else {
                             Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
                             snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -119,80 +119,52 @@ public class CashInOutActivity extends BaseActivity {
         alert.show();
     }
 
-    private class CashOutInquiryAsync extends AsyncTask<String, Void, String> {
+    private void callLCashOutInquiryAPI() {
+        showProgressDialog();
+        RequestCashOut m = new RequestCashOut();
+        m.setUsername(mAppHandler.getAndroidID());
+        m.setLimit(selectedLimit);
 
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-
-        }
-
-        @Override
-        protected String doInBackground(String... data) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("limit", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("format", "json"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            try {
-                if (result != null) {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String status = jsonObject.getString(TAG_STATUS);
-                    if (status.equals("200")) {
-                        JSONArray array = jsonObject.getJSONArray(TAG_MESSAGE_TEXT);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("array", array.toString());
-                        Intent intent = new Intent(CashInOutActivity.this, CashOutActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        finish();
+        ApiUtils.getAPIServiceV2().cashOut(m).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                try {
+                    String result = response.body().string();
+                    if (result != null) {
+                        JSONObject jsonObject = new JSONObject(result);
+                        String status = jsonObject.getString(TAG_STATUS);
+                        if (status.equals("200")) {
+                            JSONArray array = jsonObject.getJSONArray(TAG_MESSAGE_TEXT);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("array", array.toString());
+                            Intent intent = new Intent(CashInOutActivity.this, CashOutActivity.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            showErrorMessagev1(jsonObject.getString(TAG_MESSAGE));
+                        }
                     } else {
-                        Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
-                        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                        View snackBarView = snackbar.getView();
-                        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                        snackbar.show();
+                      showTryAgainDialog();
                     }
-                } else {
-                    Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                    snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                    View snackBarView = snackbar.getView();
-                    snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                    snackbar.show();
+                } catch (Exception e) {
+                    showTryAgainDialog();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+
             }
-        }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

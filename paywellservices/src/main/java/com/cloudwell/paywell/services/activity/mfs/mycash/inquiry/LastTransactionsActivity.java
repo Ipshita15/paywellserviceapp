@@ -5,9 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +17,17 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.mfs.mycash.InquiryMenuActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LastTransactionsActivity extends AppCompatActivity {
 
@@ -54,7 +57,7 @@ public class LastTransactionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_activity_log);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         relativeLayout = findViewById(R.id.trxRelativeLayout);
         listView = findViewById(R.id.trxListView);
         mAdapter = new TrxAdapter(this);
@@ -64,6 +67,8 @@ public class LastTransactionsActivity extends AppCompatActivity {
             array = bundle.getString("array");
         }
         initializeAdapter();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MYCASH_LAST_TRANSACTION);
     }
 
     public void initializeAdapter() {

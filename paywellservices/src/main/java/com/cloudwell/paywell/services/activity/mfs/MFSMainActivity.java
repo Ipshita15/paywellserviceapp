@@ -2,21 +2,24 @@ package com.cloudwell.paywell.services.activity.mfs;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.MainActivity;
+import com.cloudwell.paywell.services.activity.base.BaseActivity;
 import com.cloudwell.paywell.services.activity.mfs.mycash.MYCashMainActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
 import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
+import com.cloudwell.paywell.services.utils.StringConstant;
 
 
-public class MFSMainActivity  extends AppCompatActivity {
+public class MFSMainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +31,7 @@ public class MFSMainActivity  extends AppCompatActivity {
             getSupportActionBar().setTitle(R.string.nav_mfs);
         }
 
-        AppHandler mAppHandler = new AppHandler(this);
+        AppHandler mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnMycash = findViewById(R.id.homeBtnMyCash);
 
@@ -37,6 +40,17 @@ public class MFSMainActivity  extends AppCompatActivity {
         } else {
             btnMycash.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_MFS_MENU);
+
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_mfs_mycash, StringConstant.KEY_home_mfs_fav, IconConstant.KEY_ic_my_cash, 0, 36);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     public void onButtonClicker(View v) {

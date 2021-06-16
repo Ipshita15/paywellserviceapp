@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context="com.cloudwell.paywell.services.activity.home.login.LoginActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <ImageView
+                android:id="@+id/imageView45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.24000001"
+                app:srcCompat="@drawable/ic_paywell_login_logo" />
+
+        <TextView
+                android:id="@+id/textView35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/paywell_account_user_login"
+                android:textColor="#4d4d4d"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/imageView45"
+                app:layout_constraintTop_toBottomOf="@+id/imageView45" />
+
+        <TextView
+                android:id="@+id/textView69"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/account_id"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/textView35"
+                app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                app:hintEnabled="false"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView35"
+                app:layout_constraintTop_toBottomOf="@+id/textView69">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAccountID"
+                    android:lines="1"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/account_id" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+                android:id="@+id/textView71"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/pin_number"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                app:hintEnabled="false"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView35"
+                app:layout_constraintTop_toBottomOf="@+id/textView71">
+
+            <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPinNumber"
+                    android:lines="1"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_pin" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+                android:textStyle="bold"
+                android:id="@+id/tvForgotPIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/forgot_pin_new"
+                android:textColor="#189d49"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+        <Button
+                android:id="@+id/btSingIn"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@drawable/rounded_button_sign_in_disable"
+                android:drawableEnd="@drawable/sing_right_icon"
+                android:drawableRight="@drawable/sing_right_icon"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="32dp"
+                android:paddingRight="32dp"
+                android:text="@string/sign_in"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvForgotPIn" />
+
+        <ImageView
+                android:id="@+id/imageView49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btSingIn"
+                app:srcCompat="@drawable/line_3_login" />
+
+        <ImageView
+                android:id="@+id/imagCallButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="36dp"
+                app:layout_constraintStart_toStartOf="@+id/btSingIn"
+                app:layout_constraintTop_toBottomOf="@+id/imageView49"
+                app:srcCompat="@drawable/call_center_logo_big" />
+
+        <TextView
+                android:id="@+id/tvGetHelpLoginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="@string/get_help_home_page"
+                android:textColor="#189d49"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imagCallButton"
+                app:layout_constraintTop_toTopOf="@+id/imagCallButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

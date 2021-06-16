@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +11,16 @@ import android.widget.RelativeLayout;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.topup.model.RechargeOfferRequestModel;
+import com.cloudwell.paywell.services.activity.topup.model.TranscationLogResponseModel;
 import com.cloudwell.paywell.services.activity.topup.offer.OfferMainActivity;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -31,12 +36,17 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class OperatorMenuActivity extends BaseActivity {
 
     private AppHandler mAppHandler;
     private RelativeLayout mRelativeLayout;
     private ConnectionDetector mCd;
-    private static final String TAG_STATUS = "status";
+    private static final String TAG_STATUS = "status_code";
     private static final String TAG_RECHARGE_OFFER = "RechargeOffer";
     private static final String TAG_MESSAGE = "message";
     private int operator;
@@ -51,7 +61,7 @@ public class OperatorMenuActivity extends BaseActivity {
             getSupportActionBar().setTitle(R.string.home_topup_offer_title);
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCd = new ConnectionDetector(AppController.getContext());
 
         Button btnGp = findViewById(R.id.homeBtnGp);
@@ -76,6 +86,9 @@ public class OperatorMenuActivity extends BaseActivity {
             btnTeletalk.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnAirtel.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOPUP_ALL_OPERATOR_BUNDLE_OFFER_MENU_PAGE);
+
     }
 
     @Override
@@ -99,7 +112,8 @@ public class OperatorMenuActivity extends BaseActivity {
             case R.id.homeBtnGp:
                 if (mCd.isConnectingToInternet()) {
                     operator = 1;
-                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                    inquiryNew(operator);
+                   // new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
                     showNoInternetConnectionFound();
                 }
@@ -107,7 +121,8 @@ public class OperatorMenuActivity extends BaseActivity {
             case R.id.homeBtnSkitto:
                 if (mCd.isConnectingToInternet()) {
                     operator = 7;
-                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                    inquiryNew(operator);
+                   // new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
                     showNoInternetConnectionFound();
                 }
@@ -116,7 +131,8 @@ public class OperatorMenuActivity extends BaseActivity {
             case R.id.homeBtnRb:
                 if (mCd.isConnectingToInternet()) {
                     operator = 3;
-                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                    inquiryNew(operator);
+                    //new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
                     showNoInternetConnectionFound();
                 }
@@ -124,7 +140,8 @@ public class OperatorMenuActivity extends BaseActivity {
             case R.id.homeBtnBl:
                 if (mCd.isConnectingToInternet()) {
                     operator = 2;
-                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                    inquiryNew(operator);
+                    //new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
                     showNoInternetConnectionFound();
                 }
@@ -132,7 +149,8 @@ public class OperatorMenuActivity extends BaseActivity {
             case R.id.homeBtnTt:
                 if (mCd.isConnectingToInternet()) {
                     operator = 6;
-                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                    inquiryNew(operator);
+                   // new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
                     showNoInternetConnectionFound();
                 }
@@ -140,7 +158,8 @@ public class OperatorMenuActivity extends BaseActivity {
             case R.id.homeBtnAt:
                 if (mCd.isConnectingToInternet()) {
                     operator = 4;
-                    new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
+                    inquiryNew(operator);
+                    //new InquiryAsync().execute(getResources().getString(R.string.topup_offer), String.valueOf(operator));
                 } else {
                     showNoInternetConnectionFound();
                 }
@@ -150,12 +169,97 @@ public class OperatorMenuActivity extends BaseActivity {
         }
     }
 
-    private void showNoInternetConnectionFound() {
-        Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.connection_error_msg, Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-        View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-        snackbar.show();
+
+    private void inquiryNew(int operator){
+        showProgressDialog();
+        RechargeOfferRequestModel rechargeOfferRequestModel = new RechargeOfferRequestModel();
+        rechargeOfferRequestModel.setSubServiceId(""+operator);
+        rechargeOfferRequestModel.setUsername(mAppHandler.getUserName());
+
+        ApiUtils.getAPIServiceV2().getRechargeOffer(rechargeOfferRequestModel).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+
+                if (response.code() == 200){
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        int status = jsonObject.getInt(TAG_STATUS);
+                        String msg = jsonObject.getString("message");
+                        if (status == 200){
+                            JSONArray array = jsonObject.getJSONArray(TAG_RECHARGE_OFFER);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("array", array.toString());
+                            OperatorType operatorType;
+
+                            switch (operator) {
+                                case 1:
+                                    operatorType = OperatorType.GP;
+                                    OfferMainActivity.operatorName = getString(R.string.home_gp);
+                                    startOfferMainActivity(bundle, operatorType);
+                                    break;
+
+                                case 7:
+                                    operatorType = OperatorType.Skitto;
+                                    OfferMainActivity.operatorName = getString(R.string.home_skitto);
+                                    startOfferMainActivity(bundle, operatorType);
+                                    break;
+
+                                case 2:
+                                    operatorType = OperatorType.BANGLALINK;
+                                    OfferMainActivity.operatorName = getString(R.string.home_bl);
+                                    startOfferMainActivity(bundle, operatorType);
+                                    break;
+                                case 3:
+                                    operatorType = OperatorType.ROBI;
+                                    OfferMainActivity.operatorName = getString(R.string.home_rb);
+                                    startOfferMainActivity(bundle, operatorType);
+                                    break;
+                                case 4:
+                                    operatorType = OperatorType.AIRTEL;
+                                    OfferMainActivity.operatorName = getString(R.string.home_at);
+                                    startOfferMainActivity(bundle, operatorType);
+                                    break;
+
+
+                                case 6:
+                                    operatorType = OperatorType.TELETALK;
+                                    OfferMainActivity.operatorName = getString(R.string.home_tt);
+                                    startOfferMainActivity(bundle, operatorType);
+
+                                    break;
+
+                                default:
+                                    break;
+
+                            }
+
+                        }else {
+                            showErrorMessagev1(msg);
+                        }
+
+
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+
+
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
     }
 
     private class InquiryAsync extends AsyncTask<String, Void, String> {
@@ -163,7 +267,7 @@ public class OperatorMenuActivity extends BaseActivity {
 
         @Override
         protected void onPreExecute() {
-           showProgressDialog();
+            showProgressDialog();
         }
 
         @SuppressWarnings("deprecation")
@@ -176,7 +280,7 @@ public class OperatorMenuActivity extends BaseActivity {
             try {
                 //add data
                 List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getImeiNo()));
+                nameValuePairs.add(new BasicNameValuePair("imei", mAppHandler.getUserName()));
                 nameValuePairs.add(new BasicNameValuePair("subServiceId", data[1]));
                 nameValuePairs.add(new BasicNameValuePair("format", "json"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -195,7 +299,7 @@ public class OperatorMenuActivity extends BaseActivity {
 
         @Override
         protected void onPostExecute(String result) {
-           dismissProgressDialog();
+            dismissProgressDialog();
             try {
                 if (result != null) {
                     JSONObject jsonObject = new JSONObject(result);
@@ -249,7 +353,7 @@ public class OperatorMenuActivity extends BaseActivity {
                         }
 
 
-                    }else{
+                    } else {
                         Snackbar snackbar = Snackbar.make(mRelativeLayout, jsonObject.getString(TAG_MESSAGE), Snackbar.LENGTH_LONG);
                         snackbar.setActionTextColor(Color.parseColor("#ffffff"));
                         View snackBarView = snackbar.getView();

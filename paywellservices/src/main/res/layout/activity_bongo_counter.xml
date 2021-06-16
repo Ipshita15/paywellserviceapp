@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.cloudwell.paywell.services.activity.entertainment.bongo.BongoCounterActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:background="#2d2e31"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/bongo_count_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/back_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/bongo_ac_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/new_text_clr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bongo_sub_count"/>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="4dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        app:cardBackgroundColor="@color/bongo_item_bg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/counter_txt"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                tools:text="@string/bongo_sub_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

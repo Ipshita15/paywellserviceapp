@@ -18,4 +18,18 @@ public class AllConstant {
     public static final String IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY = "IS_FLOW_FROM_FAVORITE_AND_WEST_ZONE_BILL_INQUIRY";
     public static final String IS_FLOW_FROM_FAVORITE_BUS = "IS_FLOW_FROM_FAVORITE_BUS";
     public static final String IS_FLOW_FROM_FAVORITE_AIR = "IS_FLOW_FROM_FAVORITE_AIR";
+
+    public static final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+    public static final String Booked = "Booked";
+    public static final String Ticketed = "Ticketed";
+
+
+    public static final String Action_IsisThicket = "Action_IsisThicket";
+    public static final String Action_reIssueTicket = "Ticket Re-issue";
+    public static final String Action_Void = "Ticket Void";
+    public static final String Action_Refund = "Ticket Refund";
+    public static final String Action_DOCS_UPDATE = "Docs/info update";
+
+
 }

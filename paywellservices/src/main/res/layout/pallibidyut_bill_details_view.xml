@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/serialNumTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".8"
+        android:gravity="center|right"
+        android:hint="1."
+        android:padding="2dp"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="12"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Status: " />
+            <TextView
+                android:id="@+id/billStatusTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Status"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="TrxId: "
+                android:singleLine="true"
+                android:marqueeRepeatLimit="marquee_forever"/>
+            <TextView
+                android:id="@+id/billTransactionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Transaction ID"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bill No: " />
+            <TextView
+                android:id="@+id/billNumTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Bill No."/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Bill Amount: " />
+            <TextView
+                android:id="@+id/billAmountTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="Total Amount"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/serviceChargeLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Service Charge: " />
+            <TextView
+                android:id="@+id/serviceChargeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="service charge"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/commissionLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="23dp"
+                android:text="Commission: " />
+            <TextView
+                android:id="@+id/commissionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:hint="commission"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

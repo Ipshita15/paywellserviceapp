@@ -1,15 +1,15 @@
 package com.cloudwell.paywell.services.database;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
-
 import com.cloudwell.paywell.services.activity.myFavorite.model.FavoriteMenu;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 
 import java.util.List;
 
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 import io.reactivex.Maybe;
 
 
@@ -29,18 +29,49 @@ public interface FavoriteMenuDab {
     @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
     Maybe<List<FavoriteMenu>> getAllFavoriteMenu();
 
+
+    @Query("SELECT * FROM RecentUsedMenu")
+    Maybe<List<RecentUsedMenu>> getAllRecentUsedMenu();
+
+    @Query("SELECT * FROM favoritemenu WHERE status ='Favourite'")
+    List<FavoriteMenu> getAppShortcut();
+
+    @Query("SELECT * FROM favoritemenu WHERE status !='Favourite'")
+    List<FavoriteMenu> getDislikedMenu();
+
     @Insert
     void insert(FavoriteMenu task);
 
     @Insert
     void insert(List<FavoriteMenu> task);
 
+
+    @Insert
+    void insertRecentUsedMenu(List<RecentUsedMenu> task);
+
     @Delete
     void delete(FavoriteMenu task);
+
+    @Delete
+    void delete(List<FavoriteMenu> task);
+
+    @Query("DELETE FROM  favoritemenu WHERE alias_key = :aliasKey")
+    void delete( int aliasKey);
 
     @Update
     int update(FavoriteMenu task);
 
     @Query("DELETE FROM favoritemenu")
     public void deletedALl();
+
+
+    @Query("DELETE FROM RecentUsedMenu")
+    public void deletedALlRecentUsedMenu();
+
+
+
+
+
+
+
 }

@@ -3,19 +3,31 @@ package com.cloudwell.paywell.services.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.support.multidex.MultiDex;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
-import com.amitshekhar.DebugDB;
+import androidx.multidex.MultiDex;
+
 import com.cloudwell.paywell.services.BuildConfig;
+import com.cloudwell.paywell.services.activity.RecentUsedStackSet;
+import com.cloudwell.paywell.services.activity.home.AppSignatureHelper;
 import com.cloudwell.paywell.services.activity.myFavorite.helper.MyFavoriteHelper;
+import com.cloudwell.paywell.services.app.storage.AppStorageBox;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.database.DatabaseClient;
+import com.cloudwell.paywell.services.database.FavoriteMenuDab;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.utils.AppVersionUtility;
 import com.cloudwell.paywell.services.utils.MyHttpClient;
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -26,9 +38,17 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
-import java.util.Locale;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
-import io.fabric.sdk.android.Fabric;
+import javax.net.ssl.SSLContext;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by Android on 12/1/2015.
@@ -48,6 +68,9 @@ public class AppController extends Application {
 
     private RefWatcher refWatcher;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+
     public static synchronized AppController getInstance() {
         return mInstance;
     }
@@ -55,6 +78,8 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
         mInstance = this;
         mContext = this;
         client = createTrustedHttpsClient();
@@ -64,16 +89,9 @@ public class AppController extends Application {
             FirebaseApp.initializeApp(this);
             String id = FirebaseInstanceId.getInstance().getToken();
             Log.e("device_token", "" + id);
+            Logger.i("SMS HashKey: " + new AppSignatureHelper(getApplicationContext()).getAppSignatures().get(0));
 
-            Logger.v(DebugDB.getAddressLog());
 
-//
-//            if (LeakCanary.isInAnalyzerProcess(this)) {
-//                // This process is dedicated to LeakCanary for heap analysis.
-//                // You should not init your app in this process.
-//                return;
-//            }
-//            refWatcher = LeakCanary.install(this);
         }
 
         configureCrashReporting();
@@ -81,20 +99,155 @@ public class AppController extends Application {
 
         installMenuData();
 
+        new AppSignatureHelper(getApplicationContext()).getAppSignatures();
+
+
+        setDefaultTSLVersionForBelowAndroid5Device();
+
+    }
+
+    private void setDefaultTSLVersionForBelowAndroid5Device() {
+        int sdk = Build.VERSION.SDK_INT;
+        if (sdk < Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                ProviderInstaller.installIfNeeded(getApplicationContext());
+                SSLContext sslContext;
+                sslContext = SSLContext.getInstance("TLSv1.2");
+                sslContext.init(null, null, null);
+                sslContext.createSSLEngine();
+            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
+                    | NoSuchAlgorithmException | KeyManagementException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void addDefaultRecentList() {
+
+        RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_desco, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, 4, 4));
+        RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_ivac_free_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_bill_pay, 3, 25));
+        RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_pay_favorite, StringConstant.KEY_home_utility, IconConstant.KEY_ic_polli_biddut, 2, 11));
+        RecentUsedStackSet.getInstance().add(new RecentUsedMenu(StringConstant.KEY_mobileOperator, StringConstant.KEY_topup, IconConstant.KEY_all_operator, 1, 1));
+
+
+        ArrayList<RecentUsedMenu> all = RecentUsedStackSet.getInstance().getAll();
+
+        ArrayList<RecentUsedMenu> update = new ArrayList<>();
+
+
+        for (int i = 0; i < all.size(); i++) {
+            RecentUsedMenu recentUsedMenu1 = all.get(i);
+            recentUsedMenu1.setId(+i + 1);
+            update.add(recentUsedMenu1);
+        }
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .mFavoriteMenuDab()
+                        .deletedALlRecentUsedMenu();
+
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .mFavoriteMenuDab()
+                        .insertRecentUsedMenu(update);
+
+                return null;
+            }
+        }.execute();
+
+
+    }
+
+
+    private void generatedRecentUsedRecycView(List<RecentUsedMenu> favoriteMenus) {
+
+
     }
 
     private void installMenuData() {
         AppVersionUtility.AppStart appStart = AppVersionUtility.checkAppStart(getApplicationContext());
         switch (appStart) {
             case NORMAL:
+
+                getRecentList();
+
                 break;
             case FIRST_TIME:
                 MyFavoriteHelper.Companion.insertData(getApplicationContext());
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, false);
+
+                //setDefaultRecentList();
+
                 break;
             case FIRST_TIME_VERSION:
-                MyFavoriteHelper.Companion.insertData(getApplicationContext());
+                AppStorageBox.put(getApplicationContext(), AppStorageBox.Key.USER_USED_NOTIFICAITON_FLOW, false);
+                MyFavoriteHelper.Companion.updateData(getApplicationContext());
+
+                // setDefaultRecentList();
+
                 break;
         }
+    }
+
+    private void getRecentList() {
+
+
+        final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+        favoriteMenuDab.getAllRecentUsedMenu().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<RecentUsedMenu>>() {
+                    @Override
+                    public void accept(List<RecentUsedMenu> favoriteMenus) throws Exception {
+
+                        if (favoriteMenus.size() == 0) {
+                            addDefaultRecentList();
+                        } else {
+                            List<RecentUsedMenu> favoriteMenus1 = favoriteMenus;
+
+                            RecentUsedStackSet.getInstance().addAll(favoriteMenus);
+                        }
+                    }
+                });
+
+    }
+
+
+    private void setDefaultRecentList() {
+
+
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                        .mFavoriteMenuDab()
+                        .deletedALlRecentUsedMenu();
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                final FavoriteMenuDab favoriteMenuDab = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().mFavoriteMenuDab();
+                favoriteMenuDab.getAllRecentUsedMenu().subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<List<RecentUsedMenu>>() {
+                            @Override
+                            public void accept(List<RecentUsedMenu> favoriteMenus) throws Exception {
+
+                                if (favoriteMenus.size() == 0) {
+                                    addDefaultRecentList();
+                                }
+                            }
+                        });
+
+            }
+        }.execute();
+
+
     }
 
 
@@ -104,10 +257,17 @@ public class AppController extends Application {
     }
 
     private void configureCrashReporting() {
-        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
-                .disabled(BuildConfig.DEBUG)
-                .build();
-        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build(), new Crashlytics());
+//        CrashlyticsCore crashlyticsCore = new CrashlyticsCore.Builder()
+//                .disabled(BuildConfig.DEBUG)
+//                .build();
+//        Fabric.with(this, new Crashlytics.Builder().core(crashlyticsCore).build(), new Crashlytics());
+//
+//         FirebaseAnalytics mFirebaseAnalytics;
+
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+
+
     }
 
 
@@ -160,16 +320,14 @@ public class AppController extends Application {
 
     private void setupCrashlyticsUserInfo() {
         try {
-            mAppHandler = new AppHandler(getApplicationContext());
+            mAppHandler = AppHandler.getmInstance(getApplicationContext());
             String appStatus = mAppHandler.getAppStatus();
             if (!appStatus.equals("unknown")) {
                 String rid = mAppHandler.getRID();
                 String userName = mAppHandler.getUserName();
                 String mobileNumber = mAppHandler.getMobileNumber();
-                Crashlytics.setUserIdentifier(rid);
-                Crashlytics.setUserName("UserName: " + userName + " Mobile number: " + mobileNumber);
+                mFirebaseAnalytics.getInstance(this).setUserId("UserName: " + userName + " Mobile number: " + mobileNumber);
                 Logger.v("UserName: " + userName + " Mobile number: " + mobileNumber);
-
 
             }
         } catch (Exception e) {

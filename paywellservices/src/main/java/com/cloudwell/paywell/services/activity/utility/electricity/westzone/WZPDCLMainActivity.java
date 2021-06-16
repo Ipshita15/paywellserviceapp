@@ -2,10 +2,7 @@ package com.cloudwell.paywell.services.activity.utility.electricity.westzone;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,24 +10,28 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AppCompatDialog;
+
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -52,7 +53,7 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
 
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnBill = findViewById(R.id.homeBtnBillPay);
         Button btnInquiry = findViewById(R.id.homeBtnInquiry);
@@ -66,6 +67,9 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
         }
 
         checkIsComeFromFav(getIntent());
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_WZPDCL_MENU);
+
 
     }
 
@@ -138,7 +142,8 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getResources().getString(R.string.utility_multi_trx_inq));
+                    //new TransactionLogAsync().execute(getResources().getString(R.string.utility_multi_trx_inq));
+                    callAPI("WESTZONE", selectedLimit);
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -213,54 +218,59 @@ public class WZPDCLMainActivity extends BaseActivity implements CompoundButton.O
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
+    private void callAPI(String serviceName, String selectedLimit) {
 
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+        ReqInquiryModel m = new ReqInquiryModel();
+        m.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
+        m.setLimit(selectedLimit);
+        m.setService(serviceName);
+        m.setRefId(uniqueKey);
 
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
+        showProgressDialog();
 
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", "WESTZONE"));
-                nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+        ApiUtils.getAPIServiceV2().PBInquiry(m).enqueue(new Callback<ResponseBody>() {
 
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+
+                if (response.code() == 200) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String responseMessage = jsonObject.getString("Message");
+                        int status = jsonObject.getInt("Status");
+
+                        if (status == 200) {
+                            JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
+                            String result = responseDetails.toString();
+
+                            if (result != null) {
+                                WZPDCLBillInquiryActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(WZPDCLMainActivity.this, WZPDCLBillInquiryActivity.class));
+
+                            }
+
+                        } else {
+                            showErrorMessagev1(responseMessage);
+
+                        }
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+                } else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
             }
-            return responseTxt;
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            dismissProgressDialog();
-            if (result != null) {
-                WZPDCLBillInquiryActivity.TRANSLOG_TAG = result;
-                startActivity(new Intent(WZPDCLMainActivity.this, WZPDCLBillInquiryActivity.class));
-
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
             }
-        }
+        });
     }
+
 }

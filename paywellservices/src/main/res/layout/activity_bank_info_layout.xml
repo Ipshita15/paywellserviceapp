@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    card_view:cardUseCompatPadding="true"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+    android:background="@color/white"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <TextView
+          android:visibility="gone"
+          android:id="@+id/counter"
+          android:layout_marginLeft="@dimen/activity_horizontal_margin_half"
+          tools:text="1"
+          android:gravity="center"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:background="@drawable/roundbg"
+          android:layout_width="24dp"
+          android:layout_height="24dp"/>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+
+                <ImageView
+                    android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/iamge"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:visibility="visible"
+                    tools:text="Please Select Your Bank information"/>
+
+                <Button
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                    android:id="@+id/removeBankBtn"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="top|right"
+                    android:layout_marginTop="1dp"
+                    android:background="@drawable/close_green"
+                    android:contentDescription="@null"
+                    android:shadowColor="@color/blackShade"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textViewBank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:text="@string/bank"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:id="@+id/spinner_Bank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:spinnerMode="dropdown"/>
+                <ImageView
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textViewDistrict"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:text="@string/district"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    android:id="@+id/spinner_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:spinnerMode="dropdown"/>
+                <ImageView
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewBranch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:text="@string/branch"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+
+                <Spinner
+                    android:background="@drawable/spinner_bg"
+                    style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+                    android:id="@+id/spinner_branch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                    android:spinnerMode="dropdown"/>
+                <ImageView
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:background="@color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/acccount_name_link_bank"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                <EditText
+                        android:id="@+id/acName"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                        android:hint="@string/acccount_name_link_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/account_number_link_bank"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+                <EditText
+                        android:id="@+id/acNumber"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin_half"
+                        android:hint="@string/account_number_link_bank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                    android:visibility="invisible"
+                    android:textAllCaps="false"
+                    android:id="@+id/add_another_btn"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="right"
+                    android:background="@drawable/roundbg"
+                    android:text="+"
+                    android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:textSize="18sp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:paddingRight="15dp"
+                    android:paddingLeft="15dp"
+                    android:textAllCaps="false"
+                    android:id="@+id/check_book_btn"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/camera"
+                    android:background="#e9e9e9"
+                    android:text="@string/checkbook_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/check_check"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/check_ic"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    tools:ignore="VectorDrawableCompat"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp" />
+
+                <ImageView
+                    android:id="@+id/check_book"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    tools:ignore="VectorDrawableCompat" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

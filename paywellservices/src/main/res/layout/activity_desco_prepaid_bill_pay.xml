@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/utilityLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/layout_background"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fbCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                card_view:cardBackgroundColor="@color/card_background"
+                card_view:cardCornerRadius="4dp"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/star_sign"
+                            android:textColor="#FF4719"/>
+
+                        <TextView
+                            android:id="@+id/tvDescoPin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingStart="2dp"
+                            android:text="@string/pw_pin_no_des"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/pin_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:layout_marginTop="5dp"
+                            android:digits="0123456789"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberPassword"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/linearLayout19"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                            android:layout_marginTop="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                                android:id="@+id/textView32"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/star_sign"
+                                android:textColor="#FF4719"
+                                card_view:layout_constraintBottom_toBottomOf="parent"
+                                card_view:layout_constraintStart_toStartOf="parent"
+                                card_view:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                                android:id="@+id/tvDescoBillNo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:paddingStart="2dp"
+                                android:paddingLeft="2dp"
+                                android:paddingEnd="2dp"
+                                android:paddingRight="2dp"
+                                android:text="@string/meter_number"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                card_view:layout_constraintBottom_toBottomOf="parent"
+                                card_view:layout_constraintStart_toEndOf="@+id/textView32"
+                                card_view:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                                android:id="@+id/imageView_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:background="@drawable/ic_info"
+                                android:contentDescription="@string/bell_msg"
+                                card_view:layout_constraintBottom_toBottomOf="parent"
+                                card_view:layout_constraintStart_toEndOf="@+id/tvDescoBillNo"
+                                card_view:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                                android:id="@+id/ivOcrScanner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:background="@drawable/ocr_scanner"
+                                android:gravity="right"
+                                card_view:layout_constraintBottom_toBottomOf="parent"
+                                card_view:layout_constraintEnd_toEndOf="parent"
+                                card_view:layout_constraintTop_toTopOf="@+id/imageView_info" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/mycash_bill"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="5dp"
+                        android:digits="0123456789"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="20"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/star_sign"
+                            android:textColor="#FF4719"/>
+
+                        <TextView
+                            android:id="@+id/tvDescoPhn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingStart="2dp"
+                            android:text="@string/payer_phone_number_des"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        android:id="@+id/mycash_phn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="5dp"
+                        android:digits="0123456789"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/star_sign"
+                            android:textColor="#FF4719"/>
+
+                        <TextView
+                            android:id="@+id/tvDescoAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="2dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingStart="2dp"
+                            android:text="@string/amount_des"
+                            android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/amountDescoET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="5dp"
+                        android:maxLength="7"
+                        android:singleLine="true"
+                        android:inputType="numberDecimal"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/mycash_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="10dip"
+                android:background="@drawable/button_green"
+                android:shadowColor="#000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="@string/confirm_btn"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorText"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

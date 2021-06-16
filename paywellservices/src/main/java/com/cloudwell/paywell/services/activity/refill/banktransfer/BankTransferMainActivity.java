@@ -3,8 +3,6 @@ package com.cloudwell.paywell.services.activity.refill.banktransfer;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,13 +11,20 @@ import android.widget.TextView;
 
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.refill.model.DistrictData;
+import com.cloudwell.paywell.services.activity.refill.banktransfer.model.ReposeDistrictListerBankDeposit;
 import com.cloudwell.paywell.services.activity.refill.model.RequestDistrict;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
 import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.google.android.material.snackbar.Snackbar;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +37,7 @@ public class BankTransferMainActivity extends BaseActivity {
     private ConnectionDetector mCd;
     private AppHandler mAppHandler;
     private CoordinatorLayout mCoordinateLayout;
+    Button btnBrac, btnDbbl, btnIbbl, btnPbl, btnScb, btnCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +48,17 @@ public class BankTransferMainActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.home_refill_bank);
         }
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
         mCoordinateLayout = findViewById(R.id.coordinateLayout);
         mCd = new ConnectionDetector(AppController.getContext());
 
         TextView textView = findViewById(R.id.detailsText);
-        Button btnBrac = findViewById(R.id.homeBtnBrac);
-        Button btnDbbl = findViewById(R.id.homeBtnDbbl);
-        Button btnIbbl = findViewById(R.id.homeBtnIbbl);
-        Button btnPbl = findViewById(R.id.homeBtnPbl);
-        Button btnScb = findViewById(R.id.homeBtnScb);
-        Button btnCity = findViewById(R.id.homeBtnCity);
+        btnBrac = findViewById(R.id.homeBtnBrac);
+        btnDbbl = findViewById(R.id.homeBtnDbbl);
+        btnIbbl = findViewById(R.id.homeBtnIbbl);
+        btnPbl = findViewById(R.id.homeBtnPbl);
+        btnScb = findViewById(R.id.homeBtnScb);
+        btnCity = findViewById(R.id.homeBtnCity);
 
         if (mAppHandler.getAppLanguage().equalsIgnoreCase("en")) {
             textView.setTypeface(AppController.getInstance().getOxygenLightFont());
@@ -73,6 +79,16 @@ public class BankTransferMainActivity extends BaseActivity {
             btnScb.setTypeface(AppController.getInstance().getAponaLohitFont());
             btnCity.setTypeface(AppController.getInstance().getAponaLohitFont());
         }
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_BALANCE_REFILL_BANK);
+
+        addRecentUsedList();
+
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_refill_bank, StringConstant.KEY_home_refill_balance, IconConstant.KEY_ic_bank_deposit, 0, 43);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     @Override
@@ -92,50 +108,68 @@ public class BankTransferMainActivity extends BaseActivity {
     public void onButtonClicker(View v) {
         switch (v.getId()) {
             case R.id.homeBtnBrac:
-                getDistrictList("1");
+                getDistrictList("1", btnBrac.getText().toString());
                 break;
             case R.id.homeBtnDbbl:
-                getDistrictList("2");
+                getDistrictList("2", btnDbbl.getText().toString());
                 break;
             case R.id.homeBtnIbbl:
-                getDistrictList("3");
+                getDistrictList("3", btnIbbl.getText().toString());
                 break;
             case R.id.homeBtnPbl:
-                getDistrictList("4");
+                getDistrictList("4", btnPbl.getText().toString());
                 break;
             case R.id.homeBtnScb:
-                getDistrictList("5");
+                getDistrictList("5", btnScb.getText().toString());
                 break;
             case R.id.homeBtnCity:
-                getDistrictList("6");
+                getDistrictList("6", btnCity.getText().toString());
                 break;
             default:
                 break;
         }
     }
 
-    private void getDistrictList(String bankId) {
+    private void getDistrictList(String bankId, String bankName) {
         showProgressDialog();
 
         final RequestDistrict requestDistrict = new RequestDistrict();
-        requestDistrict.setmUsername("" + mAppHandler.getImeiNo());
-        requestDistrict.setmBankId("" + bankId);
+        requestDistrict.setMUsername("" + mAppHandler.getUserName());
+        requestDistrict.setMBankId("" + bankId);
 
-        Call<DistrictData> responseBodyCall = ApiUtils.getAPIService().callDistrictDataAPI(requestDistrict.getmUsername(), requestDistrict.getmBankId());
 
-        responseBodyCall.enqueue(new Callback<DistrictData>() {
+
+        Call<ReposeDistrictListerBankDeposit> responseBodyCall = ApiUtils.getAPIServiceV2().callDistrictDataAPI(requestDistrict);
+
+        responseBodyCall.enqueue(new Callback<ReposeDistrictListerBankDeposit>() {
             @Override
-            public void onResponse(Call<DistrictData> call, Response<DistrictData> response) {
+            public void onResponse(Call<ReposeDistrictListerBankDeposit> call, Response<ReposeDistrictListerBankDeposit> response) {
                 dismissProgressDialog();
-                Bundle bundle = new Bundle();
-                bundle.putString("bankId", requestDistrict.getmBankId());
 
-                BankDetailsActivity.responseDistrictData = response.body();
-                startBankDetailsActivity(bundle);
+
+               if (response.code() == 200){
+                   ReposeDistrictListerBankDeposit m = response.body();
+                   if (m.getStatus() == 200){
+
+
+                       Bundle bundle = new Bundle();
+                       bundle.putString("bankId", requestDistrict.getMBankId());
+                       bundle.putString("bankName", bankName);
+
+                       BankDetailsActivity.responseDistrictData = m;
+                       startBankDetailsActivity(bundle);
+                   }   else {
+                       showErrorCallBackMessagev1(m.getMessage());
+                   }
+               }else {
+                   showTryAgainDialog();
+               }
+
+
             }
 
             @Override
-            public void onFailure(Call<DistrictData> call, Throwable t) {
+            public void onFailure(Call<ReposeDistrictListerBankDeposit> call, Throwable t) {
                 dismissProgressDialog();
                 Log.d(KEY_TAG, "onFailure:");
                 Snackbar snackbar = Snackbar.make(mCoordinateLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);

@@ -1,0 +1,1258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">পেওয়েল সার্ভিস</string>
+    <string name="rid">আরআইডিঃ&#160;</string>
+    <string name="tk">&#160;টাকা</string>
+    <string name="exit">পুনরায় ব্যাক চাপুন</string>
+
+
+    <!-- Menu Names-->
+    <string name="home_topup">টপআপ</string>
+    <string name="home_topup_offer_title">বান্ডেল ও প্যাক</string>
+    <string name="home_utility">ইউটিলিটি</string>
+    <string name="home_fee">ফী</string>
+    <string name="home_eticket">টিকেট</string>
+    <string name="home_mfs">মোবাইল ব্যাংকিং</string>
+    <string name="home_mfs_fav">মোবাইল ব্যাংকিং</string>
+    <string name="nav_mfs">মোবাইল ব্যাংকিং</string>
+    <string name="home_product_catalog">প্রোডাক্ট ক্যাটালগ</string>
+    <string name="nav_product_catalog">প্রোডাক্ট ক্যাটালগ</string>
+    <string name="nav_check_balance">ব্যালেন্স চেক</string>
+    <string name="nav_terms_and_conditions">চুক্তি ও শর্তাবলী</string>
+    <string name="nav_terms_and_conditions_title">চুক্তি ও শর্তাবলী</string>
+    <string name="nav_policy_statement">গোপনীয়তা বিবৃতি</string>
+    <string name="nav_about">সম্পর্কে</string>
+    <string name="nav_more_title">আর&#8230;</string>
+    <string name="home_statement">বিবরণী</string>
+    <string name="home_refill_balance">ব্যালেন্স রিফিল</string>
+    <string name="home_refill_balance_title">ব্যালেন্স রিফিল প্রক্রিয়া</string>
+    <string name="home_nagad_balance_title">নগদের মাধ্যমে ব্যালেন্স রিফিল</string>
+
+    <string name="home_settings">সেটিংস</string>
+    <string name="home_statement_mini">মিনি স্টেটমেন্ট</string>
+    <string name="home_statement_balance">ব্যালেন্স স্টেটমেন্ট</string>
+    <string name="home_statement_sales">সেল্‌স স্টেটমেন্ট</string>
+    <string name="home_statement_transaction">ট্রানজেকশন স্টেটমেন্ট</string>
+
+    <!-- Sub Menu Names -->
+    <string name="home_topup_trx_log">লেনদেন</string>
+    <string name="home_utility_pollibiddut">পল্লী বিদ্যুৎ</string>
+    <string name="home_utility_pollibiddut_registion">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন</string>
+    <string name="home_utility_pollibiddut_bill_pay_favorite">পল্লী বিদ্যুৎ \nবিল প্রদান</string>
+    <string name="home_utility_pollibiddut_reg_inquiry">পল্লী বিদ্যুৎ \nরেজিস্ট্রেশন \nঅনুসন্ধান </string>
+    <string name="home_utility_pollibiddut_bill_inquiry">পল্লী বিদ্যুৎ \বিল অনুসন্ধান </string>
+    <string name="home_utility_pb_bill_change_number">পল্লী বিদ্যুৎ \nনম্বর পরিবর্তন</string>
+    <string name="home_utility_pb_phone_number_inquiry">পল্লী বিদ্যুৎ \nনম্বর পরিবর্তন \n অনুসন্ধান</string>
+    <string name="home_utility_ivac">আইভিএসি</string>
+    <string name="home_utility_banglalion">বাংলালায়ন</string>
+    <string name="home_utility_karnaphuli">কর্ণফুলী</string>
+    <string name="home_utility_karnaphuli_bill_pay">কর্ণফুলী\nবিল প্রদান</string>
+    <string name="home_utility_karnaphuli_inquiry">কর্ণফুলী\nবিল অনুসন্ধান</string>
+    <string name="home_utility_pb_reg_title">পল্লী বিদ্যুৎ রেজিস্ট্রেশন</string>
+    <string name="home_utility_pb_billpay">বিল প্রদান</string>
+    <string name="home_utility_pb_reg">রেজিস্ট্রেশন</string>
+    <string name="home_utility_pb_billpay_title">পল্লী বিদ্যুৎ বিল প্রদান</string>
+    <string name="home_utility_pb_reg_statu_inquery_title">পল্লী বিদ্যুৎ বিল স্ট্যাটাস অনুসন্ধান</string>
+    <string name="home_utility_pb_reg_inq">রেজিস্ট্রেশন\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_bill_ing">বিল প্রদান\nঅনুসন্ধান</string>
+    <string name="home_utility_pb_request_inquiry">পল্লী বিদ্যুৎ\nবিল স্ট্যাটাস</string>
+    <string name="home_utility_pb_bill_statu_inquery">পল্লী বিদ্যুৎ\nবিল স্ট্যাটাস \nঅনুসন্ধান</string>
+    <string name="home_utility_polli_request_mobile_number_change_title">পল্লী বিদ্যুৎ নম্বর পরিবর্তন</string>
+    <string name="home_utility_polli_home_bill_status">পল্লী বিদ্যুৎ বিল স্ট্যাটাস</string>
+    <string name="home_utility_qubee_inq_title">রিচার্জ অনুসন্ধান</string>
+    <string name="home_utility_ivac_fee_pay">ফি পরিশোধ</string>
+    <string name="home_utility_ivac_free_pay_favorite"> আইভিএসি \nফি পরিশোধ</string>
+    <string name="home_utility_ivac_inquiry">আইভিএসি \nলেনদেনের বিবরণী</string>
+    <string name="home_payment_bkash">বিকাশ থেকে\nপ্রাপ্ত পেমেন্ট</string>
+    <string name="home_bkash_payment_confirm">পেমেন্ট\nনিশ্চিতিকরন</string>
+    <string name="home_bkash_payment_confirm_title">পেমেন্ট নিশ্চিতিকরন</string>
+    <string name="home_bkash_bank_trns_req">ব্যাংক\nট্রান্সফার</string>
+    <string name="home_bkash_bank_trns_req_title">ব্যাংক ট্রান্সফার</string>
+    <string name="home_bkash_cash_req">ক্যাশের জন্য\nঅনুরোধ</string>
+    <string name="home_bkash_cash_req_title">ক্যাশের জন্য অনুরোধ</string>
+    <string name="home_eticket_bus">বাস টিকেট</string>
+    <string name="home_eticket_air">বিমান টিকেট</string>
+    <string name="home_product_ajker_deal">আজকের ডিল</string>
+    <string name="home_product_ekshop">এক-শপ</string>
+    <string name="home_product_pw_wholesale">পেওয়েল\nহোলসেল</string>
+    <string name="home_settings_change_pin">পিন পরিবর্তন</string>
+    <string name="home_settings_upgrade">আপগ্রেড</string>
+    <string name="home_settings_change_language">ভাষা\nপরিবর্তন</string>
+    <string name="home_refill_sda_info">ডিলার সংক্রান্ত\nতথ্য</string>
+    <string name="home_refill_bank">ব্যাংক ডিপোজিট</string>
+    <string name="home_refill_card">কার্ড</string>
+    <string name="home_bank_brac">ব্র্যাক ব্যাংক</string>
+    <string name="home_bank_dbbl">ডাচ্‌ বাংলা\nব্যাংক</string>
+    <string name="home_bank_ibbl">ইসলামী ব্যাংক\nবাংলাদেশ লিঃ</string>
+    <string name="home_bank_pbl">পূবালী ব্যাংক\nলিমিটেড</string>
+    <string name="home_bank_scb">স্ট্যান্ডার্ড\nচার্টার্ড ব্যাংক</string>
+    <string name="home_bank_city">সিটি ব্যাংক</string>
+    <string name="home_mfs_mycash">মাইক্যাশ</string>
+    <string name="home_utility_desco">ডেসকো</string>
+    <string name="home_utility_desco_pay">ডেসকো-বিল প্রদান</string>
+    <string name="home_utility_desco_pay_inquiry">ডেসকো \nবিল অনুসন্ধান</string>
+    <string name="home_utility_desco_pay_title">ডেসকো বিল প্রদান</string>
+    <string name="home_utility_desco_inquary_title">ডেসকো বিল অনুসন্ধান</string>
+    <string name="desco_postpaid_inquiry">ডেসকো পোস্টপেইড \nবিল অনুসন্ধান</string>
+    <string name="home_utility_desco_prepaid_title">ডেসকো প্রিপেইড \nবিল প্রদান</string>
+    <string name="home_utility_desco_prepaid_inquiry">ডেসকো প্রিপেইড \nবিল অনুসন্ধান</string>
+    <string name="home_utility_dpdc">ডিপিডিসি</string>
+    <string name="home_utility_dpdc_bill_title">ডিপিডিসি বিল প্রদান</string>
+    <string name="home_utility_dpdc_inquary_title">ডিপিডিসি  অনুসন্ধান</string>
+    <string name="home_utility_dpdc_bill_pay_inquiry">ডিপিডিসি \nবিল অনুসন্ধান</string>
+    <string name="home_fund_management">ফান্ড\nব্যবস্থাপনা</string>
+    <string name="home_fund_management_title">ফান্ড ব্যবস্থাপনা</string>
+    <string name="home_cash_in_out">ক্যাশ ইন\nআউট</string>
+    <string name="home_cash_in_out_title">ক্যাশ ইন/আউট</string>
+    <string name="home_mycash_balance">মাইক্যাশ\nব্যালেন্স</string>
+    <string name="home_mycash_balance_title">মাইক্যাশ ব্যালেন্স</string>
+    <string name="home_customer_registration">কাস্টমার\nরেজিস্ট্রেশন</string>
+    <string name="home_customer_registration_title">কাস্টমার রেজিস্ট্রেশন</string>
+    <string name="home_generate_otp">নতুন ওটিপি\nতৈরি</string>
+    <string name="home_generate_otp_title">নতুন ওটিপি তৈরি</string>
+    <string name="home_mycash_change_pin">মাইক্যাশ\nপিন পরিবর্তন</string>
+    <string name="home_mycash_change_pin_title">মাইক্যাশ পিন পরিবর্তন</string>
+    <string name="home_inquiry">অনুসন্ধান</string>
+    <string name="home_paywell_to_mycash">পেওয়েল টু\nমাইক্যাশ</string>
+    <string name="home_paywell_to_mycash_title">পেওয়েল টু মাইক্যাশ</string>
+    <string name="home_mycash_to_paywell">মাইক্যাশ টু\nপেওয়েল</string>
+    <string name="home_mycash_to_paywell_title">মাইক্যাশ টু পেওয়েল</string>
+    <string name="home_cash_in">ক্যাশ ইন</string>
+    <string name="home_cash_out">ক্যাশ আউট</string>
+    <string name="home_activity_log">আক্টিভিটি লগ</string>
+    <string name="home_notification">নোটিফিকেশন</string>
+    <string name="home_notification_details">বিস্তারিত</string>
+    <string name="home_notification_img_view">ছবি</string>
+    <string name="home_scan">Scan</string>
+    <string name="internet_connection_title_msg">ইন্টারনেট সংযোগ</string>
+    <string name="home_utility_wasa">ওয়াসা</string>
+    <string name="home_utility_wasa_pay">ওয়াসা-বিল প্রদান</string>
+    <string name="home_utility_wasa_inquiry">ওয়াসা \nবিল অনুসন্ধান</string>
+    <string name="home_utility_west_zone">ওয়েস্ট জোন</string>
+    <string name="home_utility_west_zone_pay">ওয়েস্ট জোন\nবিল প্রদান</string>
+    <string name="home_utility_west_zone_pay_inquiry">ওয়েস্ট জোন\nবিল অনুসন্ধান</string>
+    <string name="home_scan_qr_code">পেওয়েল আরআইডি</string>
+    <string name="home_settings_help">হেল্প</string>
+    <string name="home_utility_polli_biddut_bill_pay">পল্লী বিদ্যুৎ\nবিল প্রদান</string>
+    <string name="home_utility_dpdc_bill_pay">ডিপিডিসি\nবিল প্রদান</string>
+    <string name="home_all_service">সকল\nসার্ভিসেস</string>
+    <string name="home_utility_postpaid_bill_pay">পোস্টপেইড\nবিল প্রদান</string>
+    <string name="home_utility_postpaid_bill_inq">পোস্টপেইড\nবিল অনুসন্ধান</string>
+    <string name="home_utility_banglalion_recharge">বাংলালায়ন\nরিচার্জ</string>
+    <string name="home_utility_banglalion_recharge_title">বাংলালায়ন রিচার্জ</string>
+    <string name="home_utility_banglalion_recharge_inquiry">বাংলালায়ন \nরিচার্জ অনুসন্ধান</string>
+    <string name="banglalion_acc_no">গ্রাহক আইডি/গ্রাহক নম্বর/এমএসআইএসডিএন</string>
+
+    <string name="home_gp">জিপি</string>
+    <string name="home_skitto">স্কিটো</string>
+    <string name="home_bl">বাংলালিংক</string>
+    <string name="home_at">এয়ারটেল</string>
+    <string name="home_rb">রবি</string>
+    <string name="home_tt">টেলিটক</string>
+
+    <!-- Messages -->
+    <string name="no_update_msg">নতুন আপডেট নেই</string>
+    <string name="no_notification_msg">নতুন নোটিফিকেশন নেই</string>
+    <string name="version_upgrade">ভার্শন আপগ্রেড</string>
+    <string name="upgrade_msg">নতুন ভার্শন এসেছে। অনুগ্রহ করে অবিলম্বে আপগ্রেড করুন। </string>
+    <string name="auto_date_time_msg">এই অ্যাপ্লিকেশনটি ব্যবহার করতে, আপনাকে অটো তারিখ এবং সময় সক্রিয় করতে হবে।</string>
+    <string name="access_denied_msg">অনুমতি অস্বীকার</string>
+    <string name="conn_timeout_msg">সংযোগ সময় শেষ, দয়া করে আবার চেষ্টা করুন!</string>
+    <string name="try_again_msg">পুনরায় চেষ্টা করুন</string>
+    <string name="try_again_correct_msg">সঠিকভাবে পুনরায় চেষ্টা করুন</string>
+    <string name="topup_limit_msg">সর্বোচ্চ ৫ টপআপ একসাথে</string>
+    <string name="connection_error_msg">ইন্টারনেট সংযোগ করতে পারিনি, পুনরায় চেষ্টা করুন</string>
+    <string name="phone_no_title_msg">ফোন নম্বর:</string>
+    <string name="phone_no_error_msg">সঠিক ফোন নম্বর দিন</string>
+    <string name="amount_error_msg">সর্বনিম্ন ১ ডিজিট দিন</string>
+    <string name="pin_no_error_msg">পিন নম্বর দিন</string>
+    <string name="pb_acc_error_msg">সর্বনিম্ন ৮ ডিজিট দিন</string>
+    <string name="pb_acc_mismatch_error_msg">অ্যাকাউন্ট নম্বর মিলেনি</string>
+    <string name="pb_full_name_error_msg">সম্পূর্ণ নাম দিন</string>
+    <string name="banglalion_acc_error_msg">সর্বনিম্ন ৪ ডিজিট দিন</string>
+    <string name="old_pin_error_msg">আগের পিন নম্বর দিন</string>
+    <string name="new_pin_error_msg">সঠিকভাবে নতুন পিন নম্বর দিন</string>
+    <string name="bill_no_error_msg">বিল নম্বর দিন</string>
+    <string name="consumer_no_error_msg">কনজিউমার নম্বর দিন</string>
+    <string name="mycash_pin_error_msg">মাইক্যাশ পিন নম্বর দিন</string>
+    <string name="location_error_msg">অবস্থান দিন</string>
+    <string name="otp_error_msg">ওটিপি দিন</string>
+    <string name="select_month_msg">মাস নির্বাচন করুন</string>
+    <string name="select_year_msg">বছর নির্বাচন করুন</string>
+    <string name="mycash_acc_error_msg">সর্বনিম্ন ১২ ডিজিট দিন</string>
+    <string name="serial_no_error_msg">সিরিয়াল নম্বর দিন</string>
+    <string name="loading_msg">অপেক্ষা করুন&#8230;</string>
+    <string name="log_limit_title_msg">পূর্ববর্তী লেনদেনের সংখ্যা</string>
+    <string name="reg_log_limit_title_msg">পূর্ববর্তী রেজিস্ট্রেশন সংখ্যা</string>
+    <string name="activity_log_limit_title_msg">আক্টিভিটি লগের সংখ্যা</string>
+    <string name="add_number_amount_msg">ফোন নম্বর অথবা টাকার পরিমাণ দিন</string>
+    <string name="pin_no_title_msg">পিন নম্বর</string>
+    <string name="services_alert_msg">দুঃখিত আপনি অনুমোদিত নন</string>
+    <string name="services_off_msg">আপনার জন্য সার্ভিসটি বন্ধ আছে</string>
+    <string name="phone_no_msg">ফোন নম্বর</string>
+    <string name="amount_msg">টাকার পরিমাণ</string>
+    <string name="prepaid_msg">প্রি-পেইড</string>
+    <string name="postpaid_msg">পোস্ট-পেইড</string>
+    <string name="conf_topup_title_msg">অনুরোধ বিস্তারিত</string>
+    <string name="confirm_title_msg">নিশ্চিতকরণ</string>
+    <string name="alert_confirm_msg">আপনি কি ক্যাশ টাকা হাতে পেয়েছেন?</string>
+    <string name="change_pin_status_msg">আপনার পিন সফলভাবে পরিবর্তন করা হয়েছে</string>
+    <string name="bank_transfer_header_msg">নিচের যেকোন ব্যাংকের লোগো সিলেক্ট করে, ব্যাংকের তথ্য জেনে নিন এবং ডিপোজিট স্লিপ আপলোড করুন</string>
+    <string name="language_title_msg">ভাষা নির্বাচন</string>
+    <string name="wait_msg">একটু অপেক্ষা করুন</string>
+    <string name="bell_msg">bell</string>
+    <string name="no_data_msg">কোন তথ্য পাওয়া যায়নি</string>
+    <string name="offer_combo_msg">Combo</string>
+    <string name="offer_talk_time_msg">Talk Time</string>
+    <string name="offer_internet_msg">Internet</string>
+    <string name="offer_other_msg">Other</string>
+    <string name="merchant_type_error_msg">মার্চেন্টের ধরন সিলেক্ট করুন</string>
+    <string name="business_type_error_msg">ব্যবসার ধরন সিলেক্ট করুন</string>
+    <string name="center_error_msg">কেন্দ্র সিলেক্ট করুন</string>
+    <string name="input_error_msg">সঠিকভাবে ইনপুট দিন</string>
+    <string name="input_error_msg_account_name">অ্যাকাউন্টের নামটি সঠিকভাবে ইনপুট দিন</string>
+    <string name="input_error_msg_account_number">অ্যাকাউন্ট নম্বরটি সঠিকভাবে ইনপুট দিন</string>
+    <string name="please_type_in_english">Please type in English</string>
+    <string name="info_collect_title">জরুরী তথ্য সংগ্রহ</string>
+    <string name="allow_error_msg">অনুমতি নেই। প্রথমে পিন পরিবর্তন করুন</string>
+    <string name="select_phn_title_msg">নম্বর নির্বাচন করুন</string>
+    <string name="select_phn_title_air_ticket">সাহায্যের জন্য কল করুন:</string>
+    <string name="amount_transfer_msg">টাকা স্থানান্তর সফল</string>
+    <string name="success_msg">সফল</string>
+    <string name="request_failed_msg">ফেল</string>
+    <string name="failed_msg">সফল হয়নি</string>
+    <string name="trx_details">ট্রানজেকশন লগ</string>
+    <string name="comment">মন্তব্য:</string>
+    <string name="coming_soon_msg">শীঘ্রই আসছে</string>
+    <string name="data_error_msg">সঠিকভাবে তথ্য পেতে ব্যর্থ</string>
+    <string name="permission_error_msg">পেওয়েল এপ্লিকেশন সঠিকভাবে চালানোর জন্য পরবর্তী ধাপ গুলোতে এলাও বাটনে ক্লিক করুন</string>
+    <string name="internet_connection_error_msg">দুঃখিত, কোন ইন্টারনেট সংযোগ পাওয়া যায়নি। পুনঃসংযোগ করে আবার চেষ্টা করুন।</string>
+    <string name="error_correct_operator_msg">সঠিক অপারেটর নির্বাচন করুন</string>
+
+    <!-- Button Description -->
+    <string name="auto_date_time_btn">অটো তারিখ এবং সময়</string>
+    <string name="okay_btn">OK</string>
+    <string name="confirm_btn">কনফার্ম</string>
+    <string name="cancel_btn">Cancel</string>
+    <string name="next_btn">পরবর্তী</string>
+    <string name="skip_btn">Skip</string>
+    <string name="got_it_btn">বুঝেছি</string>
+    <string name="retry_btn">পুনরায় চেষ্টা করুন</string>
+    <string name="play_btn">Play Store</string>
+    <string name="pw_btn">PayWell</string>
+
+    <!-- Content Description -->
+    <string name="pin_no_des">পিন নম্বরঃ</string>
+    <string name="pw_pin_no_des">পেওয়েল পিন নম্বরঃ</string>
+    <string name="phone_no_des">ফোন নম্বরঃ</string>
+    <string name="amount_des">টাকার পরিমাণঃ</string>
+    <string name="trx_id_des">লেনদেনের আইডিঃ</string>
+    <string name="status_des">স্ট্যাটাসঃ</string>
+    <string name="sms">বার্তাঃ</string>
+    <string name="acc_no_des">অ্যাকাউন্ট নম্বরঃ</string>
+    <string name="conf_acc_des">অ্যাকাউন্ট নম্বর পুনরায় দিনঃ</string>
+    <string name="cust_name_des">সম্পূর্ণ নামঃ</string>
+    <string name="bill_no_des">বিল নম্বরঃ</string>
+    <string name="package_type_des">টাইপঃ</string>
+    <string name="date_des">তারিখঃ</string>
+    <string name="using_paywell_des">পেওয়েল ব্যবহারের জন্য ধন্যবাদ</string>
+    <string name="hotline_des">হটলাইনঃ</string>
+    <string name="tbps_charge_des">টিবিপিএস চার্জঃ</string>
+    <string name="total_des">মোটঃ</string>
+    <string name="tk_des">টাকা</string>
+    <string name="old_pin_des">আগের পিন নম্বরঃ</string>
+    <string name="new_pin_des">নতুন পিন নম্বরঃ</string>
+    <string name="mycash_balance_des">মাইক্যাশ ব্যালেন্সঃ</string>
+    <string name="mycash_pin_des">মাইক্যাশ পিন নম্বরঃ</string>
+    <string name="payer_phone_number_des">প্রদানকারীর ফোন নম্বরঃ</string>
+    <string name="location_des">লোকেশনঃ</string>
+    <string name="otp_des">মাইক্যাশ ওটিপিঃ</string>
+    <string name="mycash_wallet_des">কাস্টমার ওয়ালেটঃ</string>
+    <string name="form_serial_des">ফরম সিরিয়াল নম্বরঃ</string>
+    <string name="mycash_old_pin_des">মাইক্যাশ আগের পিন নম্বরঃ</string>
+    <string name="mycash_new_pin_des">মাইক্যাশ নতুন পিন নম্বরঃ</string>
+    <string name="mycash_cust_no_des">বিলে কাস্টমার নম্বরঃ</string>
+    <string name="ret_com_des">অতিরিক্ত কমিশনঃ</string>
+    <string name="offer_details_des">অফার বিস্তারিতঃ</string>
+    <string name="consumer_no_des">কনজিউমার নম্বরঃ</string>
+    <string name="center_des">কেন্দ্রঃ</string>
+    <string name="merchant_type_retail">Retail Merchant</string>
+    <string name="merchant_type_des">মার্চেন্ট ধরনঃ</string>
+    <string name="business_type_des">ব্যবসা ধরনঃ</string>
+    <string name="web_file_des">ওয়েব ফাইল নম্বরঃ</string>
+    <string name="passport_des">পাসপোর্ট নম্বরঃ</string>
+    <string name="banglalion_trx_id_des">বাংলালায়ন লেনদেন নম্বরঃ</string>
+    <string name="retail_commission_des">রিটেইলার কমিশনঃ</string>
+
+    <string name="pre_paid_str">prepaid</string>
+    <string name="post_paid_str">postpaid</string>
+
+    <string name="star_sign">*</string>
+
+    <!-- Paywell Services string level -->
+    <string name="paywell_reg">পেওয়েল নিবন্ধন</string>
+    <string name="paywell_reg_missing">অনুপস্থিত তথ্য</string>
+    <string name="paywell_footer">https://www.paywellonline.com</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <!--paywell string arrays-->
+    <!--    <string-array name="month_array">-->
+    <!--        <item>Select Month</item>-->
+    <!--        <item>January</item>-->
+    <!--        <item>February</item>-->
+    <!--        <item>March</item>-->
+    <!--        <item>April</item>-->
+    <!--        <item>May</item>-->
+    <!--        <item>June</item>-->
+    <!--        <item>July</item>-->
+    <!--        <item>August</item>-->
+    <!--        <item>September</item>-->
+    <!--        <item>October</item>-->
+    <!--        <item>November</item>-->
+    <!--        <item>December</item>-->
+    <!--    </string-array>-->
+
+    <string-array name="month_array">
+        <item>মাস নির্বাচন করুন</item>
+        <item>জানুয়ারী</item>
+        <item>ফেব্রুয়ারি</item>
+        <item>মার্চ</item>
+        <item>এপ্রিল</item>
+        <item>মে</item>
+        <item>জুন</item>
+        <item>জুলাই</item>
+        <item>অগাস্ট</item>
+        <item>সেপ্টেম্বর</item>
+        <item>অক্টোবর</item>
+        <item>নভেম্বর</item>
+        <item>ডিসেম্বর</item>
+    </string-array>
+
+    <string-array name="sampleStrings" formatted="false">
+        <item>পেওয়েল একটি প্রযুক্তি নির্ভর ডিজিটাল সার্ভিস প্ল্যাটফর্ম যা মোবাইল রিচার্জ, ইউটিলিটি বিল, ভিসা ফি, বাস টিকেট, বিমান টিকেট, শিক্ষা ও বিনোদন কন্টেন্ট সাবস্ক্রিপশন ফি সহ নানাবিধ পেমেন্ট সংক্রান্ত সার্ভিস প্রদান করে। পেওয়েল সার্ভিস একটি মানসম্পন্ন ডিস্ট্রিবিউশন প্রক্রিয়ায় ভোক্তার কাছে পৌঁছায়, যেখানে ডিস্ট্রিবিউটর ও রিটেইলারগণ চ্যানেল পার্টনার হিসেবে সক্রিয় ভূমিকা পালন করে।\n\nআমাদের ঠিকানাঃ\nস্কিল হাউস\nক-৫৩/২ শাহজাদপুর\nগুলশান, ঢাকা-১২১২।\nফোন: ০৯৬৬৬৭৭৩৩৩৩, ০৯৬১০১১৬৫৬৬, ০৯৬৩৮০১৬৫৬৬\nইমেইল: contact@cloudwell.co\nওয়েবসাইট: https://www.paywellonline.com/</item>
+    </string-array>
+
+
+    <!-- paywell apis -->
+
+
+    <string name="app_next_version_no">vten_seventeen</string>
+
+
+
+
+
+    <string name="mobileOperator">সকল অপারেটর</string>
+    <string name="operator">অপারেটর</string>
+    <string name="brilliant">ব্রিলিয়ান্ট</string>
+    <string name="brilliant_topup">ব্রিলিয়ান্ট টপআপ</string>
+    <string name="paywell_trx_id">পেওয়েল লেনদেন আইডি:</string>
+    <string name="brilliant_trx_id">ব্রিলিয়ান্ট লেনদেন আইডি:</string>
+    <string name="brilliant_num">ব্রিলিয়ান্ট নম্বর:</string>
+    <string name="brilliant_trx_log">ব্রিলিয়ান্ট লেনদেন</string>
+
+
+    <!-- Utility -->
+
+
+    <string name="title_activity_my_favorite_menu">আমার পছন্দ</string>
+    <string name="can_not_add_more_than">৮ মেনু থেকে বেশি যোগ করতে পারবেন না</string>
+    <string name="Added">যোগ করা হয়েছে:</string>
+    <string name="add_fav">যোগ করুন</string>
+    <string name="balance_pre_text">ব্যালেন্স</string>
+    <string name="home_utility_pb_bill_status_inquiry_title">পল্লী বিদ্যুৎ ফোন নম্বর পরিবর্তন অনুসন্ধান</string>
+    <string name="home_utility_bill_inquiry_title">পল্লী বিদ্যুৎ	বিল অনুসন্ধান</string>
+    <string name="home_utility_pb_reg_inq_log_title">পল্লী বিদ্যুৎ রেজিস্ট্রেশন অনুসন্ধান</string>
+    <string name="home_utility_wasa_billpay_title">ওয়াসা বিল প্রদান</string>
+    <string name="home_utility_wasa_bill_inquary_title">ওয়াসা বিল অনুসন্ধান</string>
+    <string name="home_utility_west_zone_pay_title">ওয়েস্ট জোন বিল প্রদান</string>
+    <string name="home_wast_zone_inquiry_title">ওয়েস্ট জোন বিল অনুসন্ধান</string>
+    <string name="home_utility_ivac_fee_pay_title">আইভিএসি ফি পরিশোধ</string>
+    <string name="home_utility_ivac_inquiry_title">আইভিএসি ফি অনুসন্ধান</string>
+    <string name="home_karnaphuli_bill_title">কর্ণফুলী বিল প্রদান</string>
+    <string name="home_karnaphuli_inquiryl_title">কর্ণফুলী বিল অনুসন্ধান</string>
+    <string name="details">বিস্তারিত:</string>
+    <string name="home_utility_pb_request_inquiry_bt">বিল স্ট্যাটাস</string>
+    <string name="home_utility_pb_bill_statu_inquery_bt">বিল স্ট্যাটাস \nঅনুসন্ধান</string>
+    <string name="home_utility_pb_bill_change_number_bt">নম্বর পরিবর্তন</string>
+    <string name="home_utility_pb_phone_number_inquiry_bt">নম্বর পরিবর্তন \n অনুসন্ধান</string>
+    <string name="title_activity_air_tricket_menu">Air Ticket</string>
+    <string name="title_serach_view">Search Flights</string>
+    <string name="no_search_results">No search results</string>
+    <string name="search_again">Search again</string>
+    <string name="search">সার্চ</string>
+    <string name="cancel">বুকিং বাতিল</string>
+    <string name="ticket_void_menu_text">টিকেট ভয়েড</string>
+    <string name="ticket_refund_menu_text">টিকেট রিফান্ড</string>
+    <string name="ticket_issue_menu_text">ইস্যু টিকেট</string>
+    <string name="ticket_reissue_menu_text">রি-ইস্যু টিকেট</string>
+    <string name="ticket_docs_update_info_menu_text">তথ্য পরিবর্তন</string>
+    <string name="transaction_log">বুকিং লগ</string>
+    <string name="title_booking_and_review">Review and Book</string>
+    <string name="baggage_policy_details"><![CDATA[Baggage & Policy Details]]></string>
+    <string name="refundable">" Is refundable"</string>
+    <string name="passport_mandatory">Passport Mandatory</string>
+    <string name="passport_not_mandatory">Passport not mandatory</string>
+    <string name="fares_information">Fare Information</string>
+    <string name="fares">Fare</string>
+    <string name="roles">Air Rules</string>
+    <string name="title_flightDetails2">Review page 2</string>
+    <string name="title_passenger_list">Passenger Info</string>
+
+    <string name="title_add_passenger">Add Passenger</string>
+
+    <string name="add">Add</string>
+    <string name="title">Title *</string>
+    <string name="first_name">First Name *</string>
+    <string name="last_name">Last Name *</string>
+    <string name="gender">Gender *</string>
+    <string name="country">Country *</string>
+    <string name="contact_number">Contact Number *</string>
+    <string name="email">Email *</string>
+    <string name="hit_passport_number">Passport Number</string>
+    <string name="male">পুরুষ</string>
+    <string name="female">মহিলা</string>
+    <string name="other">Other</string>
+    <string name="book">বুকিং স্ট্যাটাস</string>
+    <string name="title_activity_baggage_and_policies_actiivty">Air Rules &amp; Fare</string>
+    <string name="passenger_deleted_message">Passenger info cannot be recovered once deleted. Are you sure you want to delete?sdf.,wPassenger info cannot be recovered once deleted. Are you sure you want to delete?skdf</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="cancel_booking">Cancel Booking</string>
+    <string name="title_all_summary">All Summary</string>
+    <string name="lbl_take_camera_picture">Camara</string>
+    <string name="lbl_choose_from_gallery">Gallery</string>
+    <string name="lbl_set_profile_photo" />
+    <string name="tile_cencel_booking">Cancel Booking</string>
+    <string name="airport_search_hit">Airport name or code or country name </string>
+
+    <string name="mr">Mr</string>
+    <string name="ms">Ms</string>
+    <string name="mrs">Mrs</string>
+    <string name="mstr">Mstr</string>
+    <string name="miss">Miss</string>
+    <string name="name_title">Title</string>
+    <string name="passenger_type">Passenger type *</string>
+    <string name="adult">Adult</string>
+    <string name="child">Child</string>
+    <string name="infant">Infant</string>
+    <string name="kg_per_adult">per adult ticket</string>
+    <string name="baggage">Baggage :</string>
+    <string name="n_a">N/A</string>
+    <string name="slycalendar_save">Save</string>
+    <string name="slycalendar_cancel">Cancel</string>
+    <string name="slycalendar_next">Next</string>
+    <string name="slycalendar_dates_period" translatable="false">%1$s – %2$s</string>
+    <string name="continue_text">Continue</string>
+    <string name="details_text">Details</string>
+    <string name="edit">Edit</string>
+    <string name="depart">Depart</string>
+    <string name="date">Date</string>
+    <string name="class_text">Class</string>
+    <string name="economy">Economy</string>
+    <string name="passengers">Passengers</string>
+    <string name="search_text">Search</string>
+    <string name="airline_code">"Airlines code: "</string>
+    <string name="airless_name">"Airlines Name: "</string>
+    <string name="flight_number">"Flight number: "</string>
+    <string name="booking_class">"Booking Class: "</string>
+    <string name="cabin_class">Cabin class :</string>
+    <string name="operating_carrier">"Operating carrier: "</string>
+    <string name="baggage_info">Baggage info</string>
+    <string name="airport_code">"Airport Code:  "</string>
+    <string name="airport_name">"Airport Name: "</string>
+    <string name="terminal">Terminal:</string>
+    <string name="city_code">"City Code: "</string>
+    <string name="city_name">"City Name: "</string>
+    <string name="country_code">"Country code: "</string>
+    <string name="country_name">"Country name: "</string>
+    <string name="arrival_time">"Arrival Time: "</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="invalid_passenger_type">Invalid passenger type</string>
+    <string name="invalid_title">Invalid Title</string>
+    <string name="invalid_first_name">Invalid First Name</string>
+    <string name="invalid_last_name">Invalid Last Name</string>
+    <string name="invalid_country_name">Invalid Country Name</string>
+    <string name="invalid_gender">Invalid Gender</string>
+    <string name="invalid_contact_name">Invalid Contact number</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="please_select_from_airport">"Please select from airport "</string>
+    <string name="please_select_arrival_airport">Please select arrival airport</string>
+    <string name="please_select_depart_date">Please select depart date</string>
+    <string name="total_fare_text">Total Fare</string>
+    <string name="depart_time_">Departure Time: </string>
+    <string name="one_way_menu_title">One-way</string>
+    <string name="round_trip_menu_title">Round-Trip</string>
+    <string name="multi_city_menu_title">Multi-City</string>
+    <string name="indian_menu_title">Indian</string>
+    <string name="search_flights">Search Flights</string>
+    <string name="bbc">বিবিসি</string>
+    <string name="return_text">Return</string>
+    <string name="airport">Airport</string>
+    <string name="more">More</string>
+    <string name="price_details">Price Details</string>
+    <string name="rules">Rules:</string>
+    <string name="extra_serviex">Extra Services</string>
+    <string name="base_fare">Base Fare</string>
+    <string name="tax">Tax</string>
+    <string name="currency">Currency</string>
+    <string name="othercharges">Other Charges</string>
+    <string name="discount">Discount</string>
+    <string name="paxtype">Pax Type</string>
+    <string name="passenger_count">Passenger Count</string>
+    <string name="service_fee">Service Fee</string>
+    <string name="book_text">Book</string>
+    <string name="select_a_saved_passenger_or_add_a_new_one">Select a saved passenger or add a new one</string>
+    <string name="review">Review</string>
+    <string name="please_enter_the_passenger_">Please enter the passenger\'s name exactly as it appears on their ID. Modifications after submission are often not permitted or may incur an additional fee.</string>
+    <string name="lead_passenger">Lead Passenger</string>
+    <string name="add_edit">Add/Edit</string>
+    <string name="flight_information">Flight Information</string>
+    <string name="add_passenger">Add passenger</string>
+    <string name="national_id">NID/Office ID/Student ID Number</string>
+    <string name="booking_now">Book Now</string>
+    <string name="booking_id">Booking ID: </string>
+    <string name="ticket_status">Ticket status :</string>
+    <string name="view_tricket">View Ticket</string>
+    <string name="title_ticket_viewer">Ticket View</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="send_email">Send Email</string>
+    <string name="title_email_list">Eamil List</string>
+    <string name="hit_email">Email</string>
+    <string name="email_address_already_exists">Email address already exists</string>
+    <string name="please_select_atleast_one_email_address">Please select atleast one email address</string>
+    <string name="message">বার্তা</string>
+    <string name="please_ensure_the_id_is_valid_for_at_least_6_months_after_the_date_of_departure">Please ensure the ID is valid for at least 6 months after the date of departure.</string>
+    <string name="booking_instructions_for_children_infants">Booking instructions for children/infants</string>
+    <string name="earnings">Earnings</string>
+    <string name="issue_ticket">Issue Ticket</string>
+    <string name="tricking">Issue Ticket</string>
+    <string name="new_ticket_prices">New prices Tk.</string>
+    <string name="old_ticket_prices">Old prices Tk.</string>
+    <string name="outbound">Outbound</string>
+    <string name="inbound">Inbound</string>
+    <string name="flight">Flight</string>
+    <string name="passport_expiry_date">Passport Expiry Date</string>
+
+    <string name="Passport_number_mandatory">Passport number mandatory</string>
+    <string name="passport_expiry_date_mandatory">Passport expiry date mandatory</string>
+    <string name="passport_nationality">Passport nationality</string>
+    <string name="passport_nationality_mannotory">Passport Nationality</string>
+    <string name="back_to_search">Back To Search</string>
+    <string name="please_search_for_another_flight">Please search for another flight</string>
+    <string name="date_of_birth">Date Of Birth *</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="amount">Amount</string>
+    <string name="booking_log_limit_title_msg">Booking Log Limit</string>
+    <string name="amount_optional">Amount(optional)</string>
+    <string name="passport_image_mandatory">passport image mandatory</string>
+    <string name="visa_image_mandatory">Visa image mandatory</string>
+    <string name="booking_info">Booking Info</string>
+    <string name="ekshop">এক-শপ</string>
+    <string name="report">প্রতিবেদন</string>
+    <string name="home_title_ek_shope">এক-শপ</string>
+    <string name="invalid_date">ভুল তারিখ</string>
+    <string name="start_date">শুরুর তারিখ</string>
+    <string name="end_date">শেষ তারিখ</string>
+    <string name="or">অথবা</string>
+    <string name="order_code">অর্ডার কোড</string>
+    <string name="optional">ঐচ্ছিক</string>
+    <string name="search_report">অনুসন্ধান রিপোর্ট</string>
+    <string name="is_center_lock">লক</string>
+    <string name="is_center_unlock">আনলক</string>
+    <string name="cencel">Cancel</string>
+    <string name="text_accept">Accept</string>
+    <string name="text_decline">Decline</string>
+    <string name="title_edit_passenger">Edit Passenger Info</string>
+    <string name="docs_info_update">Docs/Info Update</string>
+    <string name="ticket_refund">Ticket Refund</string>
+    <string name="re_issue">Re-issue</string>
+    <string name="ticket_void">Ticket Void</string>
+    <string name="title_docs_update">Docs/Info Update</string>
+    <string name="update_request">Update Request</string>
+
+    <string name="title_bus_transtport_list">Search transport</string>
+
+    <string name="please_select_a_transport">Please select a transport</string>
+
+    <string name="title_bus_passenger_booth"><![CDATA[Passenger information & boarding point]]></string>
+    <string name="boarding_point">Boarding Point</string>
+
+    <string name="your_seats">Your seats:</string>
+    <string name="total_price">Total price:</string>
+
+    <string name="not_available">Not available</string>
+    <string name="invalid_full_name">Invalid full name</string>
+    <string name="Invalid_mobile_number">Invalid mobile number</string>
+    <string name="invalid_age">Invalid age</string>
+    <string name="invalid_address">Invalid address</string>
+    <string name="no_data_found">No data found.</string>
+    <string name="network_error">Network error!</string>
+
+    <string name="transport">Transport</string>
+    <string name="search_transport_ticket">Search Bus Ticket</string>
+    <string name="search_transport_ticket_lunch">Search Launch Ticket</string>
+    <string name="bus_validation_message">Please enter all the data first</string>
+    <string name="bus_validation_message_location">Please seleted correct location</string>
+    <string name="no_boarding_point_found">No boarding point found!!!</string>
+    <string name="sort">Sort</string>
+    <string name="boarding_point_optional">Boarding Point (Optional)</string>
+    <string name="select_your_seat">Select your seat</string>
+
+    <string name="do_you_want_to_buy_this_ticket">Do you want to buy this ticket?</string>
+    <string name="buy">Buy</string>
+    <string name="clear_all">সব মুছুন</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="bill_number">এসএমএস বিল নম্বর</string>
+    <string name="bill_amount">টাকা</string>
+    <string name="bill_number_length">Bill number length must be greater than 5</string>
+    <string name="bill_limit_msg">বর্তমানে, একসাথে সর্বোচ্চ ৫ বিল প্রদান সম্ভব</string>
+    <string name="conf_bill_title_msg">অনুরোধ বিস্তারিত</string>
+    <string name="bill_status">বিল স্ট্যাটাস</string>
+    <string name="amount_limit_error_msg">টাকার পরিমাণ ১ টাকার বেশি হতে হবে</string>
+
+    <string name="nagad_refill_msg">নগদ</string>
+    <string name="nagad_balance_refill_msg">ব্যালেন্স রিফিল\nপ্রক্রিয়া</string>
+    <string name="nagad_qr_code_msg">কিউ আর\nকোড</string>
+    <string name="nagad_balance_claim_msg">ব্যালেন্স ক্লেইম</string>
+    <string name="nagad_refill_log_msg">রিফিল লগ</string>
+    <string name="home_title_nagad_balance_claim">ব্যালেন্স ক্লেইম</string>
+    <string name="hint_mobile_number_or_transtion_id">মোবাইল নম্বর/ট্রানজেকশন আইডি</string>
+    <string name="bill_amount_naged">টাকার পরিমাণ</string>
+    <string name="invalid_input">ভুল ইনপুট</string>
+    <string name="nagad_refill_log_inquiry">রিফিল অনুসন্ধান</string>
+    <string name="log_refill_limit_title_msg">পূর্ববর্তী রিফিলের সংখ্যা</string>
+    <string name="re_submit_reb">পুনরায় জমা দিন</string>
+    <string name="title_issue_ticket">ইস্যু টিকেট</string>
+    <string name="bookingId" >বুকিং আইডি</string>
+    <string name="view_ticket_with_fare">View Ticket With Fare</string>
+    <string name="send_email_with_fare">Send Email With Fare</string>
+    <string name="scanner">স্ক্যানার</string>
+    <string name="no_bill_number_found_message">কোনও বিল নম্বর পাওয়া যায় নি, আবার চেষ্টা করুন</string>
+    <string name="finished">সম্পূর্ণ</string>
+    <string name="next_text">পরবর্তী</string>
+    <string name="title_nid">এন.আই.ডি-এর তথ্য</string>
+    <string name="title_smart">স্মার্ট আইডি কার্ড-এর তথ্য</string>
+    <string name="text_nid">জাতীয় পরিচয় পত্র</string>
+    <string name="text_smart_card">স্মার্ট কার্ড</string>
+
+    <string name="desco_prepaid_string">ডেসকো প্রিপেইড</string>
+    <string name="desco_postpaid_string">ডেসকো পোস্টপেইড</string>
+    <string name="meter_number">মিটার নম্বরঃ</string>
+    <string name="txt_login">সাইন ইন</string>
+    <string name="txt_signup">রেজিস্ট্রেশন করুন</string>
+    <string name="rid_mobile_number">মোবাইল নম্বর</string>
+    <string name="pin_number">পিন নাম্বার</string>
+    <string name="submit">লগ ইন</string>
+    <string name="forget_pin">পিন ভুলে গেছেন?</string>
+    <string name="member_login">ব্যবহারকারী লগ ইন</string>
+    <string name="txt_user_registration">নতুন এজেন্ট রেজিস্ট্রেশন</string>
+    <string name="otp_verification">ওটিপি যাচাইকরণ</string>
+    <string name="ok_text">ঠিক আছে</string>
+    <string name="resend_otp">ওটিপি পুনরায় পাঠান</string>
+    <string name="verify_your_phone_number">Verify phone number</string>
+    <string name="didn_t_you_received_any_code">(যদি ওটিপি না পেয়ে থাকেন)</string>
+    <string name="request_format_pin">অনুরোধ পিন ভুলে গেছেন?</string>
+    <string name="last_4_digit_mobile_number">মোবাইল নম্বর</string>
+    <string name="please_enter_the_last_4_digits_of_your_phone_number">আপনার নিবন্ধিত নম্বরটি লিখুন</string>
+    <string name="forgot_pin">পিন অনুরোধ</string>
+    <string name="device_not_support">সুরক্ষা জন্য রুটযুক্ত ডিভাইস এই অ্যাপে ব্যবহার করা যায় না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন।</string>
+    <string name="device_not_support_root">সুরক্ষা উদ্দেশ্যে রুটযুক্ত ডিভাইসটির জন্য এই অ্যাপটি ব্যবহার করে না, দয়া করে আমাদের কল সেন্টারে যোগাযোগ করুন</string>
+    <string name="retype_pin_number">পিন নম্বর পুনরায় টাইপ করুনঃ</string>
+    <string name="title_error_message">বার্তা</string>
+    <string name="no_internet_connection">কোনও ইন্টারনেট সংযোগ নেই</string>
+    <string name="no_internet_connection_please_check_your_internet_connection">কোনও ইন্টারনেট সংযোগ নেই আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন</string>
+    <string name="retry">আবার চেষ্টা করুন</string>
+    <string name="logout_message">আপনি কি নিশ্চিত আপনার অ্যাকাউন্টটি লগআউট করতে চান?</string>
+    <string name="logout_text">লগআউট</string>
+    <string name="fee">ফি</string>
+    <string name="home_insurance">ডিজিটাল স্বাস্থ্য সেবা</string>
+    <string name="home_education">এডুকেশন</string>
+    <string name="home_entertainment">বিনোদন</string>
+
+    <string name="selectedCourse">কোর্স</string>
+    <string name="account_number">Account Number</string>
+    <string name="direct_refil">ডিরেক্ট ব্যালেন্স\nরিফিল</string>
+    <string name="direct_refil_title">ডিরেক্ট ব্যালেন্স রিফিল</string>
+    <string name="bbc_janala">বিবিসি জানালা</string>
+    <string name="subscription">সাবস্ক্রিপশন</string>
+    <string name="bbc_course">বিবিসি জানালা কোর্স সমুহ</string>
+    <string name="courses">কোর্স সমূহ</string>
+    <string name="check_status">স্ট্যাটাস চেক</string>
+    <string name="start_course">কোর্স শুরু করুন</string>
+    <string name="bbc_registation_actionbar">কোর্স রেজিস্ট্রেশন</string>
+    <string name="reg_korun">রেজিস্ট্রেশন করুন</string>
+    <string name="reg_guid">আপনার একাউন্ট তৈরির জন্য নিচের ফর্মটি পূরণ করুন এবং শুরু করুন আপনার ইংরেজী কোর্স। মনে রাখবেন, রেজিস্ট্রেশনের সময় দেওয়া নামটিই আপনার Topic Report ও Course Report-এ উল্লেখ করা হবে।</string>
+    <string name="reg_must">অবশ্যই ইংরেজিতে লিখতে হবে।  (*) চিহ্নিত ঘরগুলো অবশ্যই পূরণ করতে হবে।</string>
+    <string name="paywell_pin">পেওয়েল পিন</string>
+    <string name="reg_dialog">রেজিস্ট্রেশন রেজাল্ট</string>
+    <string name="reg_dialog_msg">রেজিস্ট্রেশন সফলভাবে সম্পন্ন হয়েছে। </string>
+    <string name="bongo">বঙ্গ</string>
+    <string name="cancel_text">বাতিল</string>
+    <string name="title_message_comming_soon">সার্ভিস সংক্রান্ত তথ্য</string>
+    <string name="text_comming_soon">শিঘ্রয়ই আসছে সার্ভিসটি ....</string>
+    <string name="bongo_bd">বঙ্গ বিডি</string>
+    <string name="bongo_sub">সাবস্ক্রিপসন</string>
+    <string name="bongo_sub_count">সাবস্ক্রিপসন কাউন্ট</string>
+    <string name="bongo_trx">ট্রানজেকশন লগ</string>
+    <string name="bongo_select_package">প্যাকেজ সিলেক্ট করুন</string>
+    <string name="bongo_pay_text">পেমেন্ট পরিশোধ করুন</string>
+    <string name="bongo_des1">জনপ্রিয় নাটক, টিভি সিরিজ, মুভি এবং মিউজিক ভিডিও</string>
+    <string name="bongo_des2">কোন অতিরিক্ত বিজ্ঞাপন এবং অন্য ঝামেলা নেই</string>
+    <string name="bongo_des3">নিরবচ্ছিন্ন এবং সম্পুর্ণ অরিজিনাল ভিডিও</string>
+    <string name="password">পিন*</string>
+    <string name="subscription_success">সাবস্ক্রিপশন সফল ভাবে সম্পন্ন হয়েছে</string>
+    <string name="bongo_counter">"সাবস্ক্রিপসন সংখ্যা "</string>
+    <string name="bbc_trx_action_title">"পূর্ববর্তী লেনদেন"</string>
+    <string name="bbc_subscription">"সাবস্ক্রিপশন আইডি: "</string>
+    <string name="bbc_expair">"মেয়াদ শুরুর তারিখ - "</string>
+    <string name="bbc_expair_end">"মেয়াদ শেষের তারিখ - "</string>
+    <string name="name">"নাম: "</string>
+    <string name="bank_btn">লিংক ব্যাংক একাউন্ট</string>
+    <string name="aclink_btn_txt">"ব্যাংক একাউন্ট লিংক"</string>
+    <string name="aclist_btn_txt">"লিংক একাউন্ট লিস্ট"</string>
+    <string name="checkbook_txt">চেক-এর ছবি তুলুন</string>
+    <string name="bank">ব্যাংক</string>
+    <string name="district">জেলা</string>
+    <string name="branch">শাখা</string>
+    <string name="bank_list">লিংক একাউন্ট লিস্ট</string>
+    <string name="ac_no">হিসাব নংঃ </string>
+    <string name="ac_name">হিসাবের নামঃ </string>
+    <string name="bank_added">তথ্য দেওয়ার জন্য আপনাকে ধন্যবাদ 24 ঘন্টার মধ্যে পেওয়েল আইডির সাথে ব্যাংক একাউন্টটি লিংক হয়ে যাবে</string>
+    <string name="bank_delate">আপনার এই লিংক একাউন্টটি মুছে ফেলতে চান?</string>
+    <string name="most_used_services">বেশী ব্যবহৃত সার্ভিস সমূহ-</string>
+    <string name="birthday">জন্ম তারিখ</string>
+    <string name="h_gender">লিঙ্গ</string>
+    <string name="nomine_mobile_number">মোবাইল নম্বর</string>
+    <string name="please_select">নির্বাচন করুন</string>
+    <string name="mobile_number" >মোবাইল নম্বর *</string>
+
+    <string name="launch">লঞ্চ টিকেট</string>
+    <string name="text_bus_from_error">You must type the city from you want to travel</string>
+    <string name="text_bus_to_error">You must type the destination city you want to travel</string>
+    <string name="title_ticket_cancel_list">Ticket cancel list</string>
+    <string name="paywell_account_user_login">পেওয়েল – এ লগ ইন করুন</string>
+    <string name="enter_pin">পিন নম্বর দিন </string>
+    <string name="account_id">একাউন্ট আইডি</string>
+    <string name="forgot_pin_new">পিন ভুলে গিয়েছেন?</string>
+    <string name="sign_in">সাইন ইন</string>
+    <string name="title_login">সাইন ইন</string>
+    <string name="bill_number_ocr_hit_text">দয়া করে বিল নম্বরটির উপরে স্ক্যানারটি ধরে রাখুন, একবার বিল নম্বর ক্যাপচার হয়ে নিচে দেখানো হলে OK করুন</string>
+
+
+    <string name="hit_passport_number_ivac">পাসপোর্ট নম্বর</string>
+    <string name="hit_web_file_number_ivac">ওয়েব ফাইল নম্বর</string>
+    <string name="title_otp_verfication">মোবাইল নাম্বার ভেরিফিকেশন</string>
+    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আপনার মোবাইল নাম্বার-এ প্রেরিত চার ডিজিটের ওটিপি টাইপ করে মোবাইল নাম্বারটি ভেরিফাই করুন</string>
+    <string name="next">পরবর্তী ধাপ</string>
+    <string name="acccount_name_link_bank">হিসাবের নাম</string>
+    <string name="account_number_link_bank">হিসাব নং</string>
+    <string name="home_tutorial">টিউটোরিয়াল</string>
+
+
+    <!--    bus ticket bangla-->
+
+    <!--    <string name="one_way">একমুখী</string>-->
+    <!--    <string name="round_trip">রাউন্ড ট্রিপ</string>-->
+    <!--    <string name="advance_search">অ্যাডভান্সড সার্চ</string>-->
+    <!--    <string name="journey_date">যাত্রার তারিখ</string>-->
+    <!--    <string name="journey_type">যাত্রার ধরণ</string>-->
+    <!--    <string name="journey_time">যাত্রার সময়</string>-->
+    <!--    <string name="return_type">ফেরার ধরণ</string>-->
+    <!--    <string name="return_time">ফেরার সময়</string>-->
+    <!--    <string name="title_passgender_inf">যাত্রীর  তথ্য</string>-->
+    <!--    <string name="total_amount_bus">সর্বমোট পরিমাণ / মোট টাকা:</string>-->
+    <!--    <string name="departure_ticket">প্রস্থান টিকিট / যাএার টিকিট </string>-->
+    <!--    <string name="totat_amont_bus">মোট টাকা </string>-->
+    <!--    <string name="round_bus">ফিরতি টিকেট</string>-->
+    <!--    <string name="ticket_cancelable">টিকিট বাতিল</string>-->
+    <!--    <string name="this_ticket_can_t_be_cancelable">এই টিকিট বাতিল করা যাবে না</string>-->
+    <!--    <string name="any_kind_of_ticket_cancellation_might_not_be_allowed_during_public_holidays_journey_as_per_bus_company_decision">বাস সংস্থার সিদ্ধান্ত অনুযায়ী সরকারী ছুটির সময় ভ্রমণের কোনও ধরণের টিকিট হবে না।</string>-->
+    <!--    <string name="custom_filter">কাস্টম ফিল্টার</string>-->
+    <!--    <string name="time">সময়</string>-->
+    <!--    <string name="sort_by_price">দাম অনুসারে বাছাই করুন</string>-->
+    <!--    <string name="include_prices">(চার্জ অন্তর্ভুক্ত)</string>-->
+    <!--    <string name="search_text_bus">অনুসন্ধান</string>-->
+    <!--    <string name="booked">বুক</string>-->
+    <!--    <string name="available">খালি</string>-->
+    <!--    <string name="place_a_barcode_inside_the_rectangle_to_scan_it">দয়া করে আয়তক্ষেত্র বক্স এর অভ্যন্তরে বারকোডটি স্ক্যান করুন</string>-->
+    <!--    <string name="all_city">সমস্ত শহর</string>-->
+    <!--    <string name="search_city">শহর অনুসন্ধান করুন</string>-->
+    <!--    <string name="going_to">Going To</string>-->
+    <!--    <string name="leaving_from">Leaving From</string>-->
+    <!--    <string name="coach_no">কোচ নং</string>-->
+    <!--    <string name="departure">প্রস্থান</string>-->
+    <!--    <string name="available_seat">আসন সংখ্যা</string>-->
+    <!--    <string name="select">নির্বাচিত</string>-->
+    <!--    <string name="from">থেকে</string>-->
+    <!--    <string name="to">দিকে</string>-->
+    <!--    <string name="selected_seat">নির্বাচিত আসন:</string>-->
+    <!--    <string name="popular_city">জনপ্রিয় শহর</string>-->
+    <!--    <string name="full_name">সম্পূর্ণ নাম *</string>-->
+    <!--    <string name="mobile_number">মোবাইল নম্বর *</string>-->
+    <!--    <string name="age">বয়স *</string>-->
+    <!--    <string name="bus_info_gender">লিঙ্গ</string>-->
+    <!--    <string name="et_email">ইমেল</string>-->
+    <!--    <string name="bus_address">ঠিকানা* </string>-->
+    <!--    <string name="continue_booking">বুকিং চালিয়ে যান</string>-->
+    <!--    <string name="verify_your_phone_number">আপনার ফোন নম্বর যাচাই করুন</string>-->
+    <!--    <string name="we_have_send_you_an_sms_with_a_code_to_your_number">আমরা আপনার নম্বরটিতে একটি কোড সহ আপনাকে একটি এসএমএস পাঠিয়েছি</string>-->
+
+
+    <string name="cancel_ticket_list">টিকেট বাতিল</string>
+    <string name="bus_transction_log">লেনদেন</string>
+    <string name="bus_transction_log_title">Transaction Log</string>
+    <string name="cancel_ticket_list_button">Cancel Ticket</string>
+    <string name="what_new_in_new_apps">নতুন অ্যাপ এ লগইন করার পদ্ধতি</string>
+    <string name="play_video">প্লে ভিডিও</string>
+    <string name="skip">এড়িয়ে যান</string>
+    <string name="faq">হেল্প</string>
+    <string name="call_center">কল সেন্টার নাম্বার</string>
+    <string name="get_help_home_page">হেল্প</string>
+    <string name="chat">চ্যাট</string>
+    <string name="call">কল</string>
+    <string name="wellcome_text">পেওয়েল এজেন্ট রেজিস্ট্রেশনে আপনাকে  স্বাগতম। প্রয়োজনীয় তথ্যগুলো সঠিকভাবে প্রদান করে রেজিস্ট্রেশন প্রক্রিয়া সম্পন্ন করুন। </string>
+    <string name="enter_your_mobile_number">মোবাইল নাম্বারটি টাইপ করুন</string>
+    <string name="i_agree_with_rules">আমি <font color="#5aac40">শর্তাবলীগুলোর</font> সাথে সম্মতি প্রদান করছি।</string>
+    <string name="check_roles_">চুক্তি ও শর্তাদি দয়া করে চেক করুন</string>
+    <string name="outlet_name">দোকানের নাম</string>
+    <string name="address">ঠিকানা</string>
+    <string name="owner_name">মালিকের নাম</string>
+    <string name="merchant_type">মার্চেন্টের ধরন</string>
+    <string name="business_type">ব্যবসার ধরন</string>
+    <string name="email_hit"><![CDATA[<font color=#41882b> ইমেইল </font> <font color=#b3b3b3> (ঐচ্ছিক)</font>]]></string>
+    <string name="first_step">১ম ধাপ</string>
+    <string name="district_reg">জেলাঃ</string>
+    <string name="thana_reg">থানাঃ</string>
+    <string name="post_code_reg">পোস্টকোডঃ</string>
+    <string name="back">পূর্ববর্তী ধাপ</string>
+    <string name="refcode"><font color="#41882b">রেফারেন্স কোড: </font> <font color="#b3b3b3">(ঐচ্ছিক)</font></string>
+    <string name="step_3">৩য় ধাপ</string>
+    <string name="landmark"><![CDATA[<font color=#41882b>ল্যান্ডমার্কঃ </font> <font color=#b3b3b3>(ঐচ্ছিক)</font>]]></string>
+    <string name="pleaes_fill_up_correctly">সঠিকভাবে পূরণ করুন</string>
+    <string name="step2">২য় ধাপ</string>
+    <string name="outlet_image">দোকানের ছবি</string>
+    <string name="owner_photo">মালিকের ছবি</string>
+    <string name="trade_license">ট্রেড লাইসেন্স</string>
+    <string name="passport_reg">পাসপোর্ট</string>
+    <string name="birth_certificate">জন্ম সনদ</string>
+    <string name="driving_license">ড্রাইভিং লাইসেন্স</string>
+    <string name="visiting_card">ভিজিটিং কার্ড</string>
+    <string name="step4">৪র্থ</string>
+    <string name="retiler_q1">আপনি কি বর্তমানে মোবাইল রিচার্জ এর ব্যবসা করেন?</string>
+    <string name="retailer_q2">আপনি কি কোন মোবাইল ব্যাংকিং এজেন্ট?</string>
+    <string name="retailer_q3">আপনি কি প্লে স্টোর থেকে অ্যাপটি নিয়েছেন?</string>
+    <string name="grameenphone">গ্রামীনফোন</string>
+    <string name="banglalink">বাংলালিংক</string>
+    <string name="robi">রবি</string>
+    <string name="airtel">এয়ারটেল</string>
+    <string name="teletalk">টেলিটক</string>
+    <string name="service">সার্ভিস</string>
+    <string name="bkash">বিকাশ</string>
+    <string name="rocket">রকেট</string>
+    <string name="mcash">এমক্যাশ</string>
+    <string name="mobile_money">মোবাইল মানি</string>
+    <string name="mycash">মাইক্যাশ</string>
+    <string name="first_page_nid">আপনার জাতীয় পরিচয় পত্রের সামনের অংশটি ক্যামেরার সাহায্যে ছবি তুলুন</string>
+    <string name="nid_second_page">আপনার জাতীয় পরিচয় পত্রের পিছনের অংশটি ক্যামেরার সাহায্যে ছবি তুলুন</string>
+    <string name="national_id_card">জাতীয় পরিচয়পত্র</string>
+    <string name="didital_hospital">ডিজিটাল হসপিটাল</string>
+    <string name="package_list_digital_health">প্যাকেজ সমূহ</string>
+    <string name="insurance_claim">ইন্স্যুরেন্স ক্লেইম</string>
+
+    <string name="month_validity">মাসের মেয়াদ</string>
+    <string name="active_btn">এ্যাক্টিভেট করুন</string>
+    <string name="amount_title">সর্বমোট প্রদেয়:</string>
+    <string name="validity"> মেয়াদ</string>
+    <string name="contact_eith_doctor">ডাক্তারের সঙ্গে পরামর্শ</string>
+    <string name="in_pack">প্যাক-এ থাকছে</string>
+    <string name="call_doctor">ডক্টর কল</string>
+    <string name="doctor_vedio_call">ডক্টর ভিডিও কল</string>
+    <string name="call_limit">আনলিমিটেড</string>
+    <string name="doctor_chat">ডক্টর চ্যাট</string>
+    <string name="degital_prescription">ডিজিটাল প্রেসক্রিপশন</string>
+    <string name="free_prescription">ফ্রি</string>
+    <string name="helth_cashback">হেলথ ক্যাশব্যাক</string>
+    <string name="in_package">প্যাক-এ থাকছে</string>
+    <string name="next_step">পরবর্তী ধাপ</string>
+    <string name="type_of_identy">পরিচয় পত্রের ধরণ</string>
+    <string name="helth_birth_certificate">জন্ম নিবন্ধন ১৮+</string>
+    <string name="passport">পাসপোর্ট</string>
+    <string name="nid_paper">জাতীয় পরিচয় পত্র</string>
+    <string name="user_details">গ্রাহকের তথ্য</string>
+    <string name="helth_active_to">এ্যাক্টিভেট করা হচ্ছে</string>
+    <string name="type_name_in_english">নাম লিখুন (ইংরেজীতে লিখুন)</string>
+    <string name="relation">সম্পর্ক</string>
+    <string name="number_in_english">নম্বর (ইংরেজীতে লিখুন)</string>
+    <string name="father">বাবা</string>
+    <string name="mother">মা</string>
+    <string name="husband_wife">স্বামী / স্ত্রী</string>
+    <string name="son">পুত্র</string>
+    <string name="daughter">কন্যা</string>
+    <string name="selectfrom">নির্বাচন করুন</string>
+    <string name="selected_helth_p">প্যাকেজ</string>
+    <string name="health_trx_id">এ্যাক্টিভেশন আই.ডি:</string>
+    <string name="nominir_info">নমিনির তথ্য (ঐচ্ছিক)</string>
+
+
+    <array name="faq_header">
+        <item>পেওয়েল নতুন অ্যাপ ভার্সনে প্রথমবার কীভাবে লগইন করব?</item>
+        <item>রেজিস্টার্ড মোবাইল নম্বর কি?</item>
+        <item>OTP কি?</item>
+        <item>OTP নম্বরটি না আসলে?</item>
+        <item>কীভাবে পেওয়েল নতুন অ্যাপ ভার্সনে পরবর্তী সময় লগইন করব?</item>
+        <item>পেওয়েল এর ই-মেইল এড্রেস কি?</item>
+    </array>
+
+    <array name="faq_child">
+        <item>লগইন করার জন্য লগইন অপশনটি ক্লিক করুন। তারপর পেওয়েলে এ ব্যবহৃত আপনার মোবাইল নম্বরটি
+            এবং আপনার পিন নম্বরটি লিখে লগইন অপশনটি ক্লিক করুন। আপনার রেজিস্টার্ড মোবাইল নম্বরে <b>
+                “৪”
+            </b> ডিজিটের একটি <b>OTP</b> নাম্বার পাঠানো হবে। <b>OTP</b> নাম্বারটি সঠিক স্থানে বসিয়ে <b>
+                “Next”
+            </b> অপশনটি ক্লিক করুন।<b>OTP</b> যাচাইকরণ সম্পন্ন হলে <b>“ঠিক আছে”</b> অপশনে ক্লিক করুন।
+        </item>
+        <item>পেওয়েল এ রেজিস্ট্রেশন করার সময় ব্যবহৃত আপনার মোবাইল নম্বরটি হল
+            আপনার রেজিস্টার্ড মোবাইল নম্বর।
+        </item>
+        <item>প্রথমবার লগইন করার সময় আপনার রেজিস্টার্ড মোবাইল নম্বরে ৪ ডিজিটের একটি <b>OTP</b> নাম্বার
+            পাঠানো হবে।
+        </item>
+        <item>
+            <b>OTP</b>
+            নম্বরটি যদি না পেয়ে থাকেন তাহলে ওটিপি পুনরায় পাঠান অপশনটি ক্লিক করুন।
+        </item>
+        <item>পরবর্তী সময় লগইন এর ক্ষেএে রেজিস্টার্ড মোবাইল নম্বর ও পিন নম্বর দিয়ে লগইন করুন।</item>
+        <item>helpdesk@cloudwell.co অথবা salesops@cloudwell.co</item>
+    </array>
+
+
+    <array name="parent">
+        <item>নিবন্ধন সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>পেওয়েল ব্যালেন্স রিফিল প্রক্রিয়া সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>মোবাইল টপআপ সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>পল্লী বিদ্যুৎ বিল প্রদান সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>ডেসকো, ডিপিডিসি এবং ওয়াসা বিল প্রদান সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>মাইক্যাশ সংক্রান্ত জিজ্ঞাসা?</item>
+        <item>বিমান, বাস এবং লঞ্চ টিকেট সংক্রান্ত জিজ্ঞাসা?</item>
+    </array>
+
+    <array name="q1">
+        <item>১. পেওয়েল কি?</item>
+        <item>২. পেওয়েল সেবা কি কি উপায়ে ব্যবহার করা যাবে?</item>
+        <item>৩. কীভাবে আমি খুচরা বিক্রেতা হিসাবে পেওয়েল সার্ভিসে নিবন্ধন করতে পারি?</item>
+        <item>৪. বৈধ ট্রেড লাইসেন্স ছাড়া কিভাবে আমি পেওয়েল একাউন্ট খুলতে পারব?</item>
+        <item>৫. পেওয়েল একাউন্ট খুলতে কি আমি অন্য কারও ট্রেড লাইসেন্স ব্যবহার করতে পারি?</item>
+        <item>৬. পেওয়েল একাউন্ট মালিকানা স্থানান্তর সম্ভব?</item>
+        <item>৭. পেওয়েল রেজিস্ট্রেশন এর জন্য কোন চার্জ আছে কি?</item>
+        <item>৮. পেওয়েল সার্ভিস কম্পিউটারে ব্যবহার করতে হলে কি করতে হবে?</item>
+        <item>৯. রেজিস্ট্রেশনের পর "Pending" লেখা দেখাচ্ছে, এখন কি করতে হবে?</item>
+        <item>১০. কীভাবে রেজিস্ট্রেশন বাতিল করব?</item>
+        <item>১১. মোবাইল পরিবর্তন করতে হলে কি করতে হবে?</item>
+    </array>
+    <array name="a1">
+        <item>পেওয়েল বিস্তৃত রিটেল নেটওয়ার্কের মাধ্যমে সকল পেমেন্ট পরিসেবা প্রদানের এক সহজ, নিরাপদ
+            ও দ্রুততম মাধ্যম। একজন গ্রাহক অতি সহজেই সারাদেশে পেওয়েল এর বিস্তৃত রিটেল আউটলেট থেকে সকল
+            মোবাইল অপারেটর এবং ব্রিলিয়ান্ট নাম্বার রিচার্জ, পল্লী বিদ্যুৎ, DESO, DPDC, Dhaka WASA,
+            কর্ণফুলী গ্যাস বিল, ইন্টারনেট বিল প্রদান বাস, লঞ্চ ও বিমান টিকেট ক্রয়, বিবিসি জানালা ও
+            বঙ্গ প্যাকেজ ক্রয়, ইন্ডিয়ান ভিসা ফি প্রদান সহ বিভিন্ন পরিসেবা গ্রহন করতে পারবেন।
+        </item>
+        <item>POS machine, Android app &amp; Web portal</item>
+        <item>আপনি Google Play Store হতে PayWell services App টি ডাউনলোড করে App এর প্রদত্ত
+            নির্দেশনা অনুযায়ী সকল তথ্য পূরন করে ব্যাবসা শুরু করতে পারবেন। আপনার ১ কপি পাসপোর্ট
+            সাইজের ছবি, NID ছবি (উভয় দিকের), ট্রেড লাইসেন্সের ছবি এবং আপনার আউটলেটের বাহির থেকে
+            সাইনবোর্ড/ব্যানার সহ পরিস্কার ছবিসহ অন্যান্য তথ্য প্রদান করতে হবে। এজেন্টের সকল তথ্য
+            পেওয়েল হেড অফিস থেকে যাচাই হবার পর, এজেন্টের ফোন নাম্বার এ নিবন্ধনটি সম্পূর্ণ হবার মেসেজ
+            যাবে। সেই মেসেজ এ এজেন্ট পেওয়েল অ্যাকাউন্ট এর পিন নাম্বার ও এজেন্ট RID টি পাবে।
+        </item>
+        <item>যদি আপনার কোন ট্রেড লাইসেন্স না থাকে তাহলে আপনি PayWell service App মাধ্যমে ব্যাবসা
+            শুরু করতে পারবেন না।
+        </item>
+        <item>আমরা আপনার নিজস্ব ট্রেড লাইসেন্স ব্যাবহার করতে পরামর্শ দিব।</item>
+        <item>POS মেশিনের ক্ষেত্রে নতুন এজেন্ট এর ১ কপি পাসপোর্ট সাইজের ছবি, NID ছবি, ট্রেড
+            লাইসেন্সর ছবি, এবং আউটলেটের বাহির থেকে সাইনবোর্ড/ব্যানার সহ পরিস্কার ছবি নিয়ে আপনার
+            নিকটতম ডিলার/কালেশন অফিসারের সাথে যোগাযোগ করুন। Mobile App এবং Web Portal এর ক্ষেত্রে
+            আমরা নতুন একাউন্ট খুলতে পরামর্শ দিয়ে থাকি।
+        </item>
+        <item>পেওয়েল এ রেজিস্ট্রেশন জন্য কোন প্রকার চার্জ নেই।</item>
+        <item>পেওয়েল সার্ভিস কম্পিউটারে মাধ্যমে ব্যবহার করার জন্য আপনার ১ কপি পাসপোর্ট সাইজের ছবি,
+            NID ছবি (উভয় দিক), ট্রেড লাইসেন্সের ছবি এবং আপনার আউটলেটের বাহিরের সাইনবোর্ড/ব্যানার সহ
+            পরিস্কার ছবি, আপনার বিস্তারিত তথ্য আমাদের ইমেইল করুন। আমাদের ইমেইল ঠিকানা
+            salesops@cloudwell.co অথবা helpdesk@cloudwell.co
+        </item>
+        <item>এজেন্টের সকল তথ্য পেওয়েল হেড অফিস থেকে যাচাই করা হয় তাই "Pending" লেখাটি দেখাচ্ছে। ১
+            ঘণ্টার পর যদি "Pending" লেখাটি তাহলে আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬,
+            ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন
+        </item>
+        <item>রেজিস্ট্রেশন বাতিল করতে আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬
+            হেল্প লাইন।
+        </item>
+        <item>স্যার নতুন মোবাইলে পেওয়েল অ্যাপ চালু করতে আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬,
+            ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।
+        </item>
+    </array>
+    <array name="q2">
+        <item>১. কীভাবে আমি টাকা এলকেশন করতে পারি/ পেওয়েল ব্যাল্যান্স পেতে পারি?</item>
+        <item>২. আমার কি প্রতিটি সার্ভিস এর জন্য আলাদা ব্যালেন্স নিতে হবে?</item>
+        <item>৩. কোন কোন ব্যাংক থেকে পেওয়েল এ ব্যালেন্স রিফিল করতে পারব?</item>
+        <item>৪. বিকাশ থেকে পেওয়েল এ ব্যালেন্স রিফিল করতে পারব?</item>
+        <item>৫. কীভাবে নগদ থেকে পেওয়েল এ ব্যালেন্স রিফিল করব?</item>
+        <item>৬. নগদ থেকে পেওয়েল এ ব্যালেন্স রিফিল কীভাবে ক্লেইম করব?</item>
+        <item>৭. নগদ থেকে ব্যালেন্স রিফিল এর চার্জ কত?</item>
+        <item>৮. ব্যালেন্স শুন্য (০) দেখাচ্ছে। এতে করণীয় কি?</item>
+        <item>৯. অনেক সময় আমার Account এ যত টাকা থাকার কথা তার চেয়ে কম/বেশি দেখতে পাচ্ছি। এর করণীয়
+            কি?
+        </item>
+        <item>১০. আমি আমার সারা মাসের Transaction Report (Statement) দেখতে চাচ্ছি। এর করণীয় কি?
+        </item>
+    </array>
+    <array name="a2">
+        <item>আপনার এলাকার যে নিবন্ধিত কালেকশন অফিসার থাকে তার মাধ্যমে আপনি আপনার পেওয়েল ব্যাল্যান্স
+            নিতে পারবেন। যদি কোন কালেকশন অফিসার না থাকে তাহলে ব্যাংক ডিপোজিটের মাধ্যমে অথবা নগদ
+            পেমেন্টের মাধ্যমে ব্যাল্যান্স রিফিল করতে পারবেন।
+        </item>
+        <item>না, আপনি পেওয়েল ব্যালেন্স থেকে যে কোনও সার্ভিস বিক্রয় করতে পারবেন।</item>
+        <item>ব্র্যাক ব্যাংক, ডাচ বাংলা ব্যাংক, ইসলামী ব্যাংক বাংলাদেশ লিমিটেড, পূবালী ব্যাংক,
+            স্ট্যান্ডার্ড চার্টার্ড ব্যাংক এবং সিটি ব্যাংক থেকে পেওয়েল এ ব্যালেন্স রিফিল করতে
+            পারবেন।
+        </item>
+        <item>বিকাশ থেকে পেওয়েল এ ব্যালেন্স রিফিল সার্ভিসটি চালু হলে জানানো হবে।</item>
+        <item>ডিরেক্ট ব্যালেন্স রিফিল অপশনটি সিলেক্ট করুন। \n টাকার পরিমাণ লিখে “Confirm” করুন।
+            পেওয়েল পিন নাম্বার দিন। আপনার নগদ একাউন্ট নাম্বার দিয়ে “ I agree to the terms and
+            conditions” সিলেক্ট করে “Proceed” করুন। আপনার মোবাইলে নগদ থেকে এসএমএস এর মাধ্যমে প্রেরিত
+            “OTP” নাম্বারটি দিয়ে “Proceed” করুন। নগদের পিন নাম্বার দিন। সাথে সাথে পেওয়েল ব্যালেন্স
+            যোগ হয়ে যাবে।
+        </item>
+        <item>ব্যালেন্স এর জন্য পেওয়েল অ্যাপ এর ব্যালেন্স ক্লেইম অপশন এ গিয়ে আপনার নগদ একাউন্ট
+            নম্বর/ট্রানজেকশন আইডি ও টাকার পরিমাণ দিয়ে ক্লেইম প্রক্রিয়া সম্পন্ন করুন। (১.২% সার্ভিস
+            চার্জ প্রযোজ্য)। ৫ মিনিটের মধ্যে ব্যালেন্স অ্যাড না হলে পেওয়েল হেল্প ডেস্ক-এ কল করুন। \n
+            <b>বিশেষ দ্রষ্টব্য: ১১ ডিজিটের মোবাইল নম্বর বা RID আইডি ভুলের কারণে ব্যালেন্স অ্যাড না
+                হলে তার জন্য দায় দায়িত্ব পেওয়েল কর্তৃপক্ষ বহন করে না। তাই পেমেন্ট করার সময়
+                সর্তকতা অবলম্বন করুন।
+            </b>
+        </item>
+        <item>১.২% সার্ভিস চার্জ প্রযোজ্য।</item>
+        <item>আপনার POS কে PayWell যথাযথ ভাবে চিনতে না পারলে আপনার ব্যালেন্স শুন্য দেখাতে পারে।
+            আপনার POS টির রেজিস্ট্রেশন এ কোন সমস্যা হলে এধরনের সমস্যা হতে পারে। সেক্ষেত্রে কিছুক্ষণ
+            অপেক্ষা করে আবার চেষ্টা করুন। \n যদি ওয়েব পোর্টালে ব্যালেন্স শুন্য দেখায় তাহলে কম্পিউটার
+            এর ব্রাউজার সম্পূর্ণ কেটে দিয়ে, ব্রাউজার History পরিস্কার করুন এবং নতুন করে ওয়েব পোর্টাল
+            পেজটি চালু করুন। মোবাইল অ্যাপ এর ক্ষেত্রে পূনরায় লগ ইন করুন
+        </item>
+        <item>আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন। ২৪ থেকে
+            ৪৮ঘণ্টার মধ্যে আপনার নির্দিষ্ট সময়সীমার বিস্তারিত বিবরণী (statement) দিয়ে দেয়া হবে।
+        </item>
+        <item>আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।</item>
+    </array>
+
+    <array name="q3">
+        <item>১. মোবাইল টপআপ করার সময় “Internet Connection Error” এই Message টা দেখতে পাচ্ছি। এর
+            কারণ কি?
+        </item>
+        <item>২. একটি নম্বর এ টপআপ করতে গিয়ে “Time Limit Error” দেখতে পাচ্ছি। এর করণীয় কি?</item>
+        <item>৩. টপআপ করার পর Status দেখতে পাচ্ছি “Invalid Topup Value”, এর করণীয় কি?</item>
+        <item>৪. মোবাইল টপআপ করার সময় “Authentication Error” এই Message টা দেখাচ্ছে। এর করণীয় কি?
+        </item>
+        <item>৫. কোন Number এ টপআপ করার সময় “Technical Error” দেখালে কি করতে হবে?</item>
+        <item>৬. মোবাইল টপআপ করার সময় বারবার “Can Not Be Processed” দেখাচ্ছে?</item>
+        <item>৭. মোবাইল টপআপ করার সময় নম্বর দেয়ার পর Sending Receiving এ গিয়ে অনেক সময় নিচ্ছে, পরে
+            Hang হয়ে যাচ্ছে এবং কোন error message দেখাচ্ছে না। এতে করণীয় কি?
+        </item>
+        <item>৮. কোন Number এ মোবাইল টপআপ করার পর Retailer “Successful” দেখতে পাচ্ছে কিন্তু Customer
+            Complain করছে তিনি তার Account এ টাকা পাননি। এর করণীয় কি হবে? আমি কি আবার রিচার্জটি করার
+            জন্য অনুরোধ পাঠাবো?
+        </item>
+    </array>
+
+
+    <array name="a3">
+        <item>POS এ ইন্টারনেট পেতে সমস্যা হলে এই message টি দেখায়। “Internet Connection Error”
+            message দিলে পরবর্তী transaction করার আগে 45 সেকেন্ড এর জন্য অপেক্ষা করুন। তারপরও
+            সমস্যার সমাধান না হলে POS Machine টির Battery খুলে Sim card টা খুলে আবার ঠিক মতো লাগিয়ে
+            দেখবেন, কারণ Sim card displace হয়ে গেলে POS ইন্টারনেট সংযোগ পাবেনা। 
+        </item>
+        <item>যেকোনো গ্রামীনফোন, স্কিট, বাংলালিঙ্ক, টেলিটক, এয়ারটেল অথবা রবি নম্বর এ একবার সফল ভাবে
+            Topup করার পর পরবর্তী ০৫ মিনিটের মধ্যে পুনরায় একই নাম্বারে সমপরিমান টাকা Topup করা যাবে
+            না।
+        </item>
+        <item>“Prepaid” Number এর জন্য সর্বনিম্ন ১০ টাকা এবং “Postpaid” Number এর জন্য সর্বনিম্ন ৫০
+            টাকা Topup করা যাবে। যেকোন নাম্বার এ একবার এ সর্বোচ্চ ১০০০ টাকার অধিক Topup করা যাবেনা।
+            এর বাইরে কোন অ্যামাউন্ট দিলে এই Status দেখাবে।
+        </item>
+        <item>সাধারনত ভুল PIN নাম্বার দিলে এই Error টি দেখায়।</item>
+        <item>এই Status টা দুটি কারণে হতে পারে- যে Number এ Topup করতে চাচ্ছেন ঐ অপারেটর থেকে এই
+            error পেলে অথবা Transaction হওয়ার সময় POS এর ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়ে গেলে। উভয়
+            ক্ষেত্রেই আপনাকে “Inquire Topup” এ গিয়ে Transaction status check করে দেখতে হবে। \n প্রথম
+            কারণটির ক্ষেত্রে অনুসন্ধান এর উত্তরে Transaction Status এ আপনি “Technical Error” দেখতে
+            পাবেন, এটি অপারেটর থেকে পাওয়া একটি টেকনিক্যাল সমস্যা। এর জন্য আপনার ব্যালেন্স কাটার কোন
+            সম্ভাবনা নেই।
+            দ্বিতীয় কারণটির ক্ষেত্রে কখনো কখনো Transaction টি সফল হয়ে যায়। এর কারন, Transaction টি
+            হওয়ার সময় POS থেকে আপনার অনুরোধটি আমাদের Server এ এসে পৌছালেও এর উত্তর পাবার আগেই POS এর
+            ইন্টারনেট সংযোগ বিচ্ছিন্ন হয়ে যায়, যার ফলে Error টি দেখায়। এক্ষেত্রে Topup টি পুনরায়
+            করার প্রয়োজন নেই।
+        </item>
+        <item>এই Status টি Operator (যেমনঃ Grameenphone, Banglalink, Robi, Airtel, Teletalk) থেকে
+            দিয়ে থাকে। এক্ষেত্রে কিছুক্ষন অপেক্ষা করে পুনরায় ঐ নম্বর এ Topup এর অনুরোধ করা যাবে।
+        </item>
+        <item>সাধারনত Sending, Receiving ও Connecting এর মাধ্যমে আপনার অনুরোধের উত্তর ৪৫ সেকেন্ড এর
+            মধ্যে চলে আসে। ৪৫ সেকেন্ড পরেও কোন response না এলে প্রথমত আপনার ইন্টারনেট সংযোগটি যাচাই
+            করুন, যদি ইন্টারনেট সংযোগ ঠিক থাকে তবে ৩-৫ মিনিট অপেক্ষা করে Customer Care এ Call করে
+            আপনার সমস্যাটি জানান। কোন Error না দিয়ে বের হয়ে মেনুতে চলে এলে “Inquire Topup” এ গিয়ে
+            Topup টি অনুসন্ধান করে দেখতে হবে Topup টি হয়েছে কিনা।
+        </item>
+        <item>PayWell থেকে সংশ্লিষ্ট অপারেটর এর সাথে যোগাযোগ করে পাওয়া উপযুক্ত প্রমাণাদির সাপেক্ষে
+            ২৪ থেকে ৪৮ ঘণ্টার মধ্যে আপনাকে Topup এর বিস্তারিত বিবরন জানানো হবে। সেক্ষেত্রে Topup টি
+            হয়ে থাকলে Customer এর অভিযোগ গ্রহণযোগ্য হবে না এবং রিটেইলার কোন টাকা ফেরত পাবেন না।
+            যেকোন ধরনের সমস্যার কারনে যদি Topup টি Failed হয়ে থাকে তাহলে রিটেইলার ব্যালেন্স এ Topup
+            এর সমপরিমান টাকা ফেরত দিয়ে দেয়া হবে। শুধুমাত্র “Inquire Topup” এ গিয়ে Topup টি অনুসন্ধান
+            করে “fail” দেখালে রিচার্জটি পাঠানোর জন্য আবার অনুরোধ করা যেতে পারে।
+        </item>
+    </array>
+
+    <array name="q4">
+        <item>১. কীভাবে পল্লী বিদ্যুৎ সার্ভিস পেতে পারি?</item>
+        <item>২. চুক্তি পত্রের স্ট্যাম্প কপি আমি কীভাবে পেতে পারি ?</item>
+        <item>৩. বাংলাদেশের যেকোনো স্থান হতে পল্লী বিদ্যুৎ বিল পরিশোধ করা যায় ?</item>
+        <item>৪. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “to be processed” দেখায় সেক্ষেত্রে আমার কি
+            করণীয়?
+        </item>
+        <item>৫. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “Canceled due to duplicate request” দেখায়
+            সেক্ষেত্রে আমার কি করণীয় ?
+        </item>
+        <item>৬. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “bill not processed” দেখায় সেক্ষেত্রে আমার
+            কি করণীয় ?
+        </item>
+        <item>৭. পল্লী বিদ্যুৎ বিল প্রদান করার ক্ষেত্রে “wrong bill number” দেখায় সেক্ষেত্রে আমার কি
+            করণীয় ?
+        </item>
+        <item>৮. পল্লী বিদ্যুৎ বিল প্রদান করার পর Inquiry তে Check করলে দেখাচ্ছে- TBPS Response
+            Error, সেক্ষেত্রে আমার কি করণীয়?
+        </item>
+        <item>৯. পল্লী বিদ্যুৎ বিল প্রদান করার পর “Payment Successful” দেখাচ্ছে কিন্তু পল্লী বিদ্যুৎ
+            এ বিল পরিশোধ হয়নি। সেক্ষেত্রে আমার কি করণীয় ?
+        </item>
+        <item>১০. পল্লী বিদ্যুৎ বিল প্রদানের সময় কোন নাম্বারটি ব্যবহার করব এসএমএস বিল নাম্বার অথবা
+            এসএমএস অ্যাকাউন্ট নাম্বার?
+        </item>
+        <item>১১. পল্লী বিদ্যুৎ বিল প্রদানের সময় " Invalid Bill Number" দেখাচ্ছে, সেক্ষেত্রে আমার
+            কি করণীয়?
+        </item>
+        <item>১২. পল্লী বিদ্যুৎ বিল আপলোডের জন্য কি করতে হবে?</item>
+        <item>১৩. পল্লী বিদ্যুৎ বিল প্রদানের সময় "Service not rendered" দেখাচ্ছে সেক্ষেত্রে আমার কি
+            করণীয়?
+        </item>
+        <item>১৪. পল্লী বিদ্যুৎ এর প্রি-পেইড বিল দেয়া যায় কি?</item>
+    </array>
+
+    <array name="a4">
+        <item>আমাদের সাথে চুক্তি পত্র স্বাক্ষরের মাধ্যমে আপনি পল্লী বিদ্যুৎ সার্ভিস পেতে পারেন।
+            চুক্তিপত্র আমাদের কাছে পৌছানোর পর আপনার অ্যাপ এ পল্লী বিদ্যুৎ সার্ভিস চালু হয়ে যাবে।
+        </item>
+        <item>ট্যাম্প এর কপি আপনাকে ইমেইল করা হলে আপনি তা স্বাক্ষরসহ পূরন করে স্ট্যাম্প এর স্ক্যান
+            কপি আমাদের ইমেইল করলে আমরা পল্লি বিদ্যুৎ সার্ভিসটি চালু করে দিব। স্ট্যাম্প এর মূল কপিটি
+            আমাদের ঠিখানায় কুরিয়ার করে দিতে হবে।
+        </item>
+        <item>হ্যাঁ। আপনি বাংলাদেশের যেকোনো স্থান হতে পল্লী বিদ্যুৎ বিল পরিশোধ করতে পারবেন।</item>
+        <item>কিছুক্ষন সময় অপেক্ষা করে আবার চেষ্টা করুন। আপনার বিল দেয়ার প্রথম চেষ্ঠা সফল বা বিফল
+            হওয়ার আগেই বা প্রক্রিয়াধীন থাকা কালিন আপনি আবার বিলটি দেয়ার চেষ্ঠা করেছেন । সেহ্মেত্রে
+            ৩-৫ মিনিট অপেহ্মা করে আবার বিল পরিশিধের চেষ্ঠা করুন।
+        </item>
+        <item>আপনি একই বিল বার বার দেওয়ার চেষ্টা করছেন। অথবা আপনার বিলটি পল্লী বিদ্যুৎ অফিসে আপডেট
+            করা নেই। বিলটি আপডেট না করা থাকলে সেহ্মেত্রে আমাদের কল সেন্টারে যোগাযোগ করুন। আমারা
+            আপনার বিলটি আপডেট করার জন্য পদহ্মেপ গ্রহন করব।
+        </item>
+        <item>কিছুক্ষনপর আবার চেষ্টা করুণ।</item>
+        <item>আপনি ভুল বিল নম্বর প্রদান করছেন। সঠিক বিল নাম্বার দিয়ে আবার চেষ্টা করুন।</item>
+        <item>কিছুক্ষন পর আবার চেষ্টা করুন।</item>
+        <item>আপনার বিল নম্বরটি আমাদের দিন আমরা পল্লী বিদ্যুৎ এর সাথে যোগাযোগ করে আপনার বিষয়টি
+            সমাধান করার চেষ্টা করছি।
+        </item>
+        <item>প্রিয় এজেন্ট, আপনাদের অবগতির জন্য জানানো যাচ্ছে যে ঢাকা-১/৩/৪, গাজীপুর-১,
+            নারায়ণগঞ্জ-১, যশোর-১, ভোলা, সুনামগঞ্জ, টাঙ্গাইল, ময়মনসিংহ-১, বরিশাল-২, সিলেট-১,
+            ঝিনাইদহ, ফরিদপুর, ব্রাহ্মণবাড়িয়া এবং কক্সবাজার- পল্লী বিদ্যুৎ সমিতির বিল প্রদানের
+            ক্ষেত্রে এসএমএস বিল নম্বর এর ঘরে এসএমএস একাউন্ট নম্বর দিয়ে বিল পরিশোধ করতে হবে। \n
+            <b>বি:দ্র: উল্লেখিত পল্লী বিদ্যুৎ সমিতি ছাড়া অন্যান্য বিলের ক্ষেত্রে এসএমএস বিল নম্বর
+                দিয়ে বিল পরিশোধ করতে হবে।
+            </b>
+        </item>
+        <item>পল্লী বিদ্যুৎ বিল প্রদানের সময় " Invalid Bill Number" দেখালে আমাদের সাথে যোগাযোগ করুন
+            ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।
+        </item>
+        <item>পল্লী বিদ্যুৎ বিল আপলোডের জন্য আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬,
+            ১৬৫৬৬ হেল্প লাইন।
+        </item>
+        <item>পল্লী বিদ্যুৎ বিল প্রদানের সময় "Service not rendered" দেখালে তাঁর মানে আপনার পল্লী
+            বিদ্যুৎ সার্ভিসটি চালু নেই। পল্লী বিদ্যুৎ সার্ভিসটি চালু করতে আমাদের সাথে যোগাযোগ করুন
+            ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন।
+        </item>
+        <item>পল্লী বিদ্যুৎ এর প্রি-পেইড বিল পেমেন্ট সার্ভিসটি চালু হলে জানানো হবে।</item>
+    </array>
+
+
+    <array name="q5">
+        <item>১. ডেসকো প্রি-পেইড বিল দেয়া যায় কি?</item>
+        <item>২. ডেসকো বকেয়া বিল দেয়া যায় কি?</item>
+        <item>৩. ডিপিডিসি বিল প্রদানের সময় Account No. হিসেবে আমি কি দিবো?</item>
+        <item>৪. ওয়াসা বিল প্রদানের সময় কোন নম্বর ব্যবহার করবো?</item>
+    </array>
+
+    <array name="a5">
+        <item>হ্যাঁ। ডেসকো প্রি-পেইড বিল দেয়া যায়।</item>
+        <item>হ্যাঁ। ডেসকো বকেয়া বিল দেয়া যায়।</item>
+        <item>বিলের কপির কাস্টমার নং প্রদান করবেন।</item>
+        <item>বিলের কপির বিল নং প্রদান করবেন।</item>
+    </array>
+
+
+    <array name="q6">
+        <item>১. আমি কীভাবে মাইক্যাশ সার্ভিস রেজিস্ট্রাশন করবো?</item>
+        <item>২. আমি ঢাকার বাইরে থাকি। কিভাবে ঢাকার বাইরে থেকে মাইক্যাশ রেজিস্ট্রাশন করবো?</item>
+        <item>৩. মাইক্যাশ সার্ভিসের সুবিধা কি কি?</item>
+        <item>৪. মিনি স্টেটমেন্ট হতে আমি কতগুলো ট্রানজেকশন দেখতে পাবো?</item>
+        <item>৫. OTP কি?</item>
+        <item>৬. OTP এর মেয়াদ কতদিন?</item>
+        <item>৭. OTP এর মেয়াদ শেষ হয়ে গেলে আমি কি করবো?</item>
+    </array>
+    <array name="a6">
+        <item>মাইক্যাশ রেজিস্ট্রাশন করতে এজেন্ট এর ২কপি পাসপোর্ট সাইজের ছবি (ল্যাব প্রিন্ট), ট্রেড
+            লাইসেন্সের ফটোকপি, NID এর কপি এবং নমিনির ১ কপি ছবি (ল্যাব প্রিন্ট) ও NID সহ মাইক্যাশ
+            ফর্ম পুরন করে জমা দিলে। আপনার সকল তথ্য যাচাই করার পর MyCash এর এজেন্ট হবেন। রেজিস্ট্রাশন
+            ফরম এর জন্য আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প লাইন। \n
+            <b>বি:দ্র: মাইক্যাশে রেজিস্ট্রাশন এর সময় গ্রামীণফোন এবং টেলিটক মোবাইল নম্বর ব্যবহার করা
+                যাবে না।
+            </b>
+        </item>
+        <item>রেজিস্ট্রাশন এর জন্য আমাদের সাথে যোগাযোগ করুন ০৯৬১০১-১৬৫৬৬, ০৯৬৩৮০-১৬৫৬৬, ১৬৫৬৬ হেল্প
+            লাইন।
+        </item>
+        <item>মাইক্যাশ –এর মাধ্যমে আপনি ক্যাশ ইন/আউট করতে পারবেন।</item>
+        <item>সর্বশেষ ৫ টি</item>
+        <item>OTP হল ৬ ডিজিট এর একটি সিকিউরিটি কোড। এই কোডটি প্রতিটি পেমেন্ট এর ক্ষেত্রে প্রয়োজন
+            হবে।
+        </item>
+        <item>৭ দিন।</item>
+        <item>নতুন করে আবার OTP সেট করবেন।</item>
+    </array>
+
+    <array name="q7">
+        <item>১. বাস এবং লঞ্চ টিকেট সার্ভিস চার্জ এবং কমিশন কত?</item>
+        <item>২. বাস এবং লঞ্চ টিকেট বাতিল এর সার্ভিস চার্জ এবং কমিশন কত?</item>
+        <item>৩. বিমান টিকেট এর কমিশন কত?</item>
+    </array>
+
+    <array name="a7">
+        <item>প্রতিটি টিকেট এর জন্য গ্রাহকে ২০(বিশ) টাকা সার্ভিস চার্জ দিতে হবে। রিটেইলার প্রতিটি
+            টিকেট এর জন্য ১০(দশ) টাকা কমিশন পাবে।
+        </item>
+        <item>প্রতিটি টিকেট বাতিল এর জন্য গ্রাহকে ২০(বিশ) টাকা সার্ভিস চার্জ দিতে হবে। রিটেইলার
+            প্রতিটি টিকেট এর জন্য ১০(দশ) টাকা কমিশন পাবে।
+        </item>
+        <item>বিমান টিকেট এর কমিশন বেস ফেয়ার এর ৫%।</item>
+    </array>
+
+
+    <!--    bus ticket bangla-->
+
+</resources>

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,12 +15,18 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cloudwell.paywell.services.R;
+import com.cloudwell.paywell.services.analytics.AnalyticsManager;
+import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class OfferMainActivity extends AppCompatActivity {
@@ -66,6 +70,8 @@ public class OfferMainActivity extends AppCompatActivity {
         }
 
         initializeAdapter();
+
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_TOFU_ALL_OPERATOR_BUNDLE_OFFER_CONFIRM);
     }
 
     public void initializeAdapter() {
@@ -149,7 +155,7 @@ public class OfferMainActivity extends AppCompatActivity {
         }
 
         private void addItem(final String details, final String amount, final String com) {
-            mData.add(details+","+amount+","+com);
+            mData.add(details + "," + amount + "," + com);
             array.add("data");
             notifyDataSetChanged();
         }
@@ -306,6 +312,10 @@ public class OfferMainActivity extends AppCompatActivity {
         private class ViewHolder {
             TextView textViewHeader, textViewDescription;
             RadioButton radioButton;
+
+            Vector va = new Vector();
+
+
         }
     }
 }

@@ -3,11 +3,7 @@ package com.cloudwell.paywell.services.activity.utility.pallibidyut;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatDialog;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,12 +15,14 @@ import android.widget.RelativeLayout;
 import com.cloudwell.paywell.services.R;
 import com.cloudwell.paywell.services.activity.WebViewActivity;
 import com.cloudwell.paywell.services.activity.base.BaseActivity;
-import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayActivity;
+import com.cloudwell.paywell.services.activity.utility.AllUrl;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBBillPayNewActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.bill.PBInquiryBillPayActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.billStatus.PBBillStatusInquiryActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.MobileNumberChangeActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.changeMobileNumber.PBInquiryMobileNumberChangeActivity;
+import com.cloudwell.paywell.services.activity.utility.pallibidyut.model.ReqInquiryModel;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBInquiryRegActivity;
 import com.cloudwell.paywell.services.activity.utility.pallibidyut.registion.PBRegistrationActivity;
 import com.cloudwell.paywell.services.analytics.AnalyticsManager;
@@ -32,19 +30,22 @@ import com.cloudwell.paywell.services.analytics.AnalyticsParameters;
 import com.cloudwell.paywell.services.app.AppController;
 import com.cloudwell.paywell.services.app.AppHandler;
 import com.cloudwell.paywell.services.constant.AllConstant;
+import com.cloudwell.paywell.services.constant.IconConstant;
+import com.cloudwell.paywell.services.recentList.model.RecentUsedMenu;
+import com.cloudwell.paywell.services.retrofit.ApiUtils;
 import com.cloudwell.paywell.services.utils.ConnectionDetector;
+import com.cloudwell.paywell.services.utils.StringConstant;
+import com.cloudwell.paywell.services.utils.UniqueKeyGenerator;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.appcompat.app.AppCompatDialog;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PBMainActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -54,8 +55,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
     private ConnectionDetector cd;
     private static AppHandler mAppHandler;
     private static String serviceName;
-    private String packageNameYoutube = "com.google.android.youtube";
-    private String linkPolliBillPay = "https://www.youtube.com/watch?v=SAuIFcUclvs&t=1s";
+    private String packageNameYoutube = AllUrl.packageNameYoutube;
+    private String linkPolliBillPay =AllUrl.linkPolliBillPay;
     private static String TAG_SERVICE_REGISTRATION_INQUIRY = "POLLI_REG";
     private static String TAG_SERVICE_BILL_INQUIRY = "POLLI_BILL";
     private static String TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY = "POLLI_RREG";
@@ -73,7 +74,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         }
         mRelativeLayout = findViewById(R.id.relativeLayout);
         cd = new ConnectionDetector(AppController.getContext());
-        mAppHandler = new AppHandler(this);
+        mAppHandler = AppHandler.getmInstance(getApplicationContext());
 
         Button btnReg = findViewById(R.id.homeBtnRegistration);
         Button btnBill = findViewById(R.id.homeBtnBillPay);
@@ -109,20 +110,39 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
         checkIsComeFromFav(getIntent());
 
+        AnalyticsManager.sendScreenView(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU);
+
+
     }
 
     private void checkIsComeFromFav(Intent intent) {
+
+        RecentUsedMenu recentUsedMenu;
         boolean isFav = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE, false);
         if (isFav) {
             boolean booleanExtra = intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_RG_INQUERY, false);
             if (booleanExtra) {
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_reg_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 12);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_BILL_INQUERY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 13);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_REQUEST_BILL_INQUIRY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS);
+
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_bill_statu_inquery, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 15);
+                addItemToRecentListInDB(recentUsedMenu);
+
             } else if (intent.getBooleanExtra(AllConstant.IS_FLOW_FROM_FAVORITE_AND_PB_MOBILE_NUMBER_CHANGE_INQUIRY, false)) {
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
+
+
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_phone_number_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry ,0, 17);
+                addItemToRecentListInDB(recentUsedMenu);
             }
         }
     }
@@ -160,6 +180,8 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
     public void onButtonClicker(View v) {
 
+        RecentUsedMenu recentUsedMenu;
+
         switch (v.getId()) {
             case R.id.homeBtnRegistration:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_REGISTION);
@@ -167,13 +189,18 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
             case R.id.homeBtnBillPay:
                 AnalyticsManager.sendEvent(AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_MENU, AnalyticsParameters.KEY_UTILITY_POLLI_BIDDUT_BILL_PAY);
-                startActivity(new Intent(this, PBBillPayActivity.class));
+                startActivity(new Intent(this, PBBillPayNewActivity.class));
                 break;
             case R.id.homeBtnInquiryReg:
                 shwTheLimitedPrompt(TAG_SERVICE_REGISTRATION_INQUIRY);
+                 recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_reg_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 12);
+                addItemToRecentListInDB(recentUsedMenu);
+
                 break;
             case R.id.homeBtnInquiryBillPay:
                 shwTheLimitedPrompt(TAG_SERVICE_BILL_INQUIRY);
+                 recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pollibiddut_bill_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 13);
+                addItemToRecentListInDB(recentUsedMenu);
                 break;
 
             case R.id.btRequestInquiry:
@@ -182,6 +209,9 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                 break;
             case R.id.btBillStatusInquiry:
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS);
+
+                recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_bill_statu_inquery, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry, 0, 15);
+                addItemToRecentListInDB(recentUsedMenu);
                 break;
 
             case R.id.btChangeMobileNumber:
@@ -190,10 +220,18 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
 
             case R.id.btChangeMobileNumbeEnquiry:
                 shwTheLimitedPrompt(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY);
+
+                addRecentUsedList();
                 break;
             default:
                 break;
         }
+    }
+
+    private void addRecentUsedList() {
+        RecentUsedMenu recentUsedMenu;
+        recentUsedMenu = new RecentUsedMenu(StringConstant.KEY_home_utility_pb_phone_number_inquiry, StringConstant.KEY_home_utility, IconConstant.KEY_ic_enquiry ,0, 17);
+        addItemToRecentListInDB(recentUsedMenu);
     }
 
     private void shwTheLimitedPrompt(String tagServiceBillInquiry) {
@@ -236,10 +274,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
                     selectedLimit = "5";
                 }
                 if (cd.isConnectingToInternet()) {
-                    new TransactionLogAsync().execute(getString(R.string.utility_multi_trx_inq),
-                            "username=" + mAppHandler.getImeiNo(),
-                            "&service=" + serviceName,
-                            "&limit=" + selectedLimit);
+                    callAPI(serviceName,selectedLimit);
                 } else {
                     Snackbar snackbar = Snackbar.make(mRelativeLayout, getResources().getString(R.string.connection_error_msg), Snackbar.LENGTH_LONG);
                     snackbar.setActionTextColor(Color.parseColor("#ffffff"));
@@ -258,6 +293,74 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         });
         dialog.setCancelable(true);
         dialog.show();
+    }
+
+    private void callAPI(String serviceName, String selectedLimit) {
+
+        String uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).getRID());
+        ReqInquiryModel m = new ReqInquiryModel();
+        m.setUsername(AppHandler.getmInstance(getApplicationContext()).getUserName());
+        m.setLimit(selectedLimit);
+        m.setService(serviceName);
+        m.setRefId(uniqueKey);
+
+        showProgressDialog();
+
+        ApiUtils.getAPIServiceV2().PBInquiry(m).enqueue(new Callback<ResponseBody>() {
+
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                dismissProgressDialog();
+                if (response.code() == 200){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.body().string());
+                        String responseMessage = jsonObject.getString("Message");
+                        int status = jsonObject.getInt("Status");
+
+                        if (status == 200){
+
+                            JSONArray responseDetails = jsonObject.getJSONArray("ResponseDetails");
+                            String result = responseDetails.toString();
+
+                            if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
+                                PBInquiryRegActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
+                                PBInquiryBillPayActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
+
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
+                                PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
+                                startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
+
+                            } else if (PBMainActivity.serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
+                                PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
+                                startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
+                            }
+
+                        } else {
+                            showErrorMessagev1(responseMessage);
+                        }
+
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        showErrorMessagev1(getString(R.string.try_again_msg));
+                    }
+                }else {
+                    showErrorMessagev1(getString(R.string.try_again_msg));
+                }
+
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                dismissProgressDialog();
+                showErrorMessagev1(getString(R.string.try_again_msg));
+            }
+        });
+
+
+
     }
 
     @Override
@@ -314,68 +417,7 @@ public class PBMainActivity extends BaseActivity implements CompoundButton.OnChe
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private class TransactionLogAsync extends AsyncTask<String, Integer, String> {
 
-
-        @Override
-        protected void onPreExecute() {
-            showProgressDialog();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String responseTxt = null;
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(params[0]);
-            try {
-                List<NameValuePair> nameValuePairs = new ArrayList<>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", mAppHandler.getImeiNo()));
-                nameValuePairs.add(new BasicNameValuePair("service", serviceName));
-                nameValuePairs.add(new BasicNameValuePair("limit", selectedLimit));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                ResponseHandler<String> responseHandler = new BasicResponseHandler();
-                responseTxt = httpclient.execute(httppost, responseHandler);
-            } catch (Exception e) {
-                e.fillInStackTrace();
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-//                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-            }
-            return responseTxt;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.e("logTag", result);
-            dismissProgressDialog();
-            if (result != null) {
-                if (serviceName.equalsIgnoreCase(TAG_SERVICE_REGISTRATION_INQUIRY)) {
-                    PBInquiryRegActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryRegActivity.class));
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_BILL_INQUIRY)) {
-                    PBInquiryBillPayActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryBillPayActivity.class));
-
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_BILL_STATUS)) {
-                    PBBillStatusInquiryActivity.TRANSLOG_TAG = result;
-                    startActivity(new Intent(PBMainActivity.this, PBBillStatusInquiryActivity.class));
-
-                } else if (serviceName.equalsIgnoreCase(TAG_SERVICE_PHONE_NUMBER_CHANGE_INQUIRY)) {
-                    PBInquiryMobileNumberChangeActivity.Companion.setTRANSLOG_TAG(result);
-                    startActivity(new Intent(PBMainActivity.this, PBInquiryMobileNumberChangeActivity.class));
-                }
-            } else {
-                Snackbar snackbar = Snackbar.make(mRelativeLayout, R.string.try_again_msg, Snackbar.LENGTH_LONG);
-                snackbar.setActionTextColor(Color.parseColor("#ffffff"));
-                View snackBarView = snackbar.getView();
-                snackBarView.setBackgroundColor(Color.parseColor("#4CAF50"));
-                snackbar.show();
-            }
-        }
-    }
 
     protected boolean isAppInstalled(String packageName) {
         Intent mIntent = getPackageManager().getLaunchIntentForPackage(packageName);

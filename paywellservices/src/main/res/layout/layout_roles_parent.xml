@@ -1,0 +1,43 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   android:id="@+id/relativeLayout2"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="60dp"
+                                                   android:orientation="vertical"
+                                                   android:paddingLeft="8dp"
+                                                   android:paddingTop="8dp"
+                                                   android:paddingRight="8dp"
+                                                   android:paddingBottom="8dp">
+
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="what is jodi?"
+        android:textColor="#333333"
+        app:layout_constraintBottom_toBottomOf="@+id/imgDropDown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgDropDown"
+        app:layout_constraintTop_toTopOf="@+id/imgDropDown"/>
+
+    <ImageView
+        android:id="@+id/imgDropDown"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/expandable_down"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
