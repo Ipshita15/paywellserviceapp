@@ -34,9 +34,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.OnCheckedChangeListener {
+class BBC_Main_Activity : BaseActivity(), View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
     private var mAppHandler: AppHandler? = null
+
     //private var radioButton_five: RadioButton? = null, private  var radioButton_ten:RadioButton? = null, private  var radioButton_twenty:RadioButton? = null, private  var radioButton_fifty:RadioButton? = null, private  var radioButton_hundred:RadioButton? = null, private  var radioButton_twoHundred:RadioButton? = null
     private var selectedLimit = ""
     private var radioButton_five: RadioButton? = null
@@ -107,12 +108,9 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
         }
     }
 
-
-
     fun Context.toast(context: Context = applicationContext, message: String, toastDuration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, message, toastDuration).show()
     }
-
 
     private fun showEnquiryPrompt() {
         val builder = AlertDialog.Builder(this)
@@ -145,15 +143,14 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
         alert.show()
     }
 
-
-    private fun getRegistationStatus(mobile : String) {
+    private fun getRegistationStatus(mobile: String) {
         showProgressDialog()
         //toast(message = "hello asce", toastDuration = Toast.LENGTH_LONG)
         val registation = RegistationInfo()
         registation.mobile = mobile
         registation.username = mAppHandler?.userName.toString()
 
-        ApiUtils.getAPIServiceV2().getBBCregistationInfo(registation).enqueue(object : Callback<StatusCheckResponsePojo>{
+        ApiUtils.getAPIServiceV2().getBBCregistationInfo(registation).enqueue(object : Callback<StatusCheckResponsePojo> {
             override fun onFailure(call: Call<StatusCheckResponsePojo>, t: Throwable) {
                 dismissProgressDialog()
                 showErrorMessagev1(getString(R.string.try_again_msg))
@@ -161,10 +158,10 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
             }
 
             override fun onResponse(call: Call<StatusCheckResponsePojo>, response: Response<StatusCheckResponsePojo>) {
-                    dismissProgressDialog()
-                if (response.isSuccessful){
-                    val status : StatusCheckResponsePojo = response.body()!!
-                    if (status.status == 200){
+                dismissProgressDialog()
+                if (response.isSuccessful) {
+                    val status: StatusCheckResponsePojo = response.body()!!
+                    if (status.status == 200) {
 
                         val toJson = Gson().toJson(status)
                         val intent = Intent(applicationContext, BBCstatusCheckActivity::class.java)
@@ -172,11 +169,11 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
                         startActivity(intent)
 
 
-                    }else{
+                    } else {
                         showErrorMessagev1(status.message)
                     }
 
-                   }else{
+                } else {
                     showErrorMessagev1(getString(R.string.try_again_msg))
                 }
 
@@ -184,7 +181,6 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
         })
     }
-
 
     // Transaction LOG
     private fun showLimitPrompt() {
@@ -225,17 +221,16 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
         dialog.show()
     }
 
-
     private fun getTransactionLog(limit: Int) {
         showProgressDialog()
         val uniqueKey = UniqueKeyGenerator.getUniqueKey(AppHandler.getmInstance(this).rid)
 
         val transcationLog = BbcTranscationLog()
-        transcationLog.limit = ""+limit
+        transcationLog.limit = "" + limit
         transcationLog.service = "BBC"
         transcationLog.userName = mAppHandler?.userName.toString()
 
-        ApiUtils.getAPIServiceV2().getBBCTransactionLog(transcationLog).enqueue(object : Callback<TransactionResponsePOjo>{
+        ApiUtils.getAPIServiceV2().getBBCTransactionLog(transcationLog).enqueue(object : Callback<TransactionResponsePOjo> {
             override fun onFailure(call: Call<TransactionResponsePOjo>, t: Throwable) {
                 dismissProgressDialog()
                 showErrorMessagev1(getString(R.string.try_again_msg))
@@ -243,30 +238,29 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
 
             override fun onResponse(call: Call<TransactionResponsePOjo>, response: Response<TransactionResponsePOjo>) {
                 dismissProgressDialog()
-               if (response.isSuccessful){
-                   val trPojo : TransactionResponsePOjo = response.body()!!
-                   val status :Int? =  trPojo.status //js.getInt("status")
-                   val msg : String =   trPojo.message.toString() //js.getString("message")
-                   if (status == 200){
+                if (response.isSuccessful) {
+                    val trPojo: TransactionResponsePOjo = response.body()!!
+                    val status: Int? = trPojo.status //js.getInt("status")
+                    val msg: String = trPojo.message.toString() //js.getString("message")
+                    if (status == 200) {
 
-                       val toJson = Gson().toJson(trPojo)
-                       val intent = Intent(applicationContext, TranscationListActivity::class.java)
-                       intent.putExtra(getString(R.string.bongo_trx_tag), toJson)
-                       startActivity(intent)
+                        val toJson = Gson().toJson(trPojo)
+                        val intent = Intent(applicationContext, TranscationListActivity::class.java)
+                        intent.putExtra(getString(R.string.bongo_trx_tag), toJson)
+                        startActivity(intent)
 
-                   }else{
-                       showErrorMessagev1(msg)
-                   }
+                    } else {
+                        showErrorMessagev1(msg)
+                    }
 
 
-               }else{
-                   showErrorMessagev1(getString(R.string.try_again_msg))
-               }
+                } else {
+                    showErrorMessagev1(getString(R.string.try_again_msg))
+                }
             }
 
 
         })
-
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
@@ -321,9 +315,6 @@ class BBC_Main_Activity : BaseActivity(), View.OnClickListener , CompoundButton.
             }
         }
     }
-
-
-
 }
 
 

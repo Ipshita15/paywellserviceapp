@@ -1095,6 +1095,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 ////                        imageUrl[len] = "https://api.paywellonline.com/retailerPromotionImage/Banner_Bus.9.png";
 //        }
 
+//        Log.e("ipshi", "" + imageUrl.length);
         String imageUpdateVersionString = mAppHandler.getDisplayPictureCount() + mAppHandler.getImageAddress();
 
         Slider.init(new PicassoImageLoadingService(imageUpdateVersionString));

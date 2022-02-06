@@ -3,6 +3,7 @@ package com.cloudwell.paywell.services.activity.BBC
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.cloudwell.paywell.services.R
 import com.cloudwell.paywell.services.activity.base.BaseActivity
@@ -65,8 +66,6 @@ class BBCsubscribeActivity : BaseActivity() {
                 askforPin(msg, username, mobile)
             }
         }
-
-
     }
 
     private fun askforPin(message: String, username: String, mobile: String){
@@ -92,6 +91,7 @@ class BBCsubscribeActivity : BaseActivity() {
         pojo.pinNo = pin
         pojo.username = mAppHandler?.userName!!
 
+        Log.e("ipshi", pojo.toString())
         ApiUtils.getAPIServiceV2().getBBCsubscribe(pojo).enqueue(object : Callback<ResponseBody>{
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 dismissProgressDialog()
@@ -99,29 +99,23 @@ class BBCsubscribeActivity : BaseActivity() {
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                Log.e("ipshi", response.toString())
                 dismissProgressDialog()
                 if (response.isSuccessful){
                    val js =  JSONObject(response.body()?.string())
                     val status = js.getInt("status")
                     val msg = js.getString("message")
+                    Log.e("ipshi", "" + status + " " + msg)
                     if (status == 200){
-
-                        //TODO what to do after success
                         showDialog()
-
                     }else{
-
                         showErrorMessagev1(msg)
                     }
-
                 }else{
                     showErrorCallBackMessagev1(getString(R.string.try_again_msg))
                 }
-
             }
-
         })
-
     }
 
     private fun showDialog() {
@@ -129,8 +123,6 @@ class BBCsubscribeActivity : BaseActivity() {
             override fun onclick() {
                 finish()
             }
-
-
         })
         msg.show(getSupportFragmentManager(), "oTPVerificationMsgDialog");
     }

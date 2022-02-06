@@ -89,7 +89,6 @@ class CourseListActivity : BaseActivity() {
 
     private fun setadapter(courselist: List<CoursesItem>) {
 
-
         bbc_course_list.adapter = TestAdapter(bbc_course_list, applicationContext,courselist, object : TestAdapter.CourseClick {
             override fun courseOnclick(coursesItem: CoursesItem?) {
                 val gson = Gson()
@@ -99,16 +98,11 @@ class CourseListActivity : BaseActivity() {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 applicationContext.startActivity(intent)
             }
-
         })
-
     }
-
-
 
     fun Context.toast(context: Context = applicationContext, message: String, toastDuration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(context, message, toastDuration).show()
     }
-
 
 }
